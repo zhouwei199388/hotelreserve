@@ -7,6 +7,19 @@ public class User {
     private String sessionkey;
     private Integer level;
     private String phone;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", openid='" + openid + '\'' +
+                ", sessionkey='" + sessionkey + '\'' +
+                ", level=" + level +
+                ", phone='" + phone + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
     private String name;
     public Integer getId() {
         return id;
