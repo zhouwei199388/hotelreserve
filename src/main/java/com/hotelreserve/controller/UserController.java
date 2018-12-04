@@ -1,6 +1,7 @@
 package com.hotelreserve.controller;
 
 import com.google.gson.Gson;
+import com.hotelreserve.http.request.UserRequest;
 import com.hotelreserve.model.User;
 import com.hotelreserve.service.UserService;
 import com.hotelreserve.utils.ResponseUtils;
@@ -8,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,11 +30,12 @@ public class UserController {
     private Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @ResponseBody
-    @RequestMapping(value = "/add",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
-    public void addUser(HttpServletResponse response, User user) {
-        int result = mUserService.addUser(user);
-        logger.info(result+"");
-        ResponseUtils.renderJson(response, new Gson().toJson(user));
+    @RequestMapping(value = "/add",method = RequestMethod.GET)
+    public void addUser(HttpServletResponse response,@RequestBody UserRequest request) {
+//        int result = mUserService.addUser(user);
+        logger.info(request.toString());
+//        logger.info(request.getParameter("key"));
+        ResponseUtils.renderJson(response, new Gson().toJson(request));
     }
 
     @ResponseBody
