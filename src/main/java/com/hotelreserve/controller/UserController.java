@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.hotelreserve.http.request.UserRequest;
 import com.hotelreserve.model.User;
 import com.hotelreserve.service.UserService;
+import com.hotelreserve.utils.LogUtils;
 import com.hotelreserve.utils.ResponseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,22 +31,22 @@ public class UserController {
     private Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @ResponseBody
-    @RequestMapping(value = "/add",method = RequestMethod.GET)
-    public void addUser(HttpServletResponse response,@RequestBody UserRequest request) {
-//        int result = mUserService.addUser(user);
-        logger.info(request.toString());
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public void addUser(HttpServletResponse response, @RequestBody UserRequest request) {
+        User user = mUserService.addUser(request);
+        LogUtils.info(request.toString());
 //        logger.info(request.getParameter("key"));
         ResponseUtils.renderJson(response, new Gson().toJson(request));
     }
 
     @ResponseBody
-    @RequestMapping(value = "/get",method = RequestMethod.GET,produces = {"application/json;charset=UTF-8"})
-    public void getUser(HttpServletResponse response, HttpServletRequest request){
+    @RequestMapping(value = "/get", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    public void getUser(HttpServletResponse response, HttpServletRequest request) {
         logger.info("getuser");
-      List<User> users =  mUserService.getUser();
-      for (User user:users){
-          logger.info(user.toString());
-      }
+        List<User> users = mUserService.getUser();
+        for (User user : users) {
+            logger.info(user.toString());
+        }
     }
 
 

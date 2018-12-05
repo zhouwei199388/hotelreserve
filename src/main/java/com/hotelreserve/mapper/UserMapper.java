@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -60,6 +61,12 @@ public interface UserMapper {
         @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR)
     })
     User selectByPrimaryKey(Integer id);
+
+    @UpdateProvider(type=UserSqlProvider.class, method="updateByExampleSelective")
+    int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);
+
+    @UpdateProvider(type=UserSqlProvider.class, method="updateByExample")
+    int updateByExample(@Param("record") User record, @Param("example") UserExample example);
 
     @UpdateProvider(type=UserSqlProvider.class, method="updateByPrimaryKeySelective")
     int updateByPrimaryKeySelective(User record);

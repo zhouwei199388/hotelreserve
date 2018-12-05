@@ -5,6 +5,7 @@ import com.hotelreserve.model.UserExample.Criteria;
 import com.hotelreserve.model.UserExample.Criterion;
 import com.hotelreserve.model.UserExample;
 import java.util.List;
+import java.util.Map;
 import org.apache.ibatis.jdbc.SQL;
 
 public class UserSqlProvider {
@@ -59,6 +60,57 @@ public class UserSqlProvider {
             sql.ORDER_BY(example.getOrderByClause());
         }
         
+        return sql.toString();
+    }
+
+    public String updateByExampleSelective(Map<String, Object> parameter) {
+        User record = (User) parameter.get("record");
+        UserExample example = (UserExample) parameter.get("example");
+        
+        SQL sql = new SQL();
+        sql.UPDATE("user");
+        
+        if (record.getId() != null) {
+            sql.SET("id = #{record.id,jdbcType=INTEGER}");
+        }
+        
+        if (record.getOpenid() != null) {
+            sql.SET("openid = #{record.openid,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getSessionkey() != null) {
+            sql.SET("sessionkey = #{record.sessionkey,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getLevel() != null) {
+            sql.SET("level = #{record.level,jdbcType=INTEGER}");
+        }
+        
+        if (record.getPhone() != null) {
+            sql.SET("phone = #{record.phone,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getName() != null) {
+            sql.SET("name = #{record.name,jdbcType=VARCHAR}");
+        }
+        
+        applyWhere(sql, example, true);
+        return sql.toString();
+    }
+
+    public String updateByExample(Map<String, Object> parameter) {
+        SQL sql = new SQL();
+        sql.UPDATE("user");
+        
+        sql.SET("id = #{record.id,jdbcType=INTEGER}");
+        sql.SET("openid = #{record.openid,jdbcType=VARCHAR}");
+        sql.SET("sessionkey = #{record.sessionkey,jdbcType=VARCHAR}");
+        sql.SET("level = #{record.level,jdbcType=INTEGER}");
+        sql.SET("phone = #{record.phone,jdbcType=VARCHAR}");
+        sql.SET("name = #{record.name,jdbcType=VARCHAR}");
+        
+        UserExample example = (UserExample) parameter.get("example");
+        applyWhere(sql, example, true);
         return sql.toString();
     }
 
