@@ -33,6 +33,13 @@ public class UserService {
         User user = new User();
         userResponse.user = user;
         LogUtils.info("addUser");
+//        if(!request.getCode().isEmpty())
+//        {
+//            String appid=Var.webConfigMap.get("AppID").toString();
+//            String secret=Var.webConfigMap.get("AppSecret").toString();
+//            shopAddress= XcxUtils.getSessionKeyOropenid(code,appid,secret);
+//
+//        }
 //        int id = mUserMapper.insertSelective(user);
 //        if (id != 0) {
 //            //TODO:通过微信小程序code等信息获取用户微信信息

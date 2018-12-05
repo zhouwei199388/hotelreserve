@@ -5,7 +5,17 @@ package com.hotelreserve.http.request;
  */
 public class UserRequest {
     public String code;
-    public String key;
+    public String encryptedData;
+    public String iv;
+
+    @Override
+    public String toString() {
+        return "UserRequest{" +
+                "code='" + code + '\'' +
+                ", encryptedData='" + encryptedData + '\'' +
+                ", iv='" + iv + '\'' +
+                '}';
+    }
 
     public String getCode() {
         return code;
@@ -15,19 +25,19 @@ public class UserRequest {
         this.code = code;
     }
 
-    public String getKey() {
-        return key;
+    public String getEncryptedData() {
+        return encryptedData;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setEncryptedData(String encryptedData) {
+        this.encryptedData = encryptedData;
     }
 
-    @Override
-    public String toString() {
-        return "UserRequest{" +
-                "code='" + code + '\'' +
-                ", key='" + key + '\'' +
-                '}';
+    public String getIv() {
+        return iv;
+    }
+
+    public void setIv(String iv) {
+        this.iv = iv;
     }
 }

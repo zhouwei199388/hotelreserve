@@ -30,6 +30,9 @@ import org.springframework.web.context.WebApplicationContext;
 public class UserControllerTest {
     @Autowired
     private MockMvc mvc;
+    private String code = "033OKtLk0LDfUq15uvLk04XPLk0OKtL6";
+    private String encrypteDate="aE1FVNTFkKEF5DmQm3XO9fuVCZHNx0w98IJwH4/bYj8jkdxuuaAwyJhcZnNVGf+vx954B6bAjCoysR7Fz27EcGDS4PvEynRhcqLXLZFReHUC8vUowbO2IErcDCAOu41w7pyvCnRzJWiB3rSEZdTETZrLKZEV9+C/5LT3SlfnJqw9N5kEYCTZ+wTdX4N7VbOBJQPVFXWvu2yrSGloPUOPOu3DRVpMrNfdvhXqGkgZ+le66838lH75kdCRTJBob2s8LUYhUH4PtJgKlbCIF5et0XdRsA9xPStU/5mO3WuC4HFiRqffjjZlppc4oQTZ5Z/C/VR3Dt9v8Idn6V7Au06Ry56LUmClzZsKwwCCm405nHeJnqw1EzrvyNw9fSEZBdaRZ+SqqsKoDkIh94xV7maIZW6L0FxIZC9mvy524UjMyNuK0iuJ/gaz0Erk0kIswMhPfVZu9UTqTCiWgp/SIggIRA==";
+    private String iv="l1MuKUU+80MTXnyx8cYLAw==";
     @Autowired
     protected WebApplicationContext wac;
     @Before()  //这个方法在每个方法执行之前都会执行一遍
@@ -41,8 +44,9 @@ public class UserControllerTest {
     public void addUser() throws Exception {
 
         UserRequest userRequest = new UserRequest();
-        userRequest.setCode("sldkjfl");
-        userRequest.setKey("sldkfjsl");
+        userRequest.setCode(code);
+        userRequest.setEncryptedData(encrypteDate);
+        userRequest.setIv(iv);
         String request = new Gson().toJson(userRequest);
 
         mvc.perform(MockMvcRequestBuilders.get("/user/add")
