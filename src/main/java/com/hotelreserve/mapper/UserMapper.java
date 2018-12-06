@@ -24,11 +24,13 @@ public interface UserMapper {
 
     @Insert({
         "insert into user (id, openid, ",
-        "sessionkey, level, ",
-        "phone, name)",
+        "sessionKey, level, ",
+        "phone, nickName, ",
+        "gender, avatarUrl)",
         "values (#{id,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, ",
         "#{sessionkey,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, ",
-        "#{phone,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR})"
+        "#{phone,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, ",
+        "#{gender,jdbcType=INTEGER}, #{avatarurl,jdbcType=VARCHAR})"
     })
     int insert(User record);
 
@@ -39,26 +41,30 @@ public interface UserMapper {
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="openid", property="openid", jdbcType=JdbcType.VARCHAR),
-        @Result(column="sessionkey", property="sessionkey", jdbcType=JdbcType.VARCHAR),
+        @Result(column="sessionKey", property="sessionkey", jdbcType=JdbcType.VARCHAR),
         @Result(column="level", property="level", jdbcType=JdbcType.INTEGER),
         @Result(column="phone", property="phone", jdbcType=JdbcType.VARCHAR),
-        @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR)
+        @Result(column="nickName", property="nickname", jdbcType=JdbcType.VARCHAR),
+        @Result(column="gender", property="gender", jdbcType=JdbcType.INTEGER),
+        @Result(column="avatarUrl", property="avatarurl", jdbcType=JdbcType.VARCHAR)
     })
     List<User> selectByExample(UserExample example);
 
     @Select({
         "select",
-        "id, openid, sessionkey, level, phone, name",
+        "id, openid, sessionKey, level, phone, nickName, gender, avatarUrl",
         "from user",
         "where id = #{id,jdbcType=INTEGER}"
     })
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="openid", property="openid", jdbcType=JdbcType.VARCHAR),
-        @Result(column="sessionkey", property="sessionkey", jdbcType=JdbcType.VARCHAR),
+        @Result(column="sessionKey", property="sessionkey", jdbcType=JdbcType.VARCHAR),
         @Result(column="level", property="level", jdbcType=JdbcType.INTEGER),
         @Result(column="phone", property="phone", jdbcType=JdbcType.VARCHAR),
-        @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR)
+        @Result(column="nickName", property="nickname", jdbcType=JdbcType.VARCHAR),
+        @Result(column="gender", property="gender", jdbcType=JdbcType.INTEGER),
+        @Result(column="avatarUrl", property="avatarurl", jdbcType=JdbcType.VARCHAR)
     })
     User selectByPrimaryKey(Integer id);
 
@@ -74,10 +80,12 @@ public interface UserMapper {
     @Update({
         "update user",
         "set openid = #{openid,jdbcType=VARCHAR},",
-          "sessionkey = #{sessionkey,jdbcType=VARCHAR},",
+          "sessionKey = #{sessionkey,jdbcType=VARCHAR},",
           "level = #{level,jdbcType=INTEGER},",
           "phone = #{phone,jdbcType=VARCHAR},",
-          "name = #{name,jdbcType=VARCHAR}",
+          "nickName = #{nickname,jdbcType=VARCHAR},",
+          "gender = #{gender,jdbcType=INTEGER},",
+          "avatarUrl = #{avatarurl,jdbcType=VARCHAR}",
         "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(User record);

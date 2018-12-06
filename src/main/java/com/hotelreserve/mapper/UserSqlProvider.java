@@ -23,7 +23,7 @@ public class UserSqlProvider {
         }
         
         if (record.getSessionkey() != null) {
-            sql.VALUES("sessionkey", "#{sessionkey,jdbcType=VARCHAR}");
+            sql.VALUES("sessionKey", "#{sessionkey,jdbcType=VARCHAR}");
         }
         
         if (record.getLevel() != null) {
@@ -34,8 +34,16 @@ public class UserSqlProvider {
             sql.VALUES("phone", "#{phone,jdbcType=VARCHAR}");
         }
         
-        if (record.getName() != null) {
-            sql.VALUES("name", "#{name,jdbcType=VARCHAR}");
+        if (record.getNickname() != null) {
+            sql.VALUES("nickName", "#{nickname,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getGender() != null) {
+            sql.VALUES("gender", "#{gender,jdbcType=INTEGER}");
+        }
+        
+        if (record.getAvatarurl() != null) {
+            sql.VALUES("avatarUrl", "#{avatarurl,jdbcType=VARCHAR}");
         }
         
         return sql.toString();
@@ -49,10 +57,12 @@ public class UserSqlProvider {
             sql.SELECT("id");
         }
         sql.SELECT("openid");
-        sql.SELECT("sessionkey");
+        sql.SELECT("sessionKey");
         sql.SELECT("level");
         sql.SELECT("phone");
-        sql.SELECT("name");
+        sql.SELECT("nickName");
+        sql.SELECT("gender");
+        sql.SELECT("avatarUrl");
         sql.FROM("user");
         applyWhere(sql, example, false);
         
@@ -79,7 +89,7 @@ public class UserSqlProvider {
         }
         
         if (record.getSessionkey() != null) {
-            sql.SET("sessionkey = #{record.sessionkey,jdbcType=VARCHAR}");
+            sql.SET("sessionKey = #{record.sessionkey,jdbcType=VARCHAR}");
         }
         
         if (record.getLevel() != null) {
@@ -90,8 +100,16 @@ public class UserSqlProvider {
             sql.SET("phone = #{record.phone,jdbcType=VARCHAR}");
         }
         
-        if (record.getName() != null) {
-            sql.SET("name = #{record.name,jdbcType=VARCHAR}");
+        if (record.getNickname() != null) {
+            sql.SET("nickName = #{record.nickname,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getGender() != null) {
+            sql.SET("gender = #{record.gender,jdbcType=INTEGER}");
+        }
+        
+        if (record.getAvatarurl() != null) {
+            sql.SET("avatarUrl = #{record.avatarurl,jdbcType=VARCHAR}");
         }
         
         applyWhere(sql, example, true);
@@ -104,10 +122,12 @@ public class UserSqlProvider {
         
         sql.SET("id = #{record.id,jdbcType=INTEGER}");
         sql.SET("openid = #{record.openid,jdbcType=VARCHAR}");
-        sql.SET("sessionkey = #{record.sessionkey,jdbcType=VARCHAR}");
+        sql.SET("sessionKey = #{record.sessionkey,jdbcType=VARCHAR}");
         sql.SET("level = #{record.level,jdbcType=INTEGER}");
         sql.SET("phone = #{record.phone,jdbcType=VARCHAR}");
-        sql.SET("name = #{record.name,jdbcType=VARCHAR}");
+        sql.SET("nickName = #{record.nickname,jdbcType=VARCHAR}");
+        sql.SET("gender = #{record.gender,jdbcType=INTEGER}");
+        sql.SET("avatarUrl = #{record.avatarurl,jdbcType=VARCHAR}");
         
         UserExample example = (UserExample) parameter.get("example");
         applyWhere(sql, example, true);
@@ -123,7 +143,7 @@ public class UserSqlProvider {
         }
         
         if (record.getSessionkey() != null) {
-            sql.SET("sessionkey = #{sessionkey,jdbcType=VARCHAR}");
+            sql.SET("sessionKey = #{sessionkey,jdbcType=VARCHAR}");
         }
         
         if (record.getLevel() != null) {
@@ -134,8 +154,16 @@ public class UserSqlProvider {
             sql.SET("phone = #{phone,jdbcType=VARCHAR}");
         }
         
-        if (record.getName() != null) {
-            sql.SET("name = #{name,jdbcType=VARCHAR}");
+        if (record.getNickname() != null) {
+            sql.SET("nickName = #{nickname,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getGender() != null) {
+            sql.SET("gender = #{gender,jdbcType=INTEGER}");
+        }
+        
+        if (record.getAvatarurl() != null) {
+            sql.SET("avatarUrl = #{avatarurl,jdbcType=VARCHAR}");
         }
         
         sql.WHERE("id = #{id,jdbcType=INTEGER}");

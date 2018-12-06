@@ -1,21 +1,6 @@
 package com.hotelreserve.model;
 
 public class User {
-    String result = "{\n" +
-            "\t\"openId\": \"ofIRZ5BAfiLYT203ahdW8oJiJAzU\",\n" +
-            "\t\"nickName\": \"邹维\",\n" +
-            "\t\"gender\": 1,\n" +
-            "\t\"language\": \"zh_CN\",\n" +
-            "\t\"city\": \"\",\n" +
-            "\t\"province\": \"\",\n" +
-            "\t\"country\": \"China\",\n" +
-            "\t\"avatarUrl\": \"https://wx.qlogo.cn/mmopen/vi_32/FC7d3bDPUHSOMpMSiaHF0cliaP0IPiauVpGjia8LamtavvqiaxAQAeS4A7CCRd54tFq8bDSibgsmGIeoyw2eeiaWuflAQ/132\",\n" +
-            "\t\"watermark\": {\n" +
-            "\t\t\"timestamp\": 1544086416,\n" +
-            "\t\t\"appid\": \"wxe7b86a74f9e96203\"\n" +
-            "\t}\n" +
-            "}"
-
     private Integer id;
 
     private String openid;
@@ -26,7 +11,25 @@ public class User {
 
     private String phone;
 
-    private String name;
+    private String nickname;
+
+    private Integer gender;
+
+    private String avatarurl;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", openid='" + openid + '\'' +
+                ", sessionkey='" + sessionkey + '\'' +
+                ", level=" + level +
+                ", phone='" + phone + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", gender=" + gender +
+                ", avatarurl='" + avatarurl + '\'' +
+                '}';
+    }
 
     public Integer getId() {
         return id;
@@ -68,11 +71,27 @@ public class User {
         this.phone = phone == null ? null : phone.trim();
     }
 
-    public String getName() {
-        return name;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setNickname(String nickname) {
+        this.nickname = nickname == null ? null : nickname.trim();
+    }
+
+    public Integer getGender() {
+        return gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
+    }
+
+    public String getAvatarurl() {
+        return avatarurl;
+    }
+
+    public void setAvatarurl(String avatarurl) {
+        this.avatarurl = avatarurl == null ? null : avatarurl.trim();
     }
 }

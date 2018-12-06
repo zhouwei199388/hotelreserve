@@ -20,6 +20,8 @@ import com.alibaba.druid.support.json.JSONUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.hotelreserve.http.model.WxModel;
+import com.hotelreserve.http.model.WxUserInfo;
+import com.hotelreserve.model.User;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.encoders.Base64;
 import sun.rmi.runtime.Log;
@@ -68,7 +70,7 @@ public class XcxUtils {
      *            加密算法的初始向量
      * @return
      */
-    public static void getUserInfo(String encryptedData, String sessionKey, String iv) {
+    public static WxUserInfo getUserInfo(String encryptedData, String sessionKey, String iv) {
         // 被加密的数据
         byte[] dataByte = Base64.decode(encryptedData);
         // 加密秘钥
@@ -97,13 +99,14 @@ public class XcxUtils {
             if (null != resultByte && resultByte.length > 0)
             {
                 String result = new String(resultByte, "UTF-8");
-                LogUtils.info("zw  "+result);
-//                return JSON.parseObject(result);
+                WxUserInfo userInfo = new Gson().fromJson(result,WxUserInfo.class);
+//                LogUtils.info("zw  "+userInfo);
+                return userInfo;
             }
         } catch (Exception e) {
             LogUtils.info(e.getMessage());
         }
-//        return null;
+        return null;
     }
 
     /**

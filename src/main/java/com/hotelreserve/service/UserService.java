@@ -3,6 +3,7 @@ package com.hotelreserve.service;
 import com.google.gson.JsonObject;
 import com.hotelreserve.http.model.ResponseHeader;
 import com.hotelreserve.http.model.WxModel;
+import com.hotelreserve.http.model.WxUserInfo;
 import com.hotelreserve.http.request.UserRequest;
 import com.hotelreserve.http.response.UserResponse;
 import com.hotelreserve.mapper.UserMapper;
@@ -22,42 +23,77 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserMapper mUserMapper;
+
+
+
+
     /**
      * 添加用户  如果用户已存在返回用户信息
+     *
      * @param request 小程序code等信息
      * @return
      */
     public UserResponse addUser(UserRequest request) {
         UserResponse userResponse = new UserResponse();
         ResponseHeader header = new ResponseHeader();
-        User user = new User();
         LogUtils.info("addUser");
         WxModel wxModel;
-        if(!request.getCode().isEmpty()) {
-            String appid="wxe7b86a74f9e96203";
-            String secret="e912dab12ca28b09c6cae11ccf7bd4ef";
-            wxModel =  XcxUtils.getSessionKeyOropenid(request.getCode(),appid,secret);
-            if(wxModel==null){
+        //判断code是否为空
+        if (!request.getCode().isEmpty()) {
+            String appid = "wxe7b86a74f9e96203";
+            String secret = "e912dab12ca28b09c6cae11ccf7bd4ef";
+            //获取微信openid和sessionkey
+            wxModel = XcxUtils.getSessionKeyOropenid(request.getCode(), appid, secret);
+            if (wxModel.openid==null||wxModel.session_key==null) {
                 header.setOpenidOrKeyError();
                 userResponse.header = header;
                 return userResponse;
             }
-            XcxUtils.getUserInfo(request.encryptedData,wxModel.session_key,request.iv);
-
-        }else{
+            //获取到openid之后判断数据库中是否有数据
+            UserExample example = new UserExample();
+            UserExample.Criteria criteria = example.createCriteria();
+            criteria.andOpenidEqualTo(wxModel.openid);
+            criteria.andSessionkeyEqualTo(wxModel.session_key);
+            List<User> users = mUserMapper.selectByExample(example);
+            User user;
+            //如果数据库获取到了数据  返回数据库用户信息 否从微信获取数据并保存到数据库
+            if (users.size() != 0) {
+                user = users.get(0);
+            } else {
+                user = getUserInfo(request.encryptedData, wxModel.session_key, request.iv);
+                if(user==null){
+                    header.setServerError();
+                }else{
+                    mUserMapper.insertSelective(user);
+                }
+            }
+            userResponse.user = user;
+        } else {
             header.setCodeError();
-
         }
-//        int id = mUserMapper.insertSelective(user);
-//        if (id != 0) {
-//            //TODO:通过微信小程序code等信息获取用户微信信息
-//        }
-        userResponse.header=header;
-        userResponse.user = user;
         return userResponse;
     }
 
-
+    /**
+     *  获取微信用户信息
+     * @param encryptedData
+     * @param session_key
+     * @param iv
+     * @return
+     */
+    public User getUserInfo(String encryptedData, String session_key, String iv) {
+        WxUserInfo userInfo = XcxUtils.getUserInfo(encryptedData, session_key, iv);
+        if (userInfo == null) {
+            return null;
+        }
+        User user = new User();
+        user.setOpenid(userInfo.openId);
+        user.setGender(userInfo.gender);
+        user.setAvatarurl(userInfo.avatarUrl);
+        user.setNickname(userInfo.nickName);
+        user.setSessionkey(session_key);
+        return user;
+    }
     /**
      * 绑定手机号
      *
