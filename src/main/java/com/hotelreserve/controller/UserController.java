@@ -2,6 +2,7 @@ package com.hotelreserve.controller;
 
 import com.google.gson.Gson;
 import com.hotelreserve.http.request.UserRequest;
+import com.hotelreserve.http.response.UserResponse;
 import com.hotelreserve.model.User;
 import com.hotelreserve.service.UserService;
 import com.hotelreserve.utils.LogUtils;
@@ -33,10 +34,9 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public void addUser(HttpServletResponse response, @RequestBody UserRequest request) {
-        User user = mUserService.addUser(request);
+        UserResponse user = mUserService.addUser(request);
         LogUtils.info(request.toString());
-//        logger.info(request.getParameter("key"));
-        ResponseUtils.renderJson(response, new Gson().toJson(request));
+        ResponseUtils.renderJson(response, new Gson().toJson(user));
     }
 
     @ResponseBody

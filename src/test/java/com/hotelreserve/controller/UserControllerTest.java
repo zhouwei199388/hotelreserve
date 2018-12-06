@@ -30,9 +30,9 @@ import org.springframework.web.context.WebApplicationContext;
 public class UserControllerTest {
     @Autowired
     private MockMvc mvc;
-    private String code = "033OKtLk0LDfUq15uvLk04XPLk0OKtL6";
-    private String encrypteDate="aE1FVNTFkKEF5DmQm3XO9fuVCZHNx0w98IJwH4/bYj8jkdxuuaAwyJhcZnNVGf+vx954B6bAjCoysR7Fz27EcGDS4PvEynRhcqLXLZFReHUC8vUowbO2IErcDCAOu41w7pyvCnRzJWiB3rSEZdTETZrLKZEV9+C/5LT3SlfnJqw9N5kEYCTZ+wTdX4N7VbOBJQPVFXWvu2yrSGloPUOPOu3DRVpMrNfdvhXqGkgZ+le66838lH75kdCRTJBob2s8LUYhUH4PtJgKlbCIF5et0XdRsA9xPStU/5mO3WuC4HFiRqffjjZlppc4oQTZ5Z/C/VR3Dt9v8Idn6V7Au06Ry56LUmClzZsKwwCCm405nHeJnqw1EzrvyNw9fSEZBdaRZ+SqqsKoDkIh94xV7maIZW6L0FxIZC9mvy524UjMyNuK0iuJ/gaz0Erk0kIswMhPfVZu9UTqTCiWgp/SIggIRA==";
-    private String iv="l1MuKUU+80MTXnyx8cYLAw==";
+    private String code = "023kDoPa2E4YuM0AfQMa2driPa2kDoP8";
+    private String encrypteDate="aUAos1rZY/APOj4gkoBTuiJ7LTMXs1pj7iC5Dwa8SmkV6mHSfIagxPw+HmvQcisbKA52YDPcSUfOIc1HY4Hoo/NLE8EWdTgVTg5LGT8HnOblg4AJv2tNHTY3k2Ql7xCMYQ8Zup5czLzypia9PxiI4SOyMhMCN0vnX6CYUUH3aadIFroLTGO1Pzg2mLdDMEyuh/ysCk1ExyqosXcl7KZgrWK4MgOmumZUrIzo/ydfcmg/dvnWIeALGHSJSrCs7eMXot15WeFvi+dKVxCr9a04nhlcJFJwKzLtOiMLaBDN/5z/bBUCexPtCWaUBv1Plpl5HOG1WIl0lWasanRl70oXsmYMvE6BjA9rtxCpuSpR9SJkfpcLtIFw+iaQ0zU/S9lo0Q9djn/zvJZySimAAYJ1XPVXNawsMfFi9XegvfQuKC9tHrJvEJG/+gcn2U+S9epkDzblFbe5WQnryT0xh/9ZMw==";
+    private String iv="W7AmHQES+1YniEcEMvZtHw==";
     @Autowired
     protected WebApplicationContext wac;
     @Before()  //这个方法在每个方法执行之前都会执行一遍

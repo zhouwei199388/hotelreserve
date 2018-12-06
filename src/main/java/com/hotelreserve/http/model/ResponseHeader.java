@@ -23,6 +23,21 @@ public class ResponseHeader {
     }
 
     /**
+     * openid获取失败
+     */
+    public void setOpenidOrKeyError() {
+        this.resultCode = ConnectionMessage.SERVER_ERROR_CODE;
+        this.resultText = ConnectionMessage.OPENID_ERROR_TEXT;
+    }
+    /**
+     * code为空
+     */
+    public void setCodeError() {
+        this.resultCode = ConnectionMessage.SERVER_ERROR_CODE;
+        this.resultText = ConnectionMessage.OPENID_ERROR_TEXT;
+    }
+
+    /**
      * 简单请求成功
      */
     public void setSuccess() {

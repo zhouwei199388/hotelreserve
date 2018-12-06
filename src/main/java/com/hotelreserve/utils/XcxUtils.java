@@ -1,5 +1,4 @@
-package com.web.wxutils;
-
+package com.hotelreserve.utils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,9 +16,13 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.hotelreserve.utils.LogUtils;
+import com.alibaba.druid.support.json.JSONUtils;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.hotelreserve.http.model.WxModel;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.encoders.Base64;
+import sun.rmi.runtime.Log;
 
 
 public class XcxUtils {
@@ -34,7 +37,7 @@ public class XcxUtils {
      *            调用微信登陆返回的Code
      * @return
      */
-    public static void getSessionKeyOropenid(String code, String appid, String secret) {
+    public static WxModel getSessionKeyOropenid(String code, String appid, String secret) {
         // 微信端登录code值
         String wxCode = code;
         String requestUrl = "https://api.weixin.qq.com/sns/jscode2session"; // 请求地址
@@ -49,9 +52,8 @@ public class XcxUtils {
         // 接口获取openid用户唯一标识
         String result = sendPost(requestUrl, requestUrlParam);
         LogUtils.info(result);
-//        JSONObject jsonObject = JSON.parseObject();
-        // System.out.println(jsonObject);
-//        return jsonObject;
+        WxModel model = new Gson().fromJson(result,WxModel.class);
+        return model;
     }
 
     /**
@@ -95,6 +97,7 @@ public class XcxUtils {
             if (null != resultByte && resultByte.length > 0)
             {
                 String result = new String(resultByte, "UTF-8");
+                LogUtils.info("zw  "+result);
 //                return JSON.parseObject(result);
             }
         } catch (Exception e) {

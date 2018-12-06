@@ -1,12 +1,15 @@
 package com.hotelreserve.service;
 
+import com.google.gson.JsonObject;
+import com.hotelreserve.http.model.ResponseHeader;
+import com.hotelreserve.http.model.WxModel;
 import com.hotelreserve.http.request.UserRequest;
 import com.hotelreserve.http.response.UserResponse;
 import com.hotelreserve.mapper.UserMapper;
 import com.hotelreserve.model.User;
 import com.hotelreserve.model.UserExample;
 import com.hotelreserve.utils.LogUtils;
-import com.sun.xml.internal.bind.v2.TODO;
+import com.hotelreserve.utils.XcxUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,34 +20,41 @@ import java.util.List;
  */
 @Service
 public class UserService {
-
     @Autowired
     private UserMapper mUserMapper;
-
-
     /**
      * 添加用户  如果用户已存在返回用户信息
-     *
      * @param request 小程序code等信息
      * @return
      */
-    public User addUser(UserRequest request) {
+    public UserResponse addUser(UserRequest request) {
         UserResponse userResponse = new UserResponse();
+        ResponseHeader header = new ResponseHeader();
         User user = new User();
-        userResponse.user = user;
         LogUtils.info("addUser");
-//        if(!request.getCode().isEmpty())
-//        {
-//            String appid=Var.webConfigMap.get("AppID").toString();
-//            String secret=Var.webConfigMap.get("AppSecret").toString();
-//            shopAddress= XcxUtils.getSessionKeyOropenid(code,appid,secret);
-//
-//        }
+        WxModel wxModel;
+        if(!request.getCode().isEmpty()) {
+            String appid="wxe7b86a74f9e96203";
+            String secret="e912dab12ca28b09c6cae11ccf7bd4ef";
+            wxModel =  XcxUtils.getSessionKeyOropenid(request.getCode(),appid,secret);
+            if(wxModel==null){
+                header.setOpenidOrKeyError();
+                userResponse.header = header;
+                return userResponse;
+            }
+            XcxUtils.getUserInfo(request.encryptedData,wxModel.session_key,request.iv);
+
+        }else{
+            header.setCodeError();
+
+        }
 //        int id = mUserMapper.insertSelective(user);
 //        if (id != 0) {
 //            //TODO:通过微信小程序code等信息获取用户微信信息
 //        }
-        return user;
+        userResponse.header=header;
+        userResponse.user = user;
+        return userResponse;
     }
 
 
