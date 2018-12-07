@@ -1,6 +1,7 @@
 package com.hotelreserve.controller;
 
 import com.google.gson.Gson;
+import com.hotelreserve.http.request.BindPhoneRequest;
 import com.hotelreserve.http.request.UserRequest;
 import org.junit.Assert;
 import org.junit.Before;
@@ -30,11 +31,12 @@ import org.springframework.web.context.WebApplicationContext;
 public class UserControllerTest {
     @Autowired
     private MockMvc mvc;
-    private String code = "0332Y2ne2I5XXG00nyme2oQ0ne22Y2nB";
-    private String encrypteDate="J9HfdfyvtYZtZ1YA3s1BAXjZoWv0+gZViK98AXYaWVJnM8Egl+Hmkhw0s4nteqI+8sjgramNFDGjoRWg1EOpuJhFTL20NTe/q2mIlWqr3wTDbemDD009XRyBYy1U10nqHa9WhZNcGP4+hPRiSpmkkTmUfCcMNKvf/6ouBSX/fOdnhRPpO4Wup1SOYnJxGDe8Jy8CLUkv+Y9cPwDg8ACVk0g0RVvDCuoQAocFU0tGl0TxqAooDXmRRYZoHXhgrxjSA5I98IGVvcVfT1JaAwJfi4WuRdXsHOvvpsmVprWu6BtiR2jK26OJ2K0odEm5vgtD3KEaTXROXm3RisPSq9XAgzHyAxGwNejqRogGcW/Ws46oIn6bcEClWAzNQXcs3QAv2hOYWrXYpcXmMjoMvJuci/4dr1nKWRuj6MHgyWoBbpXqpnPb+Cm+VAXmpv5kyd0gEFBwMreRB8p6iGeyVnTdxg==";
-    private String iv="scKoG/sNtBIhVA3iORwNFg==";
+    private String code = "023Ajsdj0fJ5jp1sWBcj0ByDdj0Ajsdg";
+    private String encrypteDate = "3XttvxNswuFowyx117Jep5FmWGzvVmes8jdi9skYjUa3cFNeq07eui24hISgOQKzF66WcvEi+hAORFQ67cI7NZ9qIwTaln6KzHjl6RkldE4SAfVKjHnhcm9kzJSTa2I/Svch4eEcgVKhXSjIg/7XVpqPx2rpExrnmHIPlVwqlc+09uArTv9aZBdg4Ma1+b/4fhhMa18lAgG/8tznuxRuRDgbOX/+6tLN0ZXbYz0ZWZ/SNtthueEVnEU7d2IDRrgJNaaO9LuMrzvQ1F03+/k2pcSG2N+TYcDdZXkHBCorsWc0Ug5Cec7ZlN39IwklIVAb7Yf3OB9LRvNkgimA10c9zwI6zLYlWdU8q/bq7wnLL3jMfevOAH7WX10Kb7v++eGfBNwkJ2jR1loSgZKkMhpRj11do48VjkmeK7MdJMlavTg/nFZlftxxOE+iLjKbymRK4RUyPmcGmJmC80bZeOdKrQ==";
+    private String iv = "/RmoQQMwXJ7uqBryQg0CnQ==";
     @Autowired
     protected WebApplicationContext wac;
+
     @Before()  //这个方法在每个方法执行之前都会执行一遍
     public void setup() {
         mvc = MockMvcBuilders.webAppContextSetup(wac).build();  //初始化MockMvc对象
@@ -44,15 +46,30 @@ public class UserControllerTest {
     public void addUser() throws Exception {
 
         UserRequest userRequest = new UserRequest();
-        userRequest.setCode(code);
-        userRequest.setEncryptedData(encrypteDate);
-        userRequest.setIv(iv);
+        userRequest.code = code;
+        userRequest.encryptedData = encrypteDate;
+        userRequest.iv = iv;
         String request = new Gson().toJson(userRequest);
 
         mvc.perform(MockMvcRequestBuilders.get("/user/add")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(request))
                 .andExpect(MockMvcResultMatchers.status().isOk()) //400错误请求
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+    }
+
+
+    @Test
+    public void bindPhone() throws Exception {
+        BindPhoneRequest bindPhoneRequest = new BindPhoneRequest();
+        bindPhoneRequest.id = 8;
+        bindPhoneRequest.phone = "15090824065";
+        String request = new Gson().toJson(bindPhoneRequest);
+        mvc.perform(MockMvcRequestBuilders.post("/user/bindPhone")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(request))
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
     }
