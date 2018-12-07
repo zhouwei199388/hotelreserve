@@ -1,9 +1,11 @@
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `phone` varchar(255) NOT NULL,
-  'openid'varchar(255) NOT NULL COMMENT '微信id',
-  'sessionKey' VARCHAR(255) NOT NULL COMMENT '微信key',
-  'level' LONG NOT NULL DEFAULT 0,
-  PRIMARY KEY (`user_id`)
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `openid` VARCHAR(255) NULL DEFAULT NULL,
+  `sessionkey` VARCHAR(255) NULL DEFAULT NULL,
+  `level` INT(11) NULL DEFAULT '0',
+  `phone` VARCHAR(50) NULL DEFAULT NULL,
+  `nickname` VARCHAR(50) NULL DEFAULT NULL,
+  `gender` INT(11) NULL DEFAULT NULL,
+  `avatarurl` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '用户表';

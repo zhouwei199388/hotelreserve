@@ -17,6 +17,20 @@ public class User {
 
     private String avatarurl;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", openid='" + openid + '\'' +
+                ", sessionkey='" + sessionkey + '\'' +
+                ", level=" + level +
+                ", phone='" + phone + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", gender=" + gender +
+                ", avatarurl='" + avatarurl + '\'' +
+                '}';
+    }
+
     public Integer getId() {
         return id;
     }
