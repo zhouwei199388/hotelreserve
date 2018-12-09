@@ -10,23 +10,20 @@ import com.hotelreserve.utils.LogUtils;
 import com.hotelreserve.utils.ResponseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by 15090 on 2018/12/2.
  */
-
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
     @Autowired
     private UserService mUserService;
 
+    @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public void addUser(HttpServletResponse response, @RequestBody UserRequest request) {
@@ -34,6 +31,7 @@ public class UserController {
         LogUtils.info(request.toString());
         ResponseUtils.renderJson(response, new Gson().toJson(user));
     }
+
 
     @RequestMapping(value = "/bindPhone", method = RequestMethod.POST)
     @ResponseBody

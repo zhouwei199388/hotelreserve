@@ -1,10 +1,7 @@
 server:
   port: 8080
 
-
 spring:
-    profiles:
-      active: ali
     datasource:
         name: mysql_test
         type: com.alibaba.druid.pool.DruidDataSource
@@ -16,7 +13,7 @@ spring:
           #基本属性
           url: jdbc:mysql://127.0.0.1:3306/hotel?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
           username: root
-          password: 199388
+          password: ZHOUwei199388
           #配置初始化大小/最小/最大
           initial-size: 1
           min-idle: 1

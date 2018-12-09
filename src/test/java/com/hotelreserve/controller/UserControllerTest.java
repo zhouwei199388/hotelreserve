@@ -34,6 +34,7 @@ public class UserControllerTest {
     private String code = "023Ajsdj0fJ5jp1sWBcj0ByDdj0Ajsdg";
     private String encrypteDate = "3XttvxNswuFowyx117Jep5FmWGzvVmes8jdi9skYjUa3cFNeq07eui24hISgOQKzF66WcvEi+hAORFQ67cI7NZ9qIwTaln6KzHjl6RkldE4SAfVKjHnhcm9kzJSTa2I/Svch4eEcgVKhXSjIg/7XVpqPx2rpExrnmHIPlVwqlc+09uArTv9aZBdg4Ma1+b/4fhhMa18lAgG/8tznuxRuRDgbOX/+6tLN0ZXbYz0ZWZ/SNtthueEVnEU7d2IDRrgJNaaO9LuMrzvQ1F03+/k2pcSG2N+TYcDdZXkHBCorsWc0Ug5Cec7ZlN39IwklIVAb7Yf3OB9LRvNkgimA10c9zwI6zLYlWdU8q/bq7wnLL3jMfevOAH7WX10Kb7v++eGfBNwkJ2jR1loSgZKkMhpRj11do48VjkmeK7MdJMlavTg/nFZlftxxOE+iLjKbymRK4RUyPmcGmJmC80bZeOdKrQ==";
     private String iv = "/RmoQQMwXJ7uqBryQg0CnQ==";
+    private String host = "http://101.132.195.191:8080";
     @Autowired
     protected WebApplicationContext wac;
 
@@ -51,7 +52,7 @@ public class UserControllerTest {
         userRequest.iv = iv;
         String request = new Gson().toJson(userRequest);
 
-        mvc.perform(MockMvcRequestBuilders.get("/user/add")
+        mvc.perform(MockMvcRequestBuilders.get(host+"/user/add")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(request))
                 .andExpect(MockMvcResultMatchers.status().isOk()) //400错误请求
