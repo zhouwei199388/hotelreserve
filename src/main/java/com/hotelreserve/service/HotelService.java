@@ -1,10 +1,12 @@
 package com.hotelreserve.service;
 
+import com.hotelreserve.http.ConnectionMessage;
 import com.hotelreserve.http.model.ResponseHeader;
 import com.hotelreserve.http.response.HotelInfosResponse;
 import com.hotelreserve.mapper.HotelInfoMapper;
 import com.hotelreserve.model.HotelInfo;
 import com.hotelreserve.model.HotelInfoExample;
+import com.hotelreserve.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +37,6 @@ public class HotelService {
         return response;
     }
 
-
     /**
      * 添加一个酒店
      * @param hotelInfo
@@ -45,11 +46,10 @@ public class HotelService {
         ResponseHeader header = new ResponseHeader();
        int type =  mHotelInfoMapper.insertSelective(hotelInfo);
        if(type!=0){
-           header.setSuccess();
+           header.setAddSuccess();
        }
        return header;
     }
-
 
     /**
      * 根据id修改一个酒店
@@ -58,9 +58,27 @@ public class HotelService {
      */
     public ResponseHeader updateHotelInfo(HotelInfo hotelInfo){
         ResponseHeader header = new ResponseHeader();
-        int type =  mHotelInfoMapper.updateByPrimaryKey(hotelInfo);
+        int type =  mHotelInfoMapper.updateByPrimaryKeySelective(hotelInfo);
         if(type!=0){
-            header.setSuccess();
+            header.resultText = ConnectionMessage.UPDATE_SUCCESS_TEXT;
+        }
+        return header;
+    }
+
+    /**
+     * 删除一个酒店
+     * @param id
+     * @return
+     */
+    public ResponseHeader deleteHotelInfo(int id){
+        ResponseHeader header = new ResponseHeader();
+        if(mHotelInfoMapper.selectByPrimaryKey(id)==null){
+         header.resultText = ConnectionMessage.HOTEL_IS_NULL;
+         return header;
+        }
+        int type  = mHotelInfoMapper.deleteByPrimaryKey(id);
+        if(type!=0){
+           header.resultText = ConnectionMessage.DELETE_SUCCESS_TEXT;
         }
         return header;
     }

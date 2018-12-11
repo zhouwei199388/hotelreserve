@@ -1,10 +1,8 @@
-server:
-  port: 8080
 
 
 spring:
     profiles:
-      active: ali
+      active: dev
     datasource:
         name: mysql_test
         type: com.alibaba.druid.pool.DruidDataSource
