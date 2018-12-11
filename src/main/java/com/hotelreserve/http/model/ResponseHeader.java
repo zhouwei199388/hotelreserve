@@ -47,6 +47,13 @@ public class ResponseHeader {
     /**
      * 简单请求成功
      */
+    public void setAddSuccess() {
+        this.resultCode = ConnectionMessage.SUCCESS_CODE;
+        this.resultText = ConnectionMessage.ADD_SUCCESS_TEXT;
+    }
+    /**
+     * 简单请求成功
+     */
     public void setSuccessNoDate() {
         this.resultCode = ConnectionMessage.SUCCESS_CODE;
         this.resultText = ConnectionMessage.SUCCESS_TEXT;
