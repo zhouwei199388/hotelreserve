@@ -13,18 +13,6 @@ public class HotelInfo {
 
     private String hoteltext;
 
-    @Override
-    public String toString() {
-        return "HotelInfo{" +
-                "id=" + id +
-                ", hotelname='" + hotelname + '\'' +
-                ", hoteladdress='" + hoteladdress + '\'' +
-                ", phone='" + phone + '\'' +
-                ", facility='" + facility + '\'' +
-                ", hoteltext='" + hoteltext + '\'' +
-                '}';
-    }
-
     public Integer getId() {
         return id;
     }

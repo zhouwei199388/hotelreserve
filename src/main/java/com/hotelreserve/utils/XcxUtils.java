@@ -16,20 +16,15 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.alibaba.druid.support.json.JSONUtils;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.hotelreserve.http.model.WxModel;
 import com.hotelreserve.http.model.WxUserInfo;
-import com.hotelreserve.model.User;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.encoders.Base64;
-import sun.rmi.runtime.Log;
 
 
 public class XcxUtils {
 
-//    private static Logger log = Logger.getLogger(XcxUtils.class);
 
     /**
      * 获取微信小程序 session_key 和 openid
