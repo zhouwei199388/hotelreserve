@@ -1,6 +1,7 @@
 package com.hotelreserve.controller;
 
 import com.google.gson.Gson;
+import com.hotelreserve.http.model.ResponseHeader;
 import com.hotelreserve.http.response.AdminResponse;
 import com.hotelreserve.model.Admin;
 import com.hotelreserve.service.AdminService;
@@ -26,7 +27,14 @@ public class AdminController {
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public void login(HttpServletResponse response,@RequestBody Admin admin) {
-        AdminResponse adminResponse = mAdminService.selectAdmin(admin);
+        AdminResponse adminResponse = mAdminService.loginAdmin(admin);
         ResponseUtils.renderJson(response,new Gson().toJson(adminResponse));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/add",method = RequestMethod.POST)
+    public void addAdmin(HttpServletResponse response,@RequestBody Admin admin){
+        ResponseHeader header =mAdminService.addAdmin(admin);
+        ResponseUtils.renderJson(response,new Gson().toJson(header));
     }
 }

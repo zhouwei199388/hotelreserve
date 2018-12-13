@@ -60,7 +60,8 @@ public class HotelService {
         ResponseHeader header = new ResponseHeader();
         int type =  mHotelInfoMapper.updateByPrimaryKeySelective(hotelInfo);
         if(type!=0){
-            header.resultText = ConnectionMessage.UPDATE_SUCCESS_TEXT;
+            header.code = ConnectionMessage.SUCCESS_CODE;
+            header.msg = ConnectionMessage.UPDATE_SUCCESS_TEXT;
         }
         return header;
     }
@@ -73,12 +74,13 @@ public class HotelService {
     public ResponseHeader deleteHotelInfo(int id){
         ResponseHeader header = new ResponseHeader();
         if(mHotelInfoMapper.selectByPrimaryKey(id)==null){
-         header.resultText = ConnectionMessage.HOTEL_IS_NULL;
+         header.msg = ConnectionMessage.HOTEL_IS_NULL;
          return header;
         }
         int type  = mHotelInfoMapper.deleteByPrimaryKey(id);
         if(type!=0){
-           header.resultText = ConnectionMessage.DELETE_SUCCESS_TEXT;
+            header.code = ConnectionMessage.SUCCESS_CODE;
+           header.msg = ConnectionMessage.DELETE_SUCCESS_TEXT;
         }
         return header;
     }

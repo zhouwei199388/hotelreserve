@@ -17,7 +17,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         LogUtils.info("addCorsMappings");
         registry.addMapping("/**")//设置允许跨域的路径
                 .allowedOrigins("*")//设置允许跨域请求的域名
-                .allowCredentials(true)//是否允许证书 不再默认开启
+                .allowCredentials(false)//是否允许证书 不再默认开启
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")//设置允许的方法
                 .maxAge(3600);//跨域允许时间
     }

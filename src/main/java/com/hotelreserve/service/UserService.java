@@ -1,6 +1,5 @@
 package com.hotelreserve.service;
 
-import com.google.gson.JsonObject;
 import com.hotelreserve.http.ConnectionMessage;
 import com.hotelreserve.http.model.ResponseHeader;
 import com.hotelreserve.http.model.WxModel;
@@ -117,7 +116,8 @@ public class UserService {
         user.setPhone(request.phone);
         int result = mUserMapper.updateByPrimaryKeySelective(user);
         if(result != 0){
-            responseHeader.resultText= ConnectionMessage.BIND_SUCCESS_TEXT;
+            responseHeader.code = ConnectionMessage.SUCCESS_CODE;
+            responseHeader.msg= ConnectionMessage.BIND_SUCCESS_TEXT;
         }
         return responseHeader;
     }

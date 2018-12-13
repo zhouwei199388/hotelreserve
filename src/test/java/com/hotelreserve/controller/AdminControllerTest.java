@@ -44,7 +44,7 @@ public class AdminControllerTest {
     @Test
     public void login() throws Exception {
         Admin admin = new Admin();
-        admin.setUser("zouwe");
+        admin.setUser("admin");
         admin.setPassword("123456");
         String request = new Gson().toJson(admin);
         mvc.perform(MockMvcRequestBuilders.post("/admin/login")
