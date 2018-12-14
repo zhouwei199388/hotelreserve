@@ -123,4 +123,24 @@ public class UserService {
     }
 
 
+    /**
+     * 获取所有用户
+     * @return
+     */
+    public UserResponse getUserList(){
+        UserResponse response = new UserResponse();
+        ResponseHeader header = new ResponseHeader();
+        List<User> users = mUserMapper.selectByExample(new UserExample());
+        if(users.size()==0){
+            header.msg = ConnectionMessage.DATA_IS_NULL;
+        }else{
+            header.code=ConnectionMessage.SUCCESS_CODE;
+            header.msg = ConnectionMessage.SUCCESS_TEXT;
+            response.users = users;
+        }
+        response.header = header;
+        return response;
+    }
+
+
 }

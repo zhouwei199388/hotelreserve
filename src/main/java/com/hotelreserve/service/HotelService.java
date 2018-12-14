@@ -1,5 +1,6 @@
 package com.hotelreserve.service;
 
+import com.google.gson.Gson;
 import com.hotelreserve.http.ConnectionMessage;
 import com.hotelreserve.http.model.ResponseHeader;
 import com.hotelreserve.http.response.HotelInfosResponse;
@@ -30,10 +31,11 @@ public class HotelService {
         if (hotelInfos.size() == 0) {
             header.setSuccessNoDate();
         } else {
+            response.hotelInfos = hotelInfos;
             header.setSuccess();
         }
+        LogUtils.info(new Gson().toJson(response));
         response.header=header;
-        response.hotelInfos = hotelInfos;
         return response;
     }
 
@@ -44,7 +46,7 @@ public class HotelService {
      */
     public ResponseHeader insertHotelInfo(HotelInfo hotelInfo){
         ResponseHeader header = new ResponseHeader();
-       int type =  mHotelInfoMapper.insertSelective(hotelInfo);
+       int type =  mHotelInfoMapper.insert(hotelInfo);
        if(type!=0){
            header.setAddSuccess();
        }

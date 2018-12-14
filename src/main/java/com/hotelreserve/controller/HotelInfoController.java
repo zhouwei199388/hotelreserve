@@ -31,6 +31,7 @@ public class HotelInfoController {
     @ResponseBody
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public void addHotelInfo(HttpServletResponse response, @RequestBody HotelInfo hotelInfo){
+        LogUtils.info(new Gson().toJson(hotelInfo));
         ResponseHeader responseHeader = mHotelService.insertHotelInfo(hotelInfo);
         ResponseUtils.renderJson(response,new Gson().toJson(responseHeader));
     }

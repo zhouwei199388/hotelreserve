@@ -45,6 +45,7 @@ public class HotelControllerTest {
         HotelInfo hotelInfo = new HotelInfo();
         hotelInfo.setHotelname("四季星酒店");
         hotelInfo.setHoteladdress("深圳市龙岗区布吉大道");
+        hotelInfo.setPhone("0217-88888888");
         hotelInfo.setFacility("停车场 游泳池 健身房 wifi");
         hotelInfo.setHoteltext("四季星酒店是一家特色经典酒店");
         String request = new Gson().toJson(hotelInfo);

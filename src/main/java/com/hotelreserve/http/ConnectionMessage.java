@@ -29,7 +29,7 @@ public class ConnectionMessage {
     public static final String LOGIN_SUCCESS_TEXT = "登录成功";
     public static final String LOGIN_FAIL_TEXT = "账号或密码错误";
     public static final String BIND_SUCCESS_TEXT = "绑定手机号成功";
-    public static final String REGISTER_SUCCESS_TEXT = "注册成功";
+    public static final String DATA_IS_NULL = "数据库暂无数据";
     public static final String USER_EXISTS = "用户已存在";
 
 }

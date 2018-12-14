@@ -40,6 +40,12 @@ public class UserController {
         ResponseHeader header = mUserService.bindPhone(request);
         ResponseUtils.renderJson(response, new Gson().toJson(header));
     }
+    @ResponseBody
+    @RequestMapping(value = "/getAllUser" ,method = RequestMethod.GET)
+    public void getAllUser(HttpServletResponse response){
+        UserResponse userResponse = mUserService.getUserList();
+        ResponseUtils.renderJson(response,new Gson().toJson(userResponse));
+    }
 
 
 }
