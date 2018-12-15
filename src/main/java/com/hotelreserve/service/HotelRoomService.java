@@ -42,7 +42,7 @@ public class HotelRoomService {
      * @param room
      * @return
      */
-    public ResponseHeader updataRoom(HotelRoom room){
+    public ResponseHeader updateRoom(HotelRoom room){
         ResponseHeader header = new ResponseHeader();
         LogUtils.info(new Gson().toJson(room));
         int type = mRoomMapper.updateByPrimaryKeySelective(room);

@@ -45,7 +45,7 @@ public class HotelRoomController {
     @ResponseBody
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     public void updateHotelInfo(HttpServletResponse response,@RequestBody HotelRoom room){
-        ResponseHeader header = mRoomService.updataRoom(room);
+        ResponseHeader header = mRoomService.updateRoom(room);
         ResponseUtils.renderJson(response,new Gson().toJson(header));
     }
     @ResponseBody
