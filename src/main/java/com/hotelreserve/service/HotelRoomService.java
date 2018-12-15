@@ -1,11 +1,13 @@
 package com.hotelreserve.service;
 
+import com.google.gson.Gson;
 import com.hotelreserve.http.ConnectionMessage;
 import com.hotelreserve.http.model.ResponseHeader;
 import com.hotelreserve.http.response.RoomResponse;
 import com.hotelreserve.mapper.HotelRoomMapper;
 import com.hotelreserve.model.HotelRoom;
 import com.hotelreserve.model.HotelRoomExample;
+import com.hotelreserve.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,10 +44,27 @@ public class HotelRoomService {
      */
     public ResponseHeader updataRoom(HotelRoom room){
         ResponseHeader header = new ResponseHeader();
+        LogUtils.info(new Gson().toJson(room));
         int type = mRoomMapper.updateByPrimaryKeySelective(room);
         if (type!=0){
             header.code= ConnectionMessage.SUCCESS_CODE;
             header.msg = ConnectionMessage.UPDATE_SUCCESS_TEXT;
+        }
+        return header;
+    }
+
+
+    /**
+     * 删除指定房间信息
+     * @param roomId
+     * @return
+     */
+    public ResponseHeader deleteRoom(int roomId){
+        ResponseHeader header = new ResponseHeader();
+        int type = mRoomMapper.deleteByPrimaryKey(roomId);
+        if (type!=0){
+            header.code= ConnectionMessage.SUCCESS_CODE;
+            header.msg = ConnectionMessage.DELETE_SUCCESS_TEXT;
         }
         return header;
     }
