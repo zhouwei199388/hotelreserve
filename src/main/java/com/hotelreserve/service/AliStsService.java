@@ -1,5 +1,10 @@
 package com.hotelreserve.service;
 
+import com.aliyun.oss.OSSClient;
+import com.hotelreserve.http.ConnectionMessage;
+import com.hotelreserve.http.model.ResponseHeader;
+import com.hotelreserve.http.response.STSResponse;
+import com.hotelreserve.utils.LogUtils;
 import org.springframework.stereotype.Service;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.exceptions.ClientException;
@@ -8,18 +13,40 @@ import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import com.aliyuncs.sts.model.v20150401.AssumeRoleRequest;
 import com.aliyuncs.sts.model.v20150401.AssumeRoleResponse;
+
+import java.awt.*;
+
 /**
  * Created by 15090 on 2018/12/16.
  */
 @Service
-public class AliStsService  {
+public class AliStsService {
 
-    public static void main(String[] args){
-//        getAliSTS();
+    /**
+     * 判断oss文件夹是否存在
+     * @return
+     */
+    public  boolean isBucketExit() {
+        String endpoint = "http://oss-cn-shanghai.aliyuncs.com";
+        String accessKeyId = "LTAIHKVYj6xAQ5Ib";
+        String accessKeySecret = "OxaV0XyoL7lNuLEvLwVvnvCLCFwwRb";
+        // 创建OSSClient实例。
+        OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
+        // 判断文件是否存在。
+        boolean found = ossClient.doesObjectExist("hotelimage", "hotel/");
+        // 关闭OSSClient。
+        ossClient.shutdown();
+        return found;
     }
 
-
-    public  void getAliSTS(){
+    /**
+     * 获取STS授权
+     * @param fileName
+     * @return
+     */
+    public STSResponse getAliSTS(String fileName) {
+        STSResponse stsResponse = new STSResponse();
+        ResponseHeader header = new ResponseHeader();
         String endpoint = "sts.cn-shanghai.aliyuncs.com";
         String accessKeyId = "LTAIHKVYj6xAQ5Ib";
         String accessKeySecret = "OxaV0XyoL7lNuLEvLwVvnvCLCFwwRb";
@@ -39,16 +66,25 @@ public class AliStsService  {
             request.setRoleSessionName(roleSessionName);
             request.setPolicy(policy); // Optional
             final AssumeRoleResponse response = client.getAcsResponse(request);
-            System.out.println("Expiration: " + response.getCredentials().getExpiration());
-            System.out.println("Access Key Id: " + response.getCredentials().getAccessKeyId());
-            System.out.println("Access Key Secret: " + response.getCredentials().getAccessKeySecret());
-            System.out.println("Security Token: " + response.getCredentials().getSecurityToken());
-            System.out.println("RequestId: " + response.getRequestId());
+            stsResponse.accessKeyId = response.getCredentials().getAccessKeyId();
+            stsResponse.accessKeySecret = response.getCredentials().getAccessKeySecret();
+            stsResponse.securityToken = response.getCredentials().getSecurityToken();
+            if(isBucketExit()){
+                stsResponse.bukerName = fileName;
+                header.code = ConnectionMessage.SUCCESS_CODE;
+                header.msg = ConnectionMessage.SUCCESS_TEXT;
+            }else{
+                stsResponse.header.msg = ConnectionMessage.BUCKET_FILE_ISEXIT;
+            }
+//            System.out.println("Expiration: " + response.getCredentials().getExpiration());
+//            System.out.println("Access Key Id: " + response.getCredentials().getAccessKeyId());
+//            System.out.println("Access Key Secret: " + response.getCredentials().getAccessKeySecret());
+//            System.out.println("Security Token: " + response.getCredentials().getSecurityToken());
+//            System.out.println("RequestId: " + response.getRequestId());
         } catch (ClientException e) {
-            System.out.println("Failed：");
-            System.out.println("Error code: " + e.getErrCode());
-            System.out.println("Error message: " + e.getErrMsg());
-            System.out.println("RequestId: " + e.getRequestId());
+            LogUtils.info(e.toString());
         }
+        stsResponse.header = header;
+        return stsResponse;
     }
 }

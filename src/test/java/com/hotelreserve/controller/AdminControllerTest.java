@@ -55,6 +55,16 @@ public class AdminControllerTest {
                 .andReturn();
     }
 
+
+    @Test
+    public void aliOss() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.post("/OSS/stsAuthorization")
+                .param("keyName","hotel/"))
+                .andExpect(MockMvcResultMatchers.status().isOk()) //400错误请求
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+    }
+
     @Test
     public void getUser() throws Exception {
 
