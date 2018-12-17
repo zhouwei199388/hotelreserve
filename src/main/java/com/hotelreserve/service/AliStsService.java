@@ -14,14 +14,12 @@ import com.aliyuncs.sts.model.v20150401.AssumeRoleResponse;
 @Service
 public class AliStsService  {
 
-
-
     public static void main(String[] args){
-        getAliSTS();
+//        getAliSTS();
     }
 
 
-    public static void getAliSTS(){
+    public  void getAliSTS(){
         String endpoint = "sts.cn-shanghai.aliyuncs.com";
         String accessKeyId = "LTAIHKVYj6xAQ5Ib";
         String accessKeySecret = "OxaV0XyoL7lNuLEvLwVvnvCLCFwwRb";
