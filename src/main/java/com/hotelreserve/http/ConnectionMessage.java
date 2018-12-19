@@ -24,7 +24,9 @@ public class ConnectionMessage {
     public static final String ADD_SUCCESS_TEXT = "添加成功";
     public static final String ADD_FAIL_TEXT = "添加失败";
     public static final String HOTEL_IS_NULL = "酒店不存在";
+    public static final String HOTELROOM_IS_NULL = "房间不存在";
     public static final String DELETE_SUCCESS_TEXT = "删除成功";
+    public static final String DELETE_FAIL_TEXT = "删除失败";
     public static final String UPDATE_SUCCESS_TEXT = "修改成功";
     public static final String LOGIN_SUCCESS_TEXT = "登录成功";
     public static final String LOGIN_FAIL_TEXT = "账号或密码错误";

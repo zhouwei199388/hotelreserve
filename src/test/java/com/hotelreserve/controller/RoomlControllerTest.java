@@ -1,8 +1,11 @@
 package com.hotelreserve.controller;
 
 import com.google.gson.Gson;
+import com.hotelreserve.http.model.RoomModel;
+import com.hotelreserve.http.request.RoomRequest;
 import com.hotelreserve.model.HotelInfo;
 import com.hotelreserve.model.HotelRoom;
+import com.hotelreserve.model.RoomImage;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +21,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -39,18 +45,35 @@ public class RoomlControllerTest {
         mvc = MockMvcBuilders.webAppContextSetup(wac).build();  //初始化MockMvc对象
     }
 
+    public RoomRequest getRoom(int id){
+        RoomRequest request = new RoomRequest();
+        RoomModel model = new RoomModel();
+        if(id!=0){
+            model.id = id;
+        }
+        model.hotelid=1;
+        model.name="标间";
+        model.price = 258.00;
+        model.window = 1;
+        List<RoomImage> roomImages = new ArrayList<>();
+        for (int i=0;i<3;i++){
+            RoomImage roomImage = new RoomImage();
+            roomImage.setRoomid(1);
+            roomImage.setName("test");
+            roomImage.setImageurl("https://hotelimage.oss-cn-shanghai.aliyuncs.com/hotel/9258356017_1215247113.400x400.jpg");
+            roomImages.add(roomImage);
+        }
+        model.roomImages = roomImages;
+        request.room = model;
+        return request;
+    }
     @Test
     public void addRoom() throws Exception {
-        HotelRoom room = new HotelRoom();
-        room.setHotelid(1);
-        room.setName("标间");
-        room.setPrice(258.00);
-        room.setWindow(1);
-        String request = new Gson().toJson(room);
-
+        RoomRequest request = getRoom(0);
+        String requestJson = new Gson().toJson(request);
         mvc.perform(MockMvcRequestBuilders.post("/room/add")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(request))
+                .content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk()) //400错误请求
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
@@ -58,16 +81,11 @@ public class RoomlControllerTest {
 
     @Test
     public void updateRoom() throws Exception {
-        HotelRoom room = new HotelRoom();
-        room.setId(1);
-        room.setHotelid(1);
-        room.setName("大床房");
-        room.setPrice(288.00);
-        room.setWindow(1);
-        String request = new Gson().toJson(room);
+        RoomRequest request = getRoom(10);
+        String requestJson = new Gson().toJson(request);
         mvc.perform(MockMvcRequestBuilders.post("/room/update")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(request))
+                .content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk()) //400错误请求
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
@@ -76,7 +94,7 @@ public class RoomlControllerTest {
     @Test
     public void getRooms() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/room/getAllRoom")
-        .param("hotelId","1"))
+        .param("hotelId","10"))
                 .andExpect(MockMvcResultMatchers.status().isOk()) //400错误请求
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
@@ -86,7 +104,7 @@ public class RoomlControllerTest {
     public void deleteRoom() throws Exception {
         mvc.perform(MockMvcRequestBuilders.post("/room/delete")
                 .contentType(MediaType.ALL)
-                .param("roomId", "1"))
+                .param("roomId", "10"))
                 .andExpect(MockMvcResultMatchers.status().isOk()) //400错误请求
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();

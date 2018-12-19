@@ -47,6 +47,7 @@ public class HotelService {
     public ResponseHeader insertHotelInfo(HotelInfo hotelInfo){
         ResponseHeader header = new ResponseHeader();
        int type =  mHotelInfoMapper.insert(hotelInfo);
+       LogUtils.info(type+"");
        if(type!=0){
            header.setAddSuccess();
        }
