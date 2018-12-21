@@ -145,8 +145,7 @@ public class HotelRoomService {
             List<RoomModel> roomModels = new ArrayList<>();
             for(HotelRoom room :rooms){
                 RoomModel roomModel = new RoomModel();
-                List<RoomImage> roomImages = mRoomImageMapper.selectByExample(new RoomImageExample());
-                roomModel.roomImages = roomImages;
+                roomModel.roomImages = mRoomImageMapper.selectByExample(new RoomImageExample());
                 roomModel.copyFromHotelRoom(room);
                 roomModels.add(roomModel);
             }
