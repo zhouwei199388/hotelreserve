@@ -25,7 +25,7 @@ public class UserController {
 
     @CrossOrigin
     @ResponseBody
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public void addUser(HttpServletResponse response, @RequestBody UserRequest request) {
         UserResponse user = mUserService.addUser(request);
         LogUtils.info(request.toString());

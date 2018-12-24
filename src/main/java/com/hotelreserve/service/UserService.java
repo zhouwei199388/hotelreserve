@@ -58,6 +58,7 @@ public class UserService {
                 user = users.get(0);
                 user.setOpenid(null);
                 user.setSessionkey(null);
+                header.setSuccess();
             } else {
                 user = getUserInfo(request.encryptedData, wxModel.session_key, request.iv);
                 if(user==null){
@@ -67,12 +68,14 @@ public class UserService {
                    if (type!=0){
                        user.setOpenid(null);
                        user.setSessionkey(null);
+                       header.setSuccess();
                    }else{
                        user = null;
                        header.setServerError();
                    }
                 }
             }
+           userResponse.header = header;
             userResponse.user = user;
         } else {
             header.setCodeError();
