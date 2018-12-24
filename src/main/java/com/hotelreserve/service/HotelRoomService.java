@@ -33,13 +33,12 @@ public class HotelRoomService {
     private RoomImageMapper mRoomImageMapper;
     /**
      * 添加房间信息
-     * @param request
+     * @param roomModel
      * @return
      */
     @Transactional
-    public ResponseHeader addRoom(RoomRequest request){
+    public ResponseHeader addRoom(RoomModel roomModel){
         ResponseHeader header = new ResponseHeader();
-        RoomModel roomModel = request.room;
         HotelRoom room = roomModel.copyToHotelRoom();
         int id = mRoomMapper.insert(room);
         LogUtils.info(id+"");
@@ -62,14 +61,13 @@ public class HotelRoomService {
 
     /**
      * 修改指定房间信息
-     * @param request
+     * @param roomModel
      * @return
      */
     @Transactional
-    public ResponseHeader updateRoom(RoomRequest request){
+    public ResponseHeader updateRoom(RoomModel roomModel){
         ResponseHeader header = new ResponseHeader();
-        LogUtils.info(new Gson().toJson(request));
-        RoomModel roomModel = request.room;
+        LogUtils.info(new Gson().toJson(roomModel));
         int type = mRoomMapper.updateByPrimaryKeySelective(roomModel.copyToHotelRoom());
         if (type!=0){
             RoomImageExample example = new RoomImageExample();
@@ -145,7 +143,10 @@ public class HotelRoomService {
             List<RoomModel> roomModels = new ArrayList<>();
             for(HotelRoom room :rooms){
                 RoomModel roomModel = new RoomModel();
-                roomModel.roomImages = mRoomImageMapper.selectByExample(new RoomImageExample());
+                RoomImageExample roomImageExample = new RoomImageExample();
+                RoomImageExample.Criteria roomCriteria = roomImageExample.createCriteria();
+                roomCriteria.andRoomidEqualTo(room.getId());
+                roomModel.roomImages = mRoomImageMapper.selectByExample(roomImageExample);
                 roomModel.copyFromHotelRoom(room);
                 roomModels.add(roomModel);
             }

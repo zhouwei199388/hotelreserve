@@ -2,6 +2,7 @@ package com.hotelreserve.controller;
 
 import com.google.gson.Gson;
 import com.hotelreserve.http.model.ResponseHeader;
+import com.hotelreserve.http.model.RoomModel;
 import com.hotelreserve.http.request.RoomRequest;
 import com.hotelreserve.http.response.HotelInfosResponse;
 import com.hotelreserve.http.response.RoomResponse;
@@ -31,27 +32,27 @@ public class HotelRoomController {
 
     @ResponseBody
     @RequestMapping(value = "/add" ,method = RequestMethod.POST)
-    public void addRoom(HttpServletResponse response, @RequestBody RoomRequest request){
-        ResponseHeader header = mRoomService.addRoom(request);
+    public void addRoom(HttpServletResponse response, @RequestBody RoomModel roomModel){
+        ResponseHeader header = mRoomService.addRoom(roomModel);
         ResponseUtils.renderJson(response,new Gson().toJson(header
         ));
     }
     @ResponseBody
     @RequestMapping(value = "/getAllRoom", method = RequestMethod.GET)
-    public void getHotelInfoList(HttpServletResponse response,int hotelId) {
+    public void getAllRoom(HttpServletResponse response,int hotelId) {
         RoomResponse roomResponse = mRoomService.getRooms(hotelId);
         ResponseUtils.renderJson(response,new Gson().toJson(roomResponse));
     }
 
     @ResponseBody
     @RequestMapping(value = "/update",method = RequestMethod.POST)
-    public void updateHotelInfo(HttpServletResponse response,@RequestBody RoomRequest request){
-        ResponseHeader header = mRoomService.updateRoom(request);
+    public void updateRoom(HttpServletResponse response,@RequestBody RoomModel roomModel){
+        ResponseHeader header = mRoomService.updateRoom(roomModel);
         ResponseUtils.renderJson(response,new Gson().toJson(header));
     }
     @ResponseBody
     @RequestMapping(value = "/delete",method = RequestMethod.POST)
-    public void updateHotelInfo(HttpServletResponse response,int roomId){
+    public void deleteRoom(HttpServletResponse response,int roomId){
         ResponseHeader header = mRoomService.deleteRoom(roomId);
         ResponseUtils.renderJson(response,new Gson().toJson(header));
     }

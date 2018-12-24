@@ -234,73 +234,73 @@ public class RoomImageExample {
             return (Criteria) this;
         }
 
-        public Criteria andImageurlIsNull() {
-            addCriterion("imageurl is null");
+        public Criteria andUrlIsNull() {
+            addCriterion("url is null");
             return (Criteria) this;
         }
 
-        public Criteria andImageurlIsNotNull() {
-            addCriterion("imageurl is not null");
+        public Criteria andUrlIsNotNull() {
+            addCriterion("url is not null");
             return (Criteria) this;
         }
 
-        public Criteria andImageurlEqualTo(String value) {
-            addCriterion("imageurl =", value, "imageurl");
+        public Criteria andUrlEqualTo(String value) {
+            addCriterion("url =", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andImageurlNotEqualTo(String value) {
-            addCriterion("imageurl <>", value, "imageurl");
+        public Criteria andUrlNotEqualTo(String value) {
+            addCriterion("url <>", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andImageurlGreaterThan(String value) {
-            addCriterion("imageurl >", value, "imageurl");
+        public Criteria andUrlGreaterThan(String value) {
+            addCriterion("url >", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andImageurlGreaterThanOrEqualTo(String value) {
-            addCriterion("imageurl >=", value, "imageurl");
+        public Criteria andUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("url >=", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andImageurlLessThan(String value) {
-            addCriterion("imageurl <", value, "imageurl");
+        public Criteria andUrlLessThan(String value) {
+            addCriterion("url <", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andImageurlLessThanOrEqualTo(String value) {
-            addCriterion("imageurl <=", value, "imageurl");
+        public Criteria andUrlLessThanOrEqualTo(String value) {
+            addCriterion("url <=", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andImageurlLike(String value) {
-            addCriterion("imageurl like", value, "imageurl");
+        public Criteria andUrlLike(String value) {
+            addCriterion("url like", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andImageurlNotLike(String value) {
-            addCriterion("imageurl not like", value, "imageurl");
+        public Criteria andUrlNotLike(String value) {
+            addCriterion("url not like", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andImageurlIn(List<String> values) {
-            addCriterion("imageurl in", values, "imageurl");
+        public Criteria andUrlIn(List<String> values) {
+            addCriterion("url in", values, "url");
             return (Criteria) this;
         }
 
-        public Criteria andImageurlNotIn(List<String> values) {
-            addCriterion("imageurl not in", values, "imageurl");
+        public Criteria andUrlNotIn(List<String> values) {
+            addCriterion("url not in", values, "url");
             return (Criteria) this;
         }
 
-        public Criteria andImageurlBetween(String value1, String value2) {
-            addCriterion("imageurl between", value1, value2, "imageurl");
+        public Criteria andUrlBetween(String value1, String value2) {
+            addCriterion("url between", value1, value2, "url");
             return (Criteria) this;
         }
 
-        public Criteria andImageurlNotBetween(String value1, String value2) {
-            addCriterion("imageurl not between", value1, value2, "imageurl");
+        public Criteria andUrlNotBetween(String value1, String value2) {
+            addCriterion("url not between", value1, value2, "url");
             return (Criteria) this;
         }
     }

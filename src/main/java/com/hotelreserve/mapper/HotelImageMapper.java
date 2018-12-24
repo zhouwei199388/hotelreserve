@@ -28,10 +28,10 @@ public interface HotelImageMapper {
     int deleteByPrimaryKey(Integer id);
 
     @Insert({
-        "insert into hotelimage (hotelId, imageUrl, ",
-        "imageName)",
-        "values (#{hotelid,jdbcType=INTEGER}, #{imageurl,jdbcType=VARCHAR}, ",
-        "#{imagename,jdbcType=VARCHAR})"
+        "insert into hotelimage (hotelId, url, ",
+        "name)",
+        "values (#{hotelid,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, ",
+        "#{name,jdbcType=VARCHAR})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
     int insert(HotelImage record);
@@ -44,22 +44,22 @@ public interface HotelImageMapper {
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="hotelId", property="hotelid", jdbcType=JdbcType.INTEGER),
-        @Result(column="imageUrl", property="imageurl", jdbcType=JdbcType.VARCHAR),
-        @Result(column="imageName", property="imagename", jdbcType=JdbcType.VARCHAR)
+        @Result(column="url", property="url", jdbcType=JdbcType.VARCHAR),
+        @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR)
     })
     List<HotelImage> selectByExample(HotelImageExample example);
 
     @Select({
         "select",
-        "id, hotelId, imageUrl, imageName",
+        "id, hotelId, url, name",
         "from hotelimage",
         "where id = #{id,jdbcType=INTEGER}"
     })
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="hotelId", property="hotelid", jdbcType=JdbcType.INTEGER),
-        @Result(column="imageUrl", property="imageurl", jdbcType=JdbcType.VARCHAR),
-        @Result(column="imageName", property="imagename", jdbcType=JdbcType.VARCHAR)
+        @Result(column="url", property="url", jdbcType=JdbcType.VARCHAR),
+        @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR)
     })
     HotelImage selectByPrimaryKey(Integer id);
 
@@ -75,8 +75,8 @@ public interface HotelImageMapper {
     @Update({
         "update hotelimage",
         "set hotelId = #{hotelid,jdbcType=INTEGER},",
-          "imageUrl = #{imageurl,jdbcType=VARCHAR},",
-          "imageName = #{imagename,jdbcType=VARCHAR}",
+          "url = #{url,jdbcType=VARCHAR},",
+          "name = #{name,jdbcType=VARCHAR}",
         "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(HotelImage record);

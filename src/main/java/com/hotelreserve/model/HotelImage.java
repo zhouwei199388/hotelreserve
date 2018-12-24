@@ -5,9 +5,9 @@ public class HotelImage {
 
     private Integer hotelid;
 
-    private String imageurl;
+    private String url;
 
-    private String imagename;
+    private String name;
 
     public Integer getId() {
         return id;
@@ -25,19 +25,19 @@ public class HotelImage {
         this.hotelid = hotelid;
     }
 
-    public String getImageurl() {
-        return imageurl;
+    public String getUrl() {
+        return url;
     }
 
-    public void setImageurl(String imageurl) {
-        this.imageurl = imageurl == null ? null : imageurl.trim();
+    public void setUrl(String url) {
+        this.url = url == null ? null : url.trim();
     }
 
-    public String getImagename() {
-        return imagename;
+    public String getName() {
+        return name;
     }
 
-    public void setImagename(String imagename) {
-        this.imagename = imagename == null ? null : imagename.trim();
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 }

@@ -19,9 +19,9 @@ public interface RoomImageMapper {
 
     @Insert({
         "insert into roomimage (roomId, name, ",
-        "imageurl)",
+        "url)",
         "values (#{roomid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, ",
-        "#{imageurl,jdbcType=VARCHAR})"
+        "#{url,jdbcType=VARCHAR})"
     })
     int insert(RoomImage record);
 
@@ -32,7 +32,7 @@ public interface RoomImageMapper {
     @Results({
         @Result(column="roomId", property="roomid", jdbcType=JdbcType.INTEGER),
         @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
-        @Result(column="imageurl", property="imageurl", jdbcType=JdbcType.VARCHAR)
+        @Result(column="url", property="url", jdbcType=JdbcType.VARCHAR)
     })
     List<RoomImage> selectByExample(RoomImageExample example);
 

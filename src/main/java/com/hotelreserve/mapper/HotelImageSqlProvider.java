@@ -25,12 +25,12 @@ public class HotelImageSqlProvider {
             sql.VALUES("hotelId", "#{hotelid,jdbcType=INTEGER}");
         }
         
-        if (record.getImageurl() != null) {
-            sql.VALUES("imageUrl", "#{imageurl,jdbcType=VARCHAR}");
+        if (record.getUrl() != null) {
+            sql.VALUES("url", "#{url,jdbcType=VARCHAR}");
         }
         
-        if (record.getImagename() != null) {
-            sql.VALUES("imageName", "#{imagename,jdbcType=VARCHAR}");
+        if (record.getName() != null) {
+            sql.VALUES("name", "#{name,jdbcType=VARCHAR}");
         }
         
         return sql.toString();
@@ -44,8 +44,8 @@ public class HotelImageSqlProvider {
             sql.SELECT("id");
         }
         sql.SELECT("hotelId");
-        sql.SELECT("imageUrl");
-        sql.SELECT("imageName");
+        sql.SELECT("url");
+        sql.SELECT("name");
         sql.FROM("hotelimage");
         applyWhere(sql, example, false);
         
@@ -71,12 +71,12 @@ public class HotelImageSqlProvider {
             sql.SET("hotelId = #{record.hotelid,jdbcType=INTEGER}");
         }
         
-        if (record.getImageurl() != null) {
-            sql.SET("imageUrl = #{record.imageurl,jdbcType=VARCHAR}");
+        if (record.getUrl() != null) {
+            sql.SET("url = #{record.url,jdbcType=VARCHAR}");
         }
         
-        if (record.getImagename() != null) {
-            sql.SET("imageName = #{record.imagename,jdbcType=VARCHAR}");
+        if (record.getName() != null) {
+            sql.SET("name = #{record.name,jdbcType=VARCHAR}");
         }
         
         applyWhere(sql, example, true);
@@ -89,8 +89,8 @@ public class HotelImageSqlProvider {
         
         sql.SET("id = #{record.id,jdbcType=INTEGER}");
         sql.SET("hotelId = #{record.hotelid,jdbcType=INTEGER}");
-        sql.SET("imageUrl = #{record.imageurl,jdbcType=VARCHAR}");
-        sql.SET("imageName = #{record.imagename,jdbcType=VARCHAR}");
+        sql.SET("url = #{record.url,jdbcType=VARCHAR}");
+        sql.SET("name = #{record.name,jdbcType=VARCHAR}");
         
         HotelImageExample example = (HotelImageExample) parameter.get("example");
         applyWhere(sql, example, true);
@@ -105,12 +105,12 @@ public class HotelImageSqlProvider {
             sql.SET("hotelId = #{hotelid,jdbcType=INTEGER}");
         }
         
-        if (record.getImageurl() != null) {
-            sql.SET("imageUrl = #{imageurl,jdbcType=VARCHAR}");
+        if (record.getUrl() != null) {
+            sql.SET("url = #{url,jdbcType=VARCHAR}");
         }
         
-        if (record.getImagename() != null) {
-            sql.SET("imageName = #{imagename,jdbcType=VARCHAR}");
+        if (record.getName() != null) {
+            sql.SET("name = #{name,jdbcType=VARCHAR}");
         }
         
         sql.WHERE("id = #{id,jdbcType=INTEGER}");

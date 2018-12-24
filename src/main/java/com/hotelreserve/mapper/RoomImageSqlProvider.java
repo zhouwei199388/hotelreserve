@@ -29,8 +29,8 @@ public class RoomImageSqlProvider {
             sql.VALUES("name", "#{name,jdbcType=VARCHAR}");
         }
         
-        if (record.getImageurl() != null) {
-            sql.VALUES("imageurl", "#{imageurl,jdbcType=VARCHAR}");
+        if (record.getUrl() != null) {
+            sql.VALUES("url", "#{url,jdbcType=VARCHAR}");
         }
         
         return sql.toString();
@@ -44,7 +44,7 @@ public class RoomImageSqlProvider {
             sql.SELECT("roomId");
         }
         sql.SELECT("name");
-        sql.SELECT("imageurl");
+        sql.SELECT("url");
         sql.FROM("roomimage");
         applyWhere(sql, example, false);
         
@@ -70,8 +70,8 @@ public class RoomImageSqlProvider {
             sql.SET("name = #{record.name,jdbcType=VARCHAR}");
         }
         
-        if (record.getImageurl() != null) {
-            sql.SET("imageurl = #{record.imageurl,jdbcType=VARCHAR}");
+        if (record.getUrl() != null) {
+            sql.SET("url = #{record.url,jdbcType=VARCHAR}");
         }
         
         applyWhere(sql, example, true);
@@ -84,7 +84,7 @@ public class RoomImageSqlProvider {
         
         sql.SET("roomId = #{record.roomid,jdbcType=INTEGER}");
         sql.SET("name = #{record.name,jdbcType=VARCHAR}");
-        sql.SET("imageurl = #{record.imageurl,jdbcType=VARCHAR}");
+        sql.SET("url = #{record.url,jdbcType=VARCHAR}");
         
         RoomImageExample example = (RoomImageExample) parameter.get("example");
         applyWhere(sql, example, true);

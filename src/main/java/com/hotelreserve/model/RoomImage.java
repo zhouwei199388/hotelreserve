@@ -5,7 +5,7 @@ public class RoomImage {
 
     private String name;
 
-    private String imageurl;
+    private String url;
 
     public Integer getRoomid() {
         return roomid;
@@ -23,11 +23,11 @@ public class RoomImage {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getImageurl() {
-        return imageurl;
+    public String getUrl() {
+        return url;
     }
 
-    public void setImageurl(String imageurl) {
-        this.imageurl = imageurl == null ? null : imageurl.trim();
+    public void setUrl(String url) {
+        this.url = url == null ? null : url.trim();
     }
 }

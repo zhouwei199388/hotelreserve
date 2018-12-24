@@ -45,8 +45,7 @@ public class RoomlControllerTest {
         mvc = MockMvcBuilders.webAppContextSetup(wac).build();  //初始化MockMvc对象
     }
 
-    public RoomRequest getRoom(int id){
-        RoomRequest request = new RoomRequest();
+    public RoomModel getRoom(int id){
         RoomModel model = new RoomModel();
         if(id!=0){
             model.id = id;
@@ -60,16 +59,15 @@ public class RoomlControllerTest {
             RoomImage roomImage = new RoomImage();
             roomImage.setRoomid(1);
             roomImage.setName("test");
-            roomImage.setImageurl("https://hotelimage.oss-cn-shanghai.aliyuncs.com/hotel/9258356017_1215247113.400x400.jpg");
+            roomImage.setUrl("https://hotelimage.oss-cn-shanghai.aliyuncs.com/hotel/9258356017_1215247113.400x400.jpg");
             roomImages.add(roomImage);
         }
         model.roomImages = roomImages;
-        request.room = model;
-        return request;
+        return model;
     }
     @Test
     public void addRoom() throws Exception {
-        RoomRequest request = getRoom(0);
+        RoomModel request = getRoom(0);
         String requestJson = new Gson().toJson(request);
         mvc.perform(MockMvcRequestBuilders.post("/room/add")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -81,7 +79,7 @@ public class RoomlControllerTest {
 
     @Test
     public void updateRoom() throws Exception {
-        RoomRequest request = getRoom(10);
+        RoomModel request = getRoom(0);
         String requestJson = new Gson().toJson(request);
         mvc.perform(MockMvcRequestBuilders.post("/room/update")
                 .contentType(MediaType.APPLICATION_JSON)

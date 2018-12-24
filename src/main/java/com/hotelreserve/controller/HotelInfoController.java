@@ -1,6 +1,7 @@
 package com.hotelreserve.controller;
 
 import com.google.gson.Gson;
+import com.hotelreserve.http.model.HotelModel;
 import com.hotelreserve.http.model.ResponseHeader;
 import com.hotelreserve.http.response.HotelInfosResponse;
 import com.hotelreserve.model.HotelInfo;
@@ -30,16 +31,16 @@ public class HotelInfoController {
     }
     @ResponseBody
     @RequestMapping(value = "/add",method = RequestMethod.POST)
-    public void addHotelInfo(HttpServletResponse response, @RequestBody HotelInfo hotelInfo){
-        LogUtils.info(new Gson().toJson(hotelInfo));
-        ResponseHeader responseHeader = mHotelService.insertHotelInfo(hotelInfo);
+    public void addHotelInfo(HttpServletResponse response, @RequestBody HotelModel hotelModel){
+        LogUtils.info(new Gson().toJson(hotelModel));
+        ResponseHeader responseHeader = mHotelService.insertHotelInfo(hotelModel);
         ResponseUtils.renderJson(response,new Gson().toJson(responseHeader));
     }
 
     @ResponseBody
     @RequestMapping(value = "/update",method = RequestMethod.POST)
-    public void updateHotelInfo(HttpServletResponse response,@RequestBody HotelInfo hotelInfo){
-        ResponseHeader header = mHotelService.updateHotelInfo(hotelInfo);
+    public void updateHotelInfo(HttpServletResponse response,@RequestBody HotelModel hotelModel){
+        ResponseHeader header = mHotelService.updateHotelInfo(hotelModel);
         ResponseUtils.renderJson(response,new Gson().toJson(header));
     }
 
