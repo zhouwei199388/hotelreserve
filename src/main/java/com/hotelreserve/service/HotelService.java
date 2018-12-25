@@ -48,6 +48,7 @@ public class HotelService {
             }
             hotelInfosResponse.hotelModels = hotelModels;
             header.msg = ConnectionMessage.SUCCESS_TEXT;
+            header.code = ConnectionMessage.SUCCESS_CODE;
         }
         hotelInfosResponse.header = header;
         return hotelInfosResponse;
