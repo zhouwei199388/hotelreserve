@@ -152,6 +152,7 @@ public class HotelRoomService {
             }
             response.rooms = roomModels;
             header.msg = ConnectionMessage.SUCCESS_TEXT;
+            header.code =ConnectionMessage.SUCCESS_CODE;
         }
         response.header = header;
         return response;
