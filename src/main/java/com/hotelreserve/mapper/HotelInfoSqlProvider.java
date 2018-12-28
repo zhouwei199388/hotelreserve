@@ -34,6 +34,10 @@ public class HotelInfoSqlProvider {
             sql.VALUES("hotelText", "#{hoteltext,jdbcType=VARCHAR}");
         }
         
+        if (record.getMinprice() != null) {
+            sql.VALUES("minPrice", "#{minprice,jdbcType=DOUBLE}");
+        }
+        
         return sql.toString();
     }
 
@@ -49,6 +53,7 @@ public class HotelInfoSqlProvider {
         sql.SELECT("phone");
         sql.SELECT("facility");
         sql.SELECT("hotelText");
+        sql.SELECT("minPrice");
         sql.FROM("hotelinfo");
         applyWhere(sql, example, false);
         
@@ -90,6 +95,10 @@ public class HotelInfoSqlProvider {
             sql.SET("hotelText = #{record.hoteltext,jdbcType=VARCHAR}");
         }
         
+        if (record.getMinprice() != null) {
+            sql.SET("minPrice = #{record.minprice,jdbcType=DOUBLE}");
+        }
+        
         applyWhere(sql, example, true);
         return sql.toString();
     }
@@ -104,6 +113,7 @@ public class HotelInfoSqlProvider {
         sql.SET("phone = #{record.phone,jdbcType=VARCHAR}");
         sql.SET("facility = #{record.facility,jdbcType=VARCHAR}");
         sql.SET("hotelText = #{record.hoteltext,jdbcType=VARCHAR}");
+        sql.SET("minPrice = #{record.minprice,jdbcType=DOUBLE}");
         
         HotelInfoExample example = (HotelInfoExample) parameter.get("example");
         applyWhere(sql, example, true);
@@ -132,6 +142,10 @@ public class HotelInfoSqlProvider {
         
         if (record.getHoteltext() != null) {
             sql.SET("hotelText = #{hoteltext,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getMinprice() != null) {
+            sql.SET("minPrice = #{minprice,jdbcType=DOUBLE}");
         }
         
         sql.WHERE("id = #{id,jdbcType=INTEGER}");

@@ -26,10 +26,10 @@ public interface HotelInfoMapper {
     @Insert({
         "insert into hotelinfo (hotelName, hotelAddress, ",
         "phone, facility, ",
-        "hotelText)",
+        "hotelText, minPrice)",
         "values (#{hotelname,jdbcType=VARCHAR}, #{hoteladdress,jdbcType=VARCHAR}, ",
         "#{phone,jdbcType=VARCHAR}, #{facility,jdbcType=VARCHAR}, ",
-        "#{hoteltext,jdbcType=VARCHAR})"
+        "#{hoteltext,jdbcType=VARCHAR}, #{minprice,jdbcType=DOUBLE})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
     int insert(HotelInfo record);
@@ -45,13 +45,14 @@ public interface HotelInfoMapper {
         @Result(column="hotelAddress", property="hoteladdress", jdbcType=JdbcType.VARCHAR),
         @Result(column="phone", property="phone", jdbcType=JdbcType.VARCHAR),
         @Result(column="facility", property="facility", jdbcType=JdbcType.VARCHAR),
-        @Result(column="hotelText", property="hoteltext", jdbcType=JdbcType.VARCHAR)
+        @Result(column="hotelText", property="hoteltext", jdbcType=JdbcType.VARCHAR),
+        @Result(column="minPrice", property="minprice", jdbcType=JdbcType.DOUBLE)
     })
     List<HotelInfo> selectByExample(HotelInfoExample example);
 
     @Select({
         "select",
-        "id, hotelName, hotelAddress, phone, facility, hotelText",
+        "id, hotelName, hotelAddress, phone, facility, hotelText, minPrice",
         "from hotelinfo",
         "where id = #{id,jdbcType=INTEGER}"
     })
@@ -61,7 +62,8 @@ public interface HotelInfoMapper {
         @Result(column="hotelAddress", property="hoteladdress", jdbcType=JdbcType.VARCHAR),
         @Result(column="phone", property="phone", jdbcType=JdbcType.VARCHAR),
         @Result(column="facility", property="facility", jdbcType=JdbcType.VARCHAR),
-        @Result(column="hotelText", property="hoteltext", jdbcType=JdbcType.VARCHAR)
+        @Result(column="hotelText", property="hoteltext", jdbcType=JdbcType.VARCHAR),
+        @Result(column="minPrice", property="minprice", jdbcType=JdbcType.DOUBLE)
     })
     HotelInfo selectByPrimaryKey(Integer id);
 
@@ -80,7 +82,8 @@ public interface HotelInfoMapper {
           "hotelAddress = #{hoteladdress,jdbcType=VARCHAR},",
           "phone = #{phone,jdbcType=VARCHAR},",
           "facility = #{facility,jdbcType=VARCHAR},",
-          "hotelText = #{hoteltext,jdbcType=VARCHAR}",
+          "hotelText = #{hoteltext,jdbcType=VARCHAR},",
+          "minPrice = #{minprice,jdbcType=DOUBLE}",
         "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(HotelInfo record);

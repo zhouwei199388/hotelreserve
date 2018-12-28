@@ -42,6 +42,14 @@ public class UserSqlProvider {
             sql.VALUES("avatarurl", "#{avatarurl,jdbcType=VARCHAR}");
         }
         
+        if (record.getCode() != null) {
+            sql.VALUES("code", "#{code,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getCodetime() != null) {
+            sql.VALUES("codeTime", "#{codetime,jdbcType=TIMESTAMP}");
+        }
+        
         return sql.toString();
     }
 
@@ -59,6 +67,8 @@ public class UserSqlProvider {
         sql.SELECT("nickname");
         sql.SELECT("gender");
         sql.SELECT("avatarurl");
+        sql.SELECT("code");
+        sql.SELECT("codeTime");
         sql.FROM("user");
         applyWhere(sql, example, false);
         
@@ -108,6 +118,14 @@ public class UserSqlProvider {
             sql.SET("avatarurl = #{record.avatarurl,jdbcType=VARCHAR}");
         }
         
+        if (record.getCode() != null) {
+            sql.SET("code = #{record.code,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getCodetime() != null) {
+            sql.SET("codeTime = #{record.codetime,jdbcType=TIMESTAMP}");
+        }
+        
         applyWhere(sql, example, true);
         return sql.toString();
     }
@@ -124,6 +142,8 @@ public class UserSqlProvider {
         sql.SET("nickname = #{record.nickname,jdbcType=VARCHAR}");
         sql.SET("gender = #{record.gender,jdbcType=INTEGER}");
         sql.SET("avatarurl = #{record.avatarurl,jdbcType=VARCHAR}");
+        sql.SET("code = #{record.code,jdbcType=VARCHAR}");
+        sql.SET("codeTime = #{record.codetime,jdbcType=TIMESTAMP}");
         
         UserExample example = (UserExample) parameter.get("example");
         applyWhere(sql, example, true);
@@ -160,6 +180,14 @@ public class UserSqlProvider {
         
         if (record.getAvatarurl() != null) {
             sql.SET("avatarurl = #{avatarurl,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getCode() != null) {
+            sql.SET("code = #{code,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getCodetime() != null) {
+            sql.SET("codeTime = #{codetime,jdbcType=TIMESTAMP}");
         }
         
         sql.WHERE("id = #{id,jdbcType=INTEGER}");

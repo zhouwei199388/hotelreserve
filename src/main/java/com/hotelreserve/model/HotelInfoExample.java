@@ -513,6 +513,66 @@ public class HotelInfoExample {
             addCriterion("hotelText not between", value1, value2, "hoteltext");
             return (Criteria) this;
         }
+
+        public Criteria andMinpriceIsNull() {
+            addCriterion("minPrice is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinpriceIsNotNull() {
+            addCriterion("minPrice is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinpriceEqualTo(Double value) {
+            addCriterion("minPrice =", value, "minprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinpriceNotEqualTo(Double value) {
+            addCriterion("minPrice <>", value, "minprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinpriceGreaterThan(Double value) {
+            addCriterion("minPrice >", value, "minprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinpriceGreaterThanOrEqualTo(Double value) {
+            addCriterion("minPrice >=", value, "minprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinpriceLessThan(Double value) {
+            addCriterion("minPrice <", value, "minprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinpriceLessThanOrEqualTo(Double value) {
+            addCriterion("minPrice <=", value, "minprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinpriceIn(List<Double> values) {
+            addCriterion("minPrice in", values, "minprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinpriceNotIn(List<Double> values) {
+            addCriterion("minPrice not in", values, "minprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinpriceBetween(Double value1, Double value2) {
+            addCriterion("minPrice between", value1, value2, "minprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinpriceNotBetween(Double value1, Double value2) {
+            addCriterion("minPrice not between", value1, value2, "minprice");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

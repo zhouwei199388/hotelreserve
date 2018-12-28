@@ -23,6 +23,8 @@ public class HotelModel {
 
     public String hoteltext;
 
+    public Double minprice;
+
     public List<HotelImage> hotelImages;
 
     public void copyFromHotel(HotelInfo hotelInfo){
@@ -32,6 +34,7 @@ public class HotelModel {
      this.hoteltext = hotelInfo.getHoteltext();
      this.facility = hotelInfo.getFacility();
      this.phone = hotelInfo.getPhone();
+     this.minprice = hotelInfo.getMinprice();
     }
 
 
@@ -43,6 +46,7 @@ public class HotelModel {
         hotelInfo.setFacility(this.facility);
         hotelInfo.setPhone(this.phone);
         hotelInfo.setHoteltext(this.hoteltext);
+        hotelInfo.setMinprice(this.minprice);
         return hotelInfo;
     }
 

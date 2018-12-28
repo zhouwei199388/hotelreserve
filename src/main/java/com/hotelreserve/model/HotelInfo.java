@@ -13,6 +13,8 @@ public class HotelInfo {
 
     private String hoteltext;
 
+    private Double minprice;
+
     public Integer getId() {
         return id;
     }
@@ -59,5 +61,13 @@ public class HotelInfo {
 
     public void setHoteltext(String hoteltext) {
         this.hoteltext = hoteltext == null ? null : hoteltext.trim();
+    }
+
+    public Double getMinprice() {
+        return minprice;
+    }
+
+    public void setMinprice(Double minprice) {
+        this.minprice = minprice;
     }
 }

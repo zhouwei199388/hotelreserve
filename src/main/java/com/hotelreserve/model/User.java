@@ -1,5 +1,7 @@
 package com.hotelreserve.model;
 
+import java.util.Date;
+
 public class User {
     private Integer id;
 
@@ -16,6 +18,10 @@ public class User {
     private Integer gender;
 
     private String avatarurl;
+
+    private String code;
+
+    private Date codetime;
 
     public Integer getId() {
         return id;
@@ -79,5 +85,21 @@ public class User {
 
     public void setAvatarurl(String avatarurl) {
         this.avatarurl = avatarurl == null ? null : avatarurl.trim();
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code == null ? null : code.trim();
+    }
+
+    public Date getCodetime() {
+        return codetime;
+    }
+
+    public void setCodetime(Date codetime) {
+        this.codetime = codetime;
     }
 }
