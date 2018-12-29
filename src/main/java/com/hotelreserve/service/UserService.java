@@ -2,6 +2,7 @@ package com.hotelreserve.service;
 
 import com.hotelreserve.http.ConnectionMessage;
 import com.hotelreserve.http.model.ResponseHeader;
+import com.hotelreserve.http.model.UserModel;
 import com.hotelreserve.http.model.WxModel;
 import com.hotelreserve.http.model.WxUserInfo;
 import com.hotelreserve.http.request.BindPhoneRequest;
@@ -42,7 +43,7 @@ public class UserService {
             String secret = "e912dab12ca28b09c6cae11ccf7bd4ef";
             //获取微信openid和sessionkey
             wxModel = XcxUtils.getSessionKeyOropenid(request.code, appid, secret);
-            if (wxModel.openid==null||wxModel.session_key==null) {
+            if (wxModel.openid == null || wxModel.session_key == null) {
                 header.setOpenidOrKeyError();
                 userResponse.header = header;
                 return userResponse;
@@ -56,27 +57,27 @@ public class UserService {
             //如果数据库获取到了数据  返回数据库用户信息 否从微信获取数据并保存到数据库
             if (users.size() != 0) {
                 user = users.get(0);
-                user.setOpenid(null);
-                user.setSessionkey(null);
                 header.setSuccess();
             } else {
                 user = getUserInfo(request.encryptedData, wxModel.session_key, request.iv);
-                if(user==null){
+                if (user == null) {
                     header.setServerError();
-                }else{
-                   int type =  mUserMapper.insertSelective(user);
-                   if (type!=0){
-                       user.setOpenid(null);
-                       user.setSessionkey(null);
-                       header.setSuccess();
-                   }else{
-                       user = null;
-                       header.setServerError();
-                   }
+                } else {
+                    int type = mUserMapper.insertSelective(user);
+                    if (type != 0) {
+                        header.setSuccess();
+                    } else {
+                        user = null;
+                        header.setServerError();
+                    }
                 }
             }
-           userResponse.header = header;
-            userResponse.user = user;
+            userResponse.header = header;
+            if (user != null) {
+                UserModel userModel = new UserModel();
+                userModel.copyFromUser(user);
+                userResponse.user = userModel;
+            }
         } else {
             header.setCodeError();
         }
@@ -84,7 +85,8 @@ public class UserService {
     }
 
     /**
-     *  获取微信用户信息
+     * 获取微信用户信息
+     *
      * @param encryptedData
      * @param session_key
      * @param iv
@@ -106,21 +108,22 @@ public class UserService {
 
     /**
      * 绑定手机号
+     *
      * @param request
      * @return
      */
     public ResponseHeader bindPhone(BindPhoneRequest request) {
         ResponseHeader responseHeader = new ResponseHeader();
-        if(request.id==0||request.phone.isEmpty()){
+        if (request.id == 0 || request.phone.isEmpty()) {
             return responseHeader;
         }
         User user = new User();
         user.setId(request.id);
         user.setPhone(request.phone);
         int result = mUserMapper.updateByPrimaryKeySelective(user);
-        if(result != 0){
+        if (result != 0) {
             responseHeader.code = ConnectionMessage.SUCCESS_CODE;
-            responseHeader.msg= ConnectionMessage.BIND_SUCCESS_TEXT;
+            responseHeader.msg = ConnectionMessage.BIND_SUCCESS_TEXT;
         }
         return responseHeader;
     }
@@ -128,18 +131,19 @@ public class UserService {
 
     /**
      * 获取所有用户
+     *
      * @return
      */
-    public UserResponse getUserList(){
+    public UserResponse getUserList() {
         UserResponse response = new UserResponse();
         ResponseHeader header = new ResponseHeader();
         List<User> users = mUserMapper.selectByExample(new UserExample());
-        if(users.size()==0){
+        if (users.size() == 0) {
             header.msg = ConnectionMessage.DATA_IS_NULL;
-        }else{
-            header.code=ConnectionMessage.SUCCESS_CODE;
+        } else {
+            header.code = ConnectionMessage.SUCCESS_CODE;
             header.msg = ConnectionMessage.SUCCESS_TEXT;
-            response.users = users;
+            response.formatUser(users);
         }
         response.header = header;
         return response;

@@ -136,7 +136,7 @@ public class HotelRoomService {
         HotelRoomExample example = new HotelRoomExample();
         HotelRoomExample.Criteria criteria = example.createCriteria();
         criteria.andHotelidEqualTo(hotelId);
-        List<HotelRoom> rooms = mRoomMapper.selectByExample(new HotelRoomExample());
+        List<HotelRoom> rooms = mRoomMapper.selectByExample(example);
         if(rooms.size()==0){
           header.msg = ConnectionMessage.DATA_IS_NULL;
         }else{
