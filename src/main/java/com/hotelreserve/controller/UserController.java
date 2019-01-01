@@ -46,6 +46,4 @@ public class UserController {
         UserResponse userResponse = mUserService.getUserList();
         ResponseUtils.renderJson(response,new Gson().toJson(userResponse));
     }
-
-
 }
