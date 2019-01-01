@@ -1,13 +1,11 @@
 package com.hotelreserve.model;
 
-import java.util.Date;
-
 public class Order {
     private Integer id;
 
     private String ordernumber;
 
-    private Integer roomnumbeer;
+    private Integer roomnumber;
 
     private String people;
 
@@ -19,13 +17,15 @@ public class Order {
 
     private Double price;
 
-    private Date starttime;
+    private String startdate;
 
-    private Date endtime;
+    private String enddate;
 
     private String hotel;
 
     private String hotelroom;
+
+    private Integer days;
 
     public Integer getId() {
         return id;
@@ -43,12 +43,12 @@ public class Order {
         this.ordernumber = ordernumber == null ? null : ordernumber.trim();
     }
 
-    public Integer getRoomnumbeer() {
-        return roomnumbeer;
+    public Integer getRoomnumber() {
+        return roomnumber;
     }
 
-    public void setRoomnumbeer(Integer roomnumbeer) {
-        this.roomnumbeer = roomnumbeer;
+    public void setRoomnumber(Integer roomnumber) {
+        this.roomnumber = roomnumber;
     }
 
     public String getPeople() {
@@ -91,20 +91,20 @@ public class Order {
         this.price = price;
     }
 
-    public Date getStarttime() {
-        return starttime;
+    public String getStartdate() {
+        return startdate;
     }
 
-    public void setStarttime(Date starttime) {
-        this.starttime = starttime;
+    public void setStartdate(String startdate) {
+        this.startdate = startdate == null ? null : startdate.trim();
     }
 
-    public Date getEndtime() {
-        return endtime;
+    public String getEnddate() {
+        return enddate;
     }
 
-    public void setEndtime(Date endtime) {
-        this.endtime = endtime;
+    public void setEnddate(String enddate) {
+        this.enddate = enddate == null ? null : enddate.trim();
     }
 
     public String getHotel() {
@@ -121,5 +121,13 @@ public class Order {
 
     public void setHotelroom(String hotelroom) {
         this.hotelroom = hotelroom == null ? null : hotelroom.trim();
+    }
+
+    public Integer getDays() {
+        return days;
+    }
+
+    public void setDays(Integer days) {
+        this.days = days;
     }
 }

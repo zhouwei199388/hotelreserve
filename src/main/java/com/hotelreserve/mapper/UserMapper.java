@@ -24,9 +24,9 @@ public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
 
     @Insert({
-        "insert into user (openid, sessionkey, ",
-        "level, phone, nickname, ",
-        "gender, avatarurl, ",
+        "insert into user (openid, sessionKey, ",
+        "level, phone, nickName, ",
+        "gender, avatarUrl, ",
         "code, codeTime)",
         "values (#{openid,jdbcType=VARCHAR}, #{sessionkey,jdbcType=VARCHAR}, ",
         "#{level,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, ",
@@ -44,12 +44,12 @@ public interface UserMapper {
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="openid", property="openid", jdbcType=JdbcType.VARCHAR),
-        @Result(column="sessionkey", property="sessionkey", jdbcType=JdbcType.VARCHAR),
+        @Result(column="sessionKey", property="sessionkey", jdbcType=JdbcType.VARCHAR),
         @Result(column="level", property="level", jdbcType=JdbcType.INTEGER),
         @Result(column="phone", property="phone", jdbcType=JdbcType.VARCHAR),
-        @Result(column="nickname", property="nickname", jdbcType=JdbcType.VARCHAR),
+        @Result(column="nickName", property="nickname", jdbcType=JdbcType.VARCHAR),
         @Result(column="gender", property="gender", jdbcType=JdbcType.INTEGER),
-        @Result(column="avatarurl", property="avatarurl", jdbcType=JdbcType.VARCHAR),
+        @Result(column="avatarUrl", property="avatarurl", jdbcType=JdbcType.VARCHAR),
         @Result(column="code", property="code", jdbcType=JdbcType.VARCHAR),
         @Result(column="codeTime", property="codetime", jdbcType=JdbcType.TIMESTAMP)
     })
@@ -57,19 +57,19 @@ public interface UserMapper {
 
     @Select({
         "select",
-        "id, openid, sessionkey, level, phone, nickname, gender, avatarurl, code, codeTime",
+        "id, openid, sessionKey, level, phone, nickName, gender, avatarUrl, code, codeTime",
         "from user",
         "where id = #{id,jdbcType=INTEGER}"
     })
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="openid", property="openid", jdbcType=JdbcType.VARCHAR),
-        @Result(column="sessionkey", property="sessionkey", jdbcType=JdbcType.VARCHAR),
+        @Result(column="sessionKey", property="sessionkey", jdbcType=JdbcType.VARCHAR),
         @Result(column="level", property="level", jdbcType=JdbcType.INTEGER),
         @Result(column="phone", property="phone", jdbcType=JdbcType.VARCHAR),
-        @Result(column="nickname", property="nickname", jdbcType=JdbcType.VARCHAR),
+        @Result(column="nickName", property="nickname", jdbcType=JdbcType.VARCHAR),
         @Result(column="gender", property="gender", jdbcType=JdbcType.INTEGER),
-        @Result(column="avatarurl", property="avatarurl", jdbcType=JdbcType.VARCHAR),
+        @Result(column="avatarUrl", property="avatarurl", jdbcType=JdbcType.VARCHAR),
         @Result(column="code", property="code", jdbcType=JdbcType.VARCHAR),
         @Result(column="codeTime", property="codetime", jdbcType=JdbcType.TIMESTAMP)
     })
@@ -87,12 +87,12 @@ public interface UserMapper {
     @Update({
         "update user",
         "set openid = #{openid,jdbcType=VARCHAR},",
-          "sessionkey = #{sessionkey,jdbcType=VARCHAR},",
+          "sessionKey = #{sessionkey,jdbcType=VARCHAR},",
           "level = #{level,jdbcType=INTEGER},",
           "phone = #{phone,jdbcType=VARCHAR},",
-          "nickname = #{nickname,jdbcType=VARCHAR},",
+          "nickName = #{nickname,jdbcType=VARCHAR},",
           "gender = #{gender,jdbcType=INTEGER},",
-          "avatarurl = #{avatarurl,jdbcType=VARCHAR},",
+          "avatarUrl = #{avatarurl,jdbcType=VARCHAR},",
           "code = #{code,jdbcType=VARCHAR},",
           "codeTime = #{codetime,jdbcType=TIMESTAMP}",
         "where id = #{id,jdbcType=INTEGER}"

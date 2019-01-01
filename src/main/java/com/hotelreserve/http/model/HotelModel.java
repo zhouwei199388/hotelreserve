@@ -12,21 +12,16 @@ import java.util.List;
  */
 public class HotelModel {
     public Integer id;
-
     public String hotelname;
-
     public String hoteladdress;
-
+    public String addressname;
     public String phone;
-
     public String facility;
-
     public String hoteltext;
-
     public Double minprice;
-
+    public Double latitude;
+    public Double longitude;
     public List<HotelImage> hotelImages;
-
     public void copyFromHotel(HotelInfo hotelInfo){
      this.id = hotelInfo.getId();
      this.hotelname = hotelInfo.getHotelname();
@@ -35,6 +30,9 @@ public class HotelModel {
      this.facility = hotelInfo.getFacility();
      this.phone = hotelInfo.getPhone();
      this.minprice = hotelInfo.getMinprice();
+     this.addressname = hotelInfo.getAddressname();
+     this.latitude = hotelInfo.getLatitude();
+     this.longitude = hotelInfo.getLongitude();
     }
 
 
@@ -47,6 +45,9 @@ public class HotelModel {
         hotelInfo.setPhone(this.phone);
         hotelInfo.setHoteltext(this.hoteltext);
         hotelInfo.setMinprice(this.minprice);
+        hotelInfo.setAddressname(this.addressname);
+        hotelInfo.setLatitude(this.latitude);
+        hotelInfo.setLongitude(this.longitude);
         return hotelInfo;
     }
 

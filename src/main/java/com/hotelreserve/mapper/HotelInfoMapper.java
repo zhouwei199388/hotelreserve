@@ -25,11 +25,15 @@ public interface HotelInfoMapper {
 
     @Insert({
         "insert into hotelinfo (hotelName, hotelAddress, ",
-        "phone, facility, ",
-        "hotelText, minPrice)",
+        "addressName, phone, ",
+        "facility, hotelText, ",
+        "minPrice, latitude, ",
+        "longitude)",
         "values (#{hotelname,jdbcType=VARCHAR}, #{hoteladdress,jdbcType=VARCHAR}, ",
-        "#{phone,jdbcType=VARCHAR}, #{facility,jdbcType=VARCHAR}, ",
-        "#{hoteltext,jdbcType=VARCHAR}, #{minprice,jdbcType=DOUBLE})"
+        "#{addressname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, ",
+        "#{facility,jdbcType=VARCHAR}, #{hoteltext,jdbcType=VARCHAR}, ",
+        "#{minprice,jdbcType=DOUBLE}, #{latitude,jdbcType=DOUBLE}, ",
+        "#{longitude,jdbcType=DOUBLE})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
     int insert(HotelInfo record);
@@ -43,16 +47,20 @@ public interface HotelInfoMapper {
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="hotelName", property="hotelname", jdbcType=JdbcType.VARCHAR),
         @Result(column="hotelAddress", property="hoteladdress", jdbcType=JdbcType.VARCHAR),
+        @Result(column="addressName", property="addressname", jdbcType=JdbcType.VARCHAR),
         @Result(column="phone", property="phone", jdbcType=JdbcType.VARCHAR),
         @Result(column="facility", property="facility", jdbcType=JdbcType.VARCHAR),
         @Result(column="hotelText", property="hoteltext", jdbcType=JdbcType.VARCHAR),
-        @Result(column="minPrice", property="minprice", jdbcType=JdbcType.DOUBLE)
+        @Result(column="minPrice", property="minprice", jdbcType=JdbcType.DOUBLE),
+        @Result(column="latitude", property="latitude", jdbcType=JdbcType.DOUBLE),
+        @Result(column="longitude", property="longitude", jdbcType=JdbcType.DOUBLE)
     })
     List<HotelInfo> selectByExample(HotelInfoExample example);
 
     @Select({
         "select",
-        "id, hotelName, hotelAddress, phone, facility, hotelText, minPrice",
+        "id, hotelName, hotelAddress, addressName, phone, facility, hotelText, minPrice, ",
+        "latitude, longitude",
         "from hotelinfo",
         "where id = #{id,jdbcType=INTEGER}"
     })
@@ -60,10 +68,13 @@ public interface HotelInfoMapper {
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="hotelName", property="hotelname", jdbcType=JdbcType.VARCHAR),
         @Result(column="hotelAddress", property="hoteladdress", jdbcType=JdbcType.VARCHAR),
+        @Result(column="addressName", property="addressname", jdbcType=JdbcType.VARCHAR),
         @Result(column="phone", property="phone", jdbcType=JdbcType.VARCHAR),
         @Result(column="facility", property="facility", jdbcType=JdbcType.VARCHAR),
         @Result(column="hotelText", property="hoteltext", jdbcType=JdbcType.VARCHAR),
-        @Result(column="minPrice", property="minprice", jdbcType=JdbcType.DOUBLE)
+        @Result(column="minPrice", property="minprice", jdbcType=JdbcType.DOUBLE),
+        @Result(column="latitude", property="latitude", jdbcType=JdbcType.DOUBLE),
+        @Result(column="longitude", property="longitude", jdbcType=JdbcType.DOUBLE)
     })
     HotelInfo selectByPrimaryKey(Integer id);
 
@@ -80,10 +91,13 @@ public interface HotelInfoMapper {
         "update hotelinfo",
         "set hotelName = #{hotelname,jdbcType=VARCHAR},",
           "hotelAddress = #{hoteladdress,jdbcType=VARCHAR},",
+          "addressName = #{addressname,jdbcType=VARCHAR},",
           "phone = #{phone,jdbcType=VARCHAR},",
           "facility = #{facility,jdbcType=VARCHAR},",
           "hotelText = #{hoteltext,jdbcType=VARCHAR},",
-          "minPrice = #{minprice,jdbcType=DOUBLE}",
+          "minPrice = #{minprice,jdbcType=DOUBLE},",
+          "latitude = #{latitude,jdbcType=DOUBLE},",
+          "longitude = #{longitude,jdbcType=DOUBLE}",
         "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(HotelInfo record);

@@ -7,6 +7,8 @@ public class HotelInfo {
 
     private String hoteladdress;
 
+    private String addressname;
+
     private String phone;
 
     private String facility;
@@ -14,6 +16,10 @@ public class HotelInfo {
     private String hoteltext;
 
     private Double minprice;
+
+    private Double latitude;
+
+    private Double longitude;
 
     public Integer getId() {
         return id;
@@ -37,6 +43,14 @@ public class HotelInfo {
 
     public void setHoteladdress(String hoteladdress) {
         this.hoteladdress = hoteladdress == null ? null : hoteladdress.trim();
+    }
+
+    public String getAddressname() {
+        return addressname;
+    }
+
+    public void setAddressname(String addressname) {
+        this.addressname = addressname == null ? null : addressname.trim();
     }
 
     public String getPhone() {
@@ -69,5 +83,21 @@ public class HotelInfo {
 
     public void setMinprice(Double minprice) {
         this.minprice = minprice;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 }

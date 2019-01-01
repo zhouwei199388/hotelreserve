@@ -12,14 +12,14 @@ public class OrderSqlProvider {
 
     public String insertSelective(Order record) {
         SQL sql = new SQL();
-        sql.INSERT_INTO("order");
+        sql.INSERT_INTO("hotel_order");
         
         if (record.getOrdernumber() != null) {
             sql.VALUES("orderNumber", "#{ordernumber,jdbcType=VARCHAR}");
         }
         
-        if (record.getRoomnumbeer() != null) {
-            sql.VALUES("roomNumbeer", "#{roomnumbeer,jdbcType=INTEGER}");
+        if (record.getRoomnumber() != null) {
+            sql.VALUES("roomNumber", "#{roomnumber,jdbcType=INTEGER}");
         }
         
         if (record.getPeople() != null) {
@@ -42,12 +42,12 @@ public class OrderSqlProvider {
             sql.VALUES("price", "#{price,jdbcType=DOUBLE}");
         }
         
-        if (record.getStarttime() != null) {
-            sql.VALUES("startTime", "#{starttime,jdbcType=TIMESTAMP}");
+        if (record.getStartdate() != null) {
+            sql.VALUES("startDate", "#{startdate,jdbcType=VARCHAR}");
         }
         
-        if (record.getEndtime() != null) {
-            sql.VALUES("endTime", "#{endtime,jdbcType=TIMESTAMP}");
+        if (record.getEnddate() != null) {
+            sql.VALUES("endDate", "#{enddate,jdbcType=VARCHAR}");
         }
         
         if (record.getHotel() != null) {
@@ -56,6 +56,10 @@ public class OrderSqlProvider {
         
         if (record.getHotelroom() != null) {
             sql.VALUES("hotelroom", "#{hotelroom,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getDays() != null) {
+            sql.VALUES("days", "#{days,jdbcType=INTEGER}");
         }
         
         return sql.toString();
@@ -69,17 +73,18 @@ public class OrderSqlProvider {
             sql.SELECT("id");
         }
         sql.SELECT("orderNumber");
-        sql.SELECT("roomNumbeer");
+        sql.SELECT("roomNumber");
         sql.SELECT("people");
         sql.SELECT("phone");
         sql.SELECT("note");
         sql.SELECT("status");
         sql.SELECT("price");
-        sql.SELECT("startTime");
-        sql.SELECT("endTime");
+        sql.SELECT("startDate");
+        sql.SELECT("endDate");
         sql.SELECT("hotel");
         sql.SELECT("hotelroom");
-        sql.FROM("order");
+        sql.SELECT("days");
+        sql.FROM("hotel_order");
         applyWhere(sql, example, false);
         
         if (example != null && example.getOrderByClause() != null) {
@@ -94,7 +99,7 @@ public class OrderSqlProvider {
         OrderExample example = (OrderExample) parameter.get("example");
         
         SQL sql = new SQL();
-        sql.UPDATE("order");
+        sql.UPDATE("hotel_order");
         
         if (record.getId() != null) {
             sql.SET("id = #{record.id,jdbcType=INTEGER}");
@@ -104,8 +109,8 @@ public class OrderSqlProvider {
             sql.SET("orderNumber = #{record.ordernumber,jdbcType=VARCHAR}");
         }
         
-        if (record.getRoomnumbeer() != null) {
-            sql.SET("roomNumbeer = #{record.roomnumbeer,jdbcType=INTEGER}");
+        if (record.getRoomnumber() != null) {
+            sql.SET("roomNumber = #{record.roomnumber,jdbcType=INTEGER}");
         }
         
         if (record.getPeople() != null) {
@@ -128,12 +133,12 @@ public class OrderSqlProvider {
             sql.SET("price = #{record.price,jdbcType=DOUBLE}");
         }
         
-        if (record.getStarttime() != null) {
-            sql.SET("startTime = #{record.starttime,jdbcType=TIMESTAMP}");
+        if (record.getStartdate() != null) {
+            sql.SET("startDate = #{record.startdate,jdbcType=VARCHAR}");
         }
         
-        if (record.getEndtime() != null) {
-            sql.SET("endTime = #{record.endtime,jdbcType=TIMESTAMP}");
+        if (record.getEnddate() != null) {
+            sql.SET("endDate = #{record.enddate,jdbcType=VARCHAR}");
         }
         
         if (record.getHotel() != null) {
@@ -144,26 +149,31 @@ public class OrderSqlProvider {
             sql.SET("hotelroom = #{record.hotelroom,jdbcType=VARCHAR}");
         }
         
+        if (record.getDays() != null) {
+            sql.SET("days = #{record.days,jdbcType=INTEGER}");
+        }
+        
         applyWhere(sql, example, true);
         return sql.toString();
     }
 
     public String updateByExample(Map<String, Object> parameter) {
         SQL sql = new SQL();
-        sql.UPDATE("order");
+        sql.UPDATE("hotel_order");
         
         sql.SET("id = #{record.id,jdbcType=INTEGER}");
         sql.SET("orderNumber = #{record.ordernumber,jdbcType=VARCHAR}");
-        sql.SET("roomNumbeer = #{record.roomnumbeer,jdbcType=INTEGER}");
+        sql.SET("roomNumber = #{record.roomnumber,jdbcType=INTEGER}");
         sql.SET("people = #{record.people,jdbcType=VARCHAR}");
         sql.SET("phone = #{record.phone,jdbcType=VARCHAR}");
         sql.SET("note = #{record.note,jdbcType=VARCHAR}");
         sql.SET("status = #{record.status,jdbcType=INTEGER}");
         sql.SET("price = #{record.price,jdbcType=DOUBLE}");
-        sql.SET("startTime = #{record.starttime,jdbcType=TIMESTAMP}");
-        sql.SET("endTime = #{record.endtime,jdbcType=TIMESTAMP}");
+        sql.SET("startDate = #{record.startdate,jdbcType=VARCHAR}");
+        sql.SET("endDate = #{record.enddate,jdbcType=VARCHAR}");
         sql.SET("hotel = #{record.hotel,jdbcType=VARCHAR}");
         sql.SET("hotelroom = #{record.hotelroom,jdbcType=VARCHAR}");
+        sql.SET("days = #{record.days,jdbcType=INTEGER}");
         
         OrderExample example = (OrderExample) parameter.get("example");
         applyWhere(sql, example, true);
@@ -172,14 +182,14 @@ public class OrderSqlProvider {
 
     public String updateByPrimaryKeySelective(Order record) {
         SQL sql = new SQL();
-        sql.UPDATE("order");
+        sql.UPDATE("hotel_order");
         
         if (record.getOrdernumber() != null) {
             sql.SET("orderNumber = #{ordernumber,jdbcType=VARCHAR}");
         }
         
-        if (record.getRoomnumbeer() != null) {
-            sql.SET("roomNumbeer = #{roomnumbeer,jdbcType=INTEGER}");
+        if (record.getRoomnumber() != null) {
+            sql.SET("roomNumber = #{roomnumber,jdbcType=INTEGER}");
         }
         
         if (record.getPeople() != null) {
@@ -202,12 +212,12 @@ public class OrderSqlProvider {
             sql.SET("price = #{price,jdbcType=DOUBLE}");
         }
         
-        if (record.getStarttime() != null) {
-            sql.SET("startTime = #{starttime,jdbcType=TIMESTAMP}");
+        if (record.getStartdate() != null) {
+            sql.SET("startDate = #{startdate,jdbcType=VARCHAR}");
         }
         
-        if (record.getEndtime() != null) {
-            sql.SET("endTime = #{endtime,jdbcType=TIMESTAMP}");
+        if (record.getEnddate() != null) {
+            sql.SET("endDate = #{enddate,jdbcType=VARCHAR}");
         }
         
         if (record.getHotel() != null) {
@@ -216,6 +226,10 @@ public class OrderSqlProvider {
         
         if (record.getHotelroom() != null) {
             sql.SET("hotelroom = #{hotelroom,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getDays() != null) {
+            sql.SET("days = #{days,jdbcType=INTEGER}");
         }
         
         sql.WHERE("id = #{id,jdbcType=INTEGER}");

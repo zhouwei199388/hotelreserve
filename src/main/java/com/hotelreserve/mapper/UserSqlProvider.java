@@ -19,7 +19,7 @@ public class UserSqlProvider {
         }
         
         if (record.getSessionkey() != null) {
-            sql.VALUES("sessionkey", "#{sessionkey,jdbcType=VARCHAR}");
+            sql.VALUES("sessionKey", "#{sessionkey,jdbcType=VARCHAR}");
         }
         
         if (record.getLevel() != null) {
@@ -31,7 +31,7 @@ public class UserSqlProvider {
         }
         
         if (record.getNickname() != null) {
-            sql.VALUES("nickname", "#{nickname,jdbcType=VARCHAR}");
+            sql.VALUES("nickName", "#{nickname,jdbcType=VARCHAR}");
         }
         
         if (record.getGender() != null) {
@@ -39,7 +39,7 @@ public class UserSqlProvider {
         }
         
         if (record.getAvatarurl() != null) {
-            sql.VALUES("avatarurl", "#{avatarurl,jdbcType=VARCHAR}");
+            sql.VALUES("avatarUrl", "#{avatarurl,jdbcType=VARCHAR}");
         }
         
         if (record.getCode() != null) {
@@ -61,12 +61,12 @@ public class UserSqlProvider {
             sql.SELECT("id");
         }
         sql.SELECT("openid");
-        sql.SELECT("sessionkey");
+        sql.SELECT("sessionKey");
         sql.SELECT("level");
         sql.SELECT("phone");
-        sql.SELECT("nickname");
+        sql.SELECT("nickName");
         sql.SELECT("gender");
-        sql.SELECT("avatarurl");
+        sql.SELECT("avatarUrl");
         sql.SELECT("code");
         sql.SELECT("codeTime");
         sql.FROM("user");
@@ -95,7 +95,7 @@ public class UserSqlProvider {
         }
         
         if (record.getSessionkey() != null) {
-            sql.SET("sessionkey = #{record.sessionkey,jdbcType=VARCHAR}");
+            sql.SET("sessionKey = #{record.sessionkey,jdbcType=VARCHAR}");
         }
         
         if (record.getLevel() != null) {
@@ -107,7 +107,7 @@ public class UserSqlProvider {
         }
         
         if (record.getNickname() != null) {
-            sql.SET("nickname = #{record.nickname,jdbcType=VARCHAR}");
+            sql.SET("nickName = #{record.nickname,jdbcType=VARCHAR}");
         }
         
         if (record.getGender() != null) {
@@ -115,7 +115,7 @@ public class UserSqlProvider {
         }
         
         if (record.getAvatarurl() != null) {
-            sql.SET("avatarurl = #{record.avatarurl,jdbcType=VARCHAR}");
+            sql.SET("avatarUrl = #{record.avatarurl,jdbcType=VARCHAR}");
         }
         
         if (record.getCode() != null) {
@@ -136,12 +136,12 @@ public class UserSqlProvider {
         
         sql.SET("id = #{record.id,jdbcType=INTEGER}");
         sql.SET("openid = #{record.openid,jdbcType=VARCHAR}");
-        sql.SET("sessionkey = #{record.sessionkey,jdbcType=VARCHAR}");
+        sql.SET("sessionKey = #{record.sessionkey,jdbcType=VARCHAR}");
         sql.SET("level = #{record.level,jdbcType=INTEGER}");
         sql.SET("phone = #{record.phone,jdbcType=VARCHAR}");
-        sql.SET("nickname = #{record.nickname,jdbcType=VARCHAR}");
+        sql.SET("nickName = #{record.nickname,jdbcType=VARCHAR}");
         sql.SET("gender = #{record.gender,jdbcType=INTEGER}");
-        sql.SET("avatarurl = #{record.avatarurl,jdbcType=VARCHAR}");
+        sql.SET("avatarUrl = #{record.avatarurl,jdbcType=VARCHAR}");
         sql.SET("code = #{record.code,jdbcType=VARCHAR}");
         sql.SET("codeTime = #{record.codetime,jdbcType=TIMESTAMP}");
         
@@ -159,7 +159,7 @@ public class UserSqlProvider {
         }
         
         if (record.getSessionkey() != null) {
-            sql.SET("sessionkey = #{sessionkey,jdbcType=VARCHAR}");
+            sql.SET("sessionKey = #{sessionkey,jdbcType=VARCHAR}");
         }
         
         if (record.getLevel() != null) {
@@ -171,7 +171,7 @@ public class UserSqlProvider {
         }
         
         if (record.getNickname() != null) {
-            sql.SET("nickname = #{nickname,jdbcType=VARCHAR}");
+            sql.SET("nickName = #{nickname,jdbcType=VARCHAR}");
         }
         
         if (record.getGender() != null) {
@@ -179,7 +179,7 @@ public class UserSqlProvider {
         }
         
         if (record.getAvatarurl() != null) {
-            sql.SET("avatarurl = #{avatarurl,jdbcType=VARCHAR}");
+            sql.SET("avatarUrl = #{avatarurl,jdbcType=VARCHAR}");
         }
         
         if (record.getCode() != null) {
