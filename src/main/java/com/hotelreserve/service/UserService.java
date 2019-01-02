@@ -1,6 +1,10 @@
 package com.hotelreserve.service;
 
+import com.github.qcloudsms.SmsSingleSender;
+import com.github.qcloudsms.SmsSingleSenderResult;
+import com.github.qcloudsms.httpclient.HTTPException;
 import com.hotelreserve.http.ConnectionMessage;
+import com.hotelreserve.http.WXmessage;
 import com.hotelreserve.http.model.ResponseHeader;
 import com.hotelreserve.http.model.UserModel;
 import com.hotelreserve.http.model.WxModel;
@@ -13,9 +17,11 @@ import com.hotelreserve.model.User;
 import com.hotelreserve.model.UserExample;
 import com.hotelreserve.utils.LogUtils;
 import com.hotelreserve.utils.XcxUtils;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -112,20 +118,26 @@ public class UserService {
      * @param request
      * @return
      */
-    public ResponseHeader bindPhone(BindPhoneRequest request) {
+    public UserResponse bindPhone(BindPhoneRequest request) {
+        UserResponse userResponse = new UserResponse();
         ResponseHeader responseHeader = new ResponseHeader();
         if (request.id == 0 || request.phone.isEmpty()) {
-            return responseHeader;
+            userResponse.header = responseHeader;
+            return userResponse;
         }
-        User user = new User();
-        user.setId(request.id);
+        User user = mUserMapper.selectByPrimaryKey(request.id);
+        if(user==null){
+            userResponse.header = responseHeader;
+            return userResponse;
+        }
         user.setPhone(request.phone);
         int result = mUserMapper.updateByPrimaryKeySelective(user);
         if (result != 0) {
             responseHeader.code = ConnectionMessage.SUCCESS_CODE;
             responseHeader.msg = ConnectionMessage.BIND_SUCCESS_TEXT;
         }
-        return responseHeader;
+        userResponse.header = responseHeader;
+        return userResponse;
     }
 
 
@@ -149,7 +161,34 @@ public class UserService {
         return response;
     }
 
-//    public ResponseHeader getVerifycode(String phone){
-//    }
+    /**
+     *  发送验证码
+     * @param phone
+     * @return
+     */
+    public ResponseHeader sendVerifycode(String phone,String verifyCode){
+        ResponseHeader header = new ResponseHeader();
+        header.setSuccess();
+        try {
+            String[] params = {verifyCode,"5"};//数组具体的元素个数和模板中变量个数必须一致，例如事例中templateId:5678对应一个变量，参数数组中元素个数也必须是一个
+            SmsSingleSender ssender = new SmsSingleSender(WXmessage.APP_ID, WXmessage.APP_KEY);
+            SmsSingleSenderResult result = ssender.sendWithParam("86", phone,
+                    WXmessage.TEMPLATE_ID, params, WXmessage.SMS_SIGN, "", "");  // 签名参数未提供或者为空时，会使用默认签名发送短信
+            header.setSuccess();
+        } catch (HTTPException e) {
+            // HTTP响应码错误
+            header.setServerError();
+            e.printStackTrace();
+        } catch (JSONException e) {
+            // json解析错误
+            header.setServerError();
+            e.printStackTrace();
+        } catch (IOException e) {
+            header.setServerError();
+            // 网络IO错误
+            e.printStackTrace();
+        }
+        return header;
+    }
 
 }

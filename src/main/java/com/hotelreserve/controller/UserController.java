@@ -37,13 +37,21 @@ public class UserController {
     @ResponseBody
     public void bindPhone(@RequestBody BindPhoneRequest request, HttpServletResponse response) {
         LogUtils.info(request.toString());
-        ResponseHeader header = mUserService.bindPhone(request);
-        ResponseUtils.renderJson(response, new Gson().toJson(header));
+        UserResponse userResponse = mUserService.bindPhone(request);
+        ResponseUtils.renderJson(response, new Gson().toJson(userResponse));
     }
     @ResponseBody
     @RequestMapping(value = "/getAllUser" ,method = RequestMethod.GET)
     public void getAllUser(HttpServletResponse response){
         UserResponse userResponse = mUserService.getUserList();
         ResponseUtils.renderJson(response,new Gson().toJson(userResponse));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/sendVerifyCode" , method = RequestMethod.POST)
+    public void sendVerifyCode(HttpServletResponse response,String phone,String code){
+         LogUtils.info("phone: "+phone+"  code:  "+code);
+         ResponseHeader header = mUserService.sendVerifycode(phone,code);
+         ResponseUtils.renderJson(response,new Gson().toJson(header));
     }
 }
