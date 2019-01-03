@@ -102,12 +102,10 @@ public class OrderService {
                     + "<sign>" + mysign + "</sign>"
                     + "</xml>";
 
-            System.out.println("调试模式_统一下单接口 请求XML数据：" + xml);
-
+            LogUtils.info("调试模式_统一下单接口 请求XML数据：" + xml);
             //调用统一下单接口，并接受返回的结果
             String result = PayUtils.httpRequest(WxPayConfig.pay_url, "POST", xml);
-
-            System.out.println("调试模式_统一下单接口 返回XML数据：" + result);
+            LogUtils.info("调试模式_统一下单接口 请求XML数据：" + result);
 
             // 将解析结果存储在HashMap中
             Map map = PayUtils.doXMLParse(result);
