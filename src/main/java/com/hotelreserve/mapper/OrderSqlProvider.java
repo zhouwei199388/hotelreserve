@@ -14,6 +14,10 @@ public class OrderSqlProvider {
         SQL sql = new SQL();
         sql.INSERT_INTO("hotel_order");
         
+        if (record.getUserid() != null) {
+            sql.VALUES("userId", "#{userid,jdbcType=INTEGER}");
+        }
+        
         if (record.getOrdernumber() != null) {
             sql.VALUES("orderNumber", "#{ordernumber,jdbcType=VARCHAR}");
         }
@@ -58,10 +62,6 @@ public class OrderSqlProvider {
             sql.VALUES("hotelroom", "#{hotelroom,jdbcType=VARCHAR}");
         }
         
-        if (record.getDays() != null) {
-            sql.VALUES("days", "#{days,jdbcType=INTEGER}");
-        }
-        
         return sql.toString();
     }
 
@@ -72,6 +72,7 @@ public class OrderSqlProvider {
         } else {
             sql.SELECT("id");
         }
+        sql.SELECT("userId");
         sql.SELECT("orderNumber");
         sql.SELECT("roomNumber");
         sql.SELECT("people");
@@ -83,7 +84,6 @@ public class OrderSqlProvider {
         sql.SELECT("endDate");
         sql.SELECT("hotel");
         sql.SELECT("hotelroom");
-        sql.SELECT("days");
         sql.FROM("hotel_order");
         applyWhere(sql, example, false);
         
@@ -103,6 +103,10 @@ public class OrderSqlProvider {
         
         if (record.getId() != null) {
             sql.SET("id = #{record.id,jdbcType=INTEGER}");
+        }
+        
+        if (record.getUserid() != null) {
+            sql.SET("userId = #{record.userid,jdbcType=INTEGER}");
         }
         
         if (record.getOrdernumber() != null) {
@@ -149,10 +153,6 @@ public class OrderSqlProvider {
             sql.SET("hotelroom = #{record.hotelroom,jdbcType=VARCHAR}");
         }
         
-        if (record.getDays() != null) {
-            sql.SET("days = #{record.days,jdbcType=INTEGER}");
-        }
-        
         applyWhere(sql, example, true);
         return sql.toString();
     }
@@ -162,6 +162,7 @@ public class OrderSqlProvider {
         sql.UPDATE("hotel_order");
         
         sql.SET("id = #{record.id,jdbcType=INTEGER}");
+        sql.SET("userId = #{record.userid,jdbcType=INTEGER}");
         sql.SET("orderNumber = #{record.ordernumber,jdbcType=VARCHAR}");
         sql.SET("roomNumber = #{record.roomnumber,jdbcType=INTEGER}");
         sql.SET("people = #{record.people,jdbcType=VARCHAR}");
@@ -173,7 +174,6 @@ public class OrderSqlProvider {
         sql.SET("endDate = #{record.enddate,jdbcType=VARCHAR}");
         sql.SET("hotel = #{record.hotel,jdbcType=VARCHAR}");
         sql.SET("hotelroom = #{record.hotelroom,jdbcType=VARCHAR}");
-        sql.SET("days = #{record.days,jdbcType=INTEGER}");
         
         OrderExample example = (OrderExample) parameter.get("example");
         applyWhere(sql, example, true);
@@ -183,6 +183,10 @@ public class OrderSqlProvider {
     public String updateByPrimaryKeySelective(Order record) {
         SQL sql = new SQL();
         sql.UPDATE("hotel_order");
+        
+        if (record.getUserid() != null) {
+            sql.SET("userId = #{userid,jdbcType=INTEGER}");
+        }
         
         if (record.getOrdernumber() != null) {
             sql.SET("orderNumber = #{ordernumber,jdbcType=VARCHAR}");
@@ -226,10 +230,6 @@ public class OrderSqlProvider {
         
         if (record.getHotelroom() != null) {
             sql.SET("hotelroom = #{hotelroom,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getDays() != null) {
-            sql.SET("days = #{days,jdbcType=INTEGER}");
         }
         
         sql.WHERE("id = #{id,jdbcType=INTEGER}");

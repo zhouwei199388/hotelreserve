@@ -34,5 +34,5 @@ public class ConnectionMessage {
     public static final String DATA_IS_NULL = "数据库暂无数据";
     public static final String BUCKET_FILE_ISEXIT = "bucket文件不存在";
     public static final String USER_EXISTS = "用户已存在";
-
+    public static final String USER_NOT_EXISTS = "用户不存在";
 }

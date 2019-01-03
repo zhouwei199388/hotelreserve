@@ -45,10 +45,8 @@ public class UserService {
         WxModel wxModel;
         //判断code是否为空
         if (!request.code.isEmpty()) {
-            String appid = "wxe7b86a74f9e96203";
-            String secret = "e912dab12ca28b09c6cae11ccf7bd4ef";
             //获取微信openid和sessionkey
-            wxModel = XcxUtils.getSessionKeyOropenid(request.code, appid, secret);
+            wxModel = XcxUtils.getSessionKeyOropenid(request.code, WXmessage.APP_ID, WXmessage.APP_SECRET);
             if (wxModel.openid == null || wxModel.session_key == null) {
                 header.setOpenidOrKeyError();
                 userResponse.header = header;
@@ -171,7 +169,7 @@ public class UserService {
         header.setSuccess();
         try {
             String[] params = {verifyCode,"5"};//数组具体的元素个数和模板中变量个数必须一致，例如事例中templateId:5678对应一个变量，参数数组中元素个数也必须是一个
-            SmsSingleSender ssender = new SmsSingleSender(WXmessage.APP_ID, WXmessage.APP_KEY);
+            SmsSingleSender ssender = new SmsSingleSender(WXmessage.SMS_APP_ID, WXmessage.APP_KEY);
             SmsSingleSenderResult result = ssender.sendWithParam("86", phone,
                     WXmessage.TEMPLATE_ID, params, WXmessage.SMS_SIGN, "", "");  // 签名参数未提供或者为空时，会使用默认签名发送短信
             header.setSuccess();

@@ -22,10 +22,6 @@ public class HotelInfoSqlProvider {
             sql.VALUES("hotelAddress", "#{hoteladdress,jdbcType=VARCHAR}");
         }
         
-        if (record.getAddressname() != null) {
-            sql.VALUES("addressName", "#{addressname,jdbcType=VARCHAR}");
-        }
-        
         if (record.getPhone() != null) {
             sql.VALUES("phone", "#{phone,jdbcType=VARCHAR}");
         }
@@ -40,6 +36,10 @@ public class HotelInfoSqlProvider {
         
         if (record.getMinprice() != null) {
             sql.VALUES("minPrice", "#{minprice,jdbcType=DOUBLE}");
+        }
+        
+        if (record.getAddressname() != null) {
+            sql.VALUES("addressname", "#{addressname,jdbcType=VARCHAR}");
         }
         
         if (record.getLatitude() != null) {
@@ -62,11 +62,11 @@ public class HotelInfoSqlProvider {
         }
         sql.SELECT("hotelName");
         sql.SELECT("hotelAddress");
-        sql.SELECT("addressName");
         sql.SELECT("phone");
         sql.SELECT("facility");
         sql.SELECT("hotelText");
         sql.SELECT("minPrice");
+        sql.SELECT("addressname");
         sql.SELECT("latitude");
         sql.SELECT("longitude");
         sql.FROM("hotelinfo");
@@ -98,10 +98,6 @@ public class HotelInfoSqlProvider {
             sql.SET("hotelAddress = #{record.hoteladdress,jdbcType=VARCHAR}");
         }
         
-        if (record.getAddressname() != null) {
-            sql.SET("addressName = #{record.addressname,jdbcType=VARCHAR}");
-        }
-        
         if (record.getPhone() != null) {
             sql.SET("phone = #{record.phone,jdbcType=VARCHAR}");
         }
@@ -116,6 +112,10 @@ public class HotelInfoSqlProvider {
         
         if (record.getMinprice() != null) {
             sql.SET("minPrice = #{record.minprice,jdbcType=DOUBLE}");
+        }
+        
+        if (record.getAddressname() != null) {
+            sql.SET("addressname = #{record.addressname,jdbcType=VARCHAR}");
         }
         
         if (record.getLatitude() != null) {
@@ -137,11 +137,11 @@ public class HotelInfoSqlProvider {
         sql.SET("id = #{record.id,jdbcType=INTEGER}");
         sql.SET("hotelName = #{record.hotelname,jdbcType=VARCHAR}");
         sql.SET("hotelAddress = #{record.hoteladdress,jdbcType=VARCHAR}");
-        sql.SET("addressName = #{record.addressname,jdbcType=VARCHAR}");
         sql.SET("phone = #{record.phone,jdbcType=VARCHAR}");
         sql.SET("facility = #{record.facility,jdbcType=VARCHAR}");
         sql.SET("hotelText = #{record.hoteltext,jdbcType=VARCHAR}");
         sql.SET("minPrice = #{record.minprice,jdbcType=DOUBLE}");
+        sql.SET("addressname = #{record.addressname,jdbcType=VARCHAR}");
         sql.SET("latitude = #{record.latitude,jdbcType=DOUBLE}");
         sql.SET("longitude = #{record.longitude,jdbcType=DOUBLE}");
         
@@ -162,10 +162,6 @@ public class HotelInfoSqlProvider {
             sql.SET("hotelAddress = #{hoteladdress,jdbcType=VARCHAR}");
         }
         
-        if (record.getAddressname() != null) {
-            sql.SET("addressName = #{addressname,jdbcType=VARCHAR}");
-        }
-        
         if (record.getPhone() != null) {
             sql.SET("phone = #{phone,jdbcType=VARCHAR}");
         }
@@ -180,6 +176,10 @@ public class HotelInfoSqlProvider {
         
         if (record.getMinprice() != null) {
             sql.SET("minPrice = #{minprice,jdbcType=DOUBLE}");
+        }
+        
+        if (record.getAddressname() != null) {
+            sql.SET("addressname = #{addressname,jdbcType=VARCHAR}");
         }
         
         if (record.getLatitude() != null) {

@@ -25,14 +25,14 @@ public interface HotelInfoMapper {
 
     @Insert({
         "insert into hotelinfo (hotelName, hotelAddress, ",
-        "addressName, phone, ",
-        "facility, hotelText, ",
-        "minPrice, latitude, ",
+        "phone, facility, ",
+        "hotelText, minPrice, ",
+        "addressname, latitude, ",
         "longitude)",
         "values (#{hotelname,jdbcType=VARCHAR}, #{hoteladdress,jdbcType=VARCHAR}, ",
-        "#{addressname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, ",
-        "#{facility,jdbcType=VARCHAR}, #{hoteltext,jdbcType=VARCHAR}, ",
-        "#{minprice,jdbcType=DOUBLE}, #{latitude,jdbcType=DOUBLE}, ",
+        "#{phone,jdbcType=VARCHAR}, #{facility,jdbcType=VARCHAR}, ",
+        "#{hoteltext,jdbcType=VARCHAR}, #{minprice,jdbcType=DOUBLE}, ",
+        "#{addressname,jdbcType=VARCHAR}, #{latitude,jdbcType=DOUBLE}, ",
         "#{longitude,jdbcType=DOUBLE})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
@@ -47,11 +47,11 @@ public interface HotelInfoMapper {
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="hotelName", property="hotelname", jdbcType=JdbcType.VARCHAR),
         @Result(column="hotelAddress", property="hoteladdress", jdbcType=JdbcType.VARCHAR),
-        @Result(column="addressName", property="addressname", jdbcType=JdbcType.VARCHAR),
         @Result(column="phone", property="phone", jdbcType=JdbcType.VARCHAR),
         @Result(column="facility", property="facility", jdbcType=JdbcType.VARCHAR),
         @Result(column="hotelText", property="hoteltext", jdbcType=JdbcType.VARCHAR),
         @Result(column="minPrice", property="minprice", jdbcType=JdbcType.DOUBLE),
+        @Result(column="addressname", property="addressname", jdbcType=JdbcType.VARCHAR),
         @Result(column="latitude", property="latitude", jdbcType=JdbcType.DOUBLE),
         @Result(column="longitude", property="longitude", jdbcType=JdbcType.DOUBLE)
     })
@@ -59,7 +59,7 @@ public interface HotelInfoMapper {
 
     @Select({
         "select",
-        "id, hotelName, hotelAddress, addressName, phone, facility, hotelText, minPrice, ",
+        "id, hotelName, hotelAddress, phone, facility, hotelText, minPrice, addressname, ",
         "latitude, longitude",
         "from hotelinfo",
         "where id = #{id,jdbcType=INTEGER}"
@@ -68,11 +68,11 @@ public interface HotelInfoMapper {
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="hotelName", property="hotelname", jdbcType=JdbcType.VARCHAR),
         @Result(column="hotelAddress", property="hoteladdress", jdbcType=JdbcType.VARCHAR),
-        @Result(column="addressName", property="addressname", jdbcType=JdbcType.VARCHAR),
         @Result(column="phone", property="phone", jdbcType=JdbcType.VARCHAR),
         @Result(column="facility", property="facility", jdbcType=JdbcType.VARCHAR),
         @Result(column="hotelText", property="hoteltext", jdbcType=JdbcType.VARCHAR),
         @Result(column="minPrice", property="minprice", jdbcType=JdbcType.DOUBLE),
+        @Result(column="addressname", property="addressname", jdbcType=JdbcType.VARCHAR),
         @Result(column="latitude", property="latitude", jdbcType=JdbcType.DOUBLE),
         @Result(column="longitude", property="longitude", jdbcType=JdbcType.DOUBLE)
     })
@@ -91,11 +91,11 @@ public interface HotelInfoMapper {
         "update hotelinfo",
         "set hotelName = #{hotelname,jdbcType=VARCHAR},",
           "hotelAddress = #{hoteladdress,jdbcType=VARCHAR},",
-          "addressName = #{addressname,jdbcType=VARCHAR},",
           "phone = #{phone,jdbcType=VARCHAR},",
           "facility = #{facility,jdbcType=VARCHAR},",
           "hotelText = #{hoteltext,jdbcType=VARCHAR},",
           "minPrice = #{minprice,jdbcType=DOUBLE},",
+          "addressname = #{addressname,jdbcType=VARCHAR},",
           "latitude = #{latitude,jdbcType=DOUBLE},",
           "longitude = #{longitude,jdbcType=DOUBLE}",
         "where id = #{id,jdbcType=INTEGER}"

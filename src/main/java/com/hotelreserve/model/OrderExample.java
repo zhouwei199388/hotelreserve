@@ -164,6 +164,66 @@ public class OrderExample {
             return (Criteria) this;
         }
 
+        public Criteria andUseridIsNull() {
+            addCriterion("userId is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridIsNotNull() {
+            addCriterion("userId is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridEqualTo(Integer value) {
+            addCriterion("userId =", value, "userid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridNotEqualTo(Integer value) {
+            addCriterion("userId <>", value, "userid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridGreaterThan(Integer value) {
+            addCriterion("userId >", value, "userid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridGreaterThanOrEqualTo(Integer value) {
+            addCriterion("userId >=", value, "userid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridLessThan(Integer value) {
+            addCriterion("userId <", value, "userid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridLessThanOrEqualTo(Integer value) {
+            addCriterion("userId <=", value, "userid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridIn(List<Integer> values) {
+            addCriterion("userId in", values, "userid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridNotIn(List<Integer> values) {
+            addCriterion("userId not in", values, "userid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridBetween(Integer value1, Integer value2) {
+            addCriterion("userId between", value1, value2, "userid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridNotBetween(Integer value1, Integer value2) {
+            addCriterion("userId not between", value1, value2, "userid");
+            return (Criteria) this;
+        }
+
         public Criteria andOrdernumberIsNull() {
             addCriterion("orderNumber is null");
             return (Criteria) this;
@@ -901,66 +961,6 @@ public class OrderExample {
 
         public Criteria andHotelroomNotBetween(String value1, String value2) {
             addCriterion("hotelroom not between", value1, value2, "hotelroom");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysIsNull() {
-            addCriterion("days is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysIsNotNull() {
-            addCriterion("days is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysEqualTo(Integer value) {
-            addCriterion("days =", value, "days");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysNotEqualTo(Integer value) {
-            addCriterion("days <>", value, "days");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysGreaterThan(Integer value) {
-            addCriterion("days >", value, "days");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysGreaterThanOrEqualTo(Integer value) {
-            addCriterion("days >=", value, "days");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysLessThan(Integer value) {
-            addCriterion("days <", value, "days");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysLessThanOrEqualTo(Integer value) {
-            addCriterion("days <=", value, "days");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysIn(List<Integer> values) {
-            addCriterion("days in", values, "days");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysNotIn(List<Integer> values) {
-            addCriterion("days not in", values, "days");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysBetween(Integer value1, Integer value2) {
-            addCriterion("days between", value1, value2, "days");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysNotBetween(Integer value1, Integer value2) {
-            addCriterion("days not between", value1, value2, "days");
             return (Criteria) this;
         }
     }

@@ -3,6 +3,8 @@ package com.hotelreserve.model;
 public class Order {
     private Integer id;
 
+    private Integer userid;
+
     private String ordernumber;
 
     private Integer roomnumber;
@@ -25,14 +27,20 @@ public class Order {
 
     private String hotelroom;
 
-    private Integer days;
-
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Integer userid) {
+        this.userid = userid;
     }
 
     public String getOrdernumber() {
@@ -121,13 +129,5 @@ public class Order {
 
     public void setHotelroom(String hotelroom) {
         this.hotelroom = hotelroom == null ? null : hotelroom.trim();
-    }
-
-    public Integer getDays() {
-        return days;
-    }
-
-    public void setDays(Integer days) {
-        this.days = days;
     }
 }

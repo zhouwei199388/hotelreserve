@@ -24,16 +24,18 @@ public interface OrderMapper {
     int deleteByPrimaryKey(Integer id);
 
     @Insert({
-        "insert into hotel_order (orderNumber, roomNumber, ",
-        "people, phone, note, ",
-        "status, price, startDate, ",
+        "insert into hotel_order (userId, orderNumber, ",
+        "roomNumber, people, ",
+        "phone, note, status, ",
+        "price, startDate, ",
         "endDate, hotel, ",
-        "hotelroom, days)",
-        "values (#{ordernumber,jdbcType=VARCHAR}, #{roomnumber,jdbcType=INTEGER}, ",
-        "#{people,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}, ",
-        "#{status,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE}, #{startdate,jdbcType=VARCHAR}, ",
+        "hotelroom)",
+        "values (#{userid,jdbcType=INTEGER}, #{ordernumber,jdbcType=VARCHAR}, ",
+        "#{roomnumber,jdbcType=INTEGER}, #{people,jdbcType=VARCHAR}, ",
+        "#{phone,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, ",
+        "#{price,jdbcType=DOUBLE}, #{startdate,jdbcType=VARCHAR}, ",
         "#{enddate,jdbcType=VARCHAR}, #{hotel,jdbcType=VARCHAR}, ",
-        "#{hotelroom,jdbcType=VARCHAR}, #{days,jdbcType=INTEGER})"
+        "#{hotelroom,jdbcType=VARCHAR})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
     int insert(Order record);
@@ -45,6 +47,7 @@ public interface OrderMapper {
     @SelectProvider(type=OrderSqlProvider.class, method="selectByExample")
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="userId", property="userid", jdbcType=JdbcType.INTEGER),
         @Result(column="orderNumber", property="ordernumber", jdbcType=JdbcType.VARCHAR),
         @Result(column="roomNumber", property="roomnumber", jdbcType=JdbcType.INTEGER),
         @Result(column="people", property="people", jdbcType=JdbcType.VARCHAR),
@@ -55,20 +58,20 @@ public interface OrderMapper {
         @Result(column="startDate", property="startdate", jdbcType=JdbcType.VARCHAR),
         @Result(column="endDate", property="enddate", jdbcType=JdbcType.VARCHAR),
         @Result(column="hotel", property="hotel", jdbcType=JdbcType.VARCHAR),
-        @Result(column="hotelroom", property="hotelroom", jdbcType=JdbcType.VARCHAR),
-        @Result(column="days", property="days", jdbcType=JdbcType.INTEGER)
+        @Result(column="hotelroom", property="hotelroom", jdbcType=JdbcType.VARCHAR)
     })
     List<Order> selectByExample(OrderExample example);
 
     @Select({
         "select",
-        "id, orderNumber, roomNumber, people, phone, note, status, price, startDate, ",
-        "endDate, hotel, hotelroom, days",
+        "id, userId, orderNumber, roomNumber, people, phone, note, status, price, startDate, ",
+        "endDate, hotel, hotelroom",
         "from hotel_order",
         "where id = #{id,jdbcType=INTEGER}"
     })
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="userId", property="userid", jdbcType=JdbcType.INTEGER),
         @Result(column="orderNumber", property="ordernumber", jdbcType=JdbcType.VARCHAR),
         @Result(column="roomNumber", property="roomnumber", jdbcType=JdbcType.INTEGER),
         @Result(column="people", property="people", jdbcType=JdbcType.VARCHAR),
@@ -79,8 +82,7 @@ public interface OrderMapper {
         @Result(column="startDate", property="startdate", jdbcType=JdbcType.VARCHAR),
         @Result(column="endDate", property="enddate", jdbcType=JdbcType.VARCHAR),
         @Result(column="hotel", property="hotel", jdbcType=JdbcType.VARCHAR),
-        @Result(column="hotelroom", property="hotelroom", jdbcType=JdbcType.VARCHAR),
-        @Result(column="days", property="days", jdbcType=JdbcType.INTEGER)
+        @Result(column="hotelroom", property="hotelroom", jdbcType=JdbcType.VARCHAR)
     })
     Order selectByPrimaryKey(Integer id);
 
@@ -95,7 +97,8 @@ public interface OrderMapper {
 
     @Update({
         "update hotel_order",
-        "set orderNumber = #{ordernumber,jdbcType=VARCHAR},",
+        "set userId = #{userid,jdbcType=INTEGER},",
+          "orderNumber = #{ordernumber,jdbcType=VARCHAR},",
           "roomNumber = #{roomnumber,jdbcType=INTEGER},",
           "people = #{people,jdbcType=VARCHAR},",
           "phone = #{phone,jdbcType=VARCHAR},",
@@ -105,8 +108,7 @@ public interface OrderMapper {
           "startDate = #{startdate,jdbcType=VARCHAR},",
           "endDate = #{enddate,jdbcType=VARCHAR},",
           "hotel = #{hotel,jdbcType=VARCHAR},",
-          "hotelroom = #{hotelroom,jdbcType=VARCHAR},",
-          "days = #{days,jdbcType=INTEGER}",
+          "hotelroom = #{hotelroom,jdbcType=VARCHAR}",
         "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Order record);
