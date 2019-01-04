@@ -1,6 +1,7 @@
 package com.hotelreserve.controller;
 
 import com.google.gson.Gson;
+import com.hotelreserve.http.model.OrderModel;
 import com.hotelreserve.model.Admin;
 import com.hotelreserve.model.Order;
 import org.junit.Before;
@@ -43,7 +44,6 @@ public class OrderControllerTest {
     @Test
     public void addOrder() throws Exception {
         Order order = new Order();
-        order.setDays(2);
         order.setStartdate("2018-12-29");
         order.setEnddate("2018-12-31");
         order.setHotel("四季星酒店");
@@ -63,5 +63,28 @@ public class OrderControllerTest {
                 .andReturn();
     }
 
+    @Test
+    public void wxPrePay() throws Exception {
+        OrderModel order = new OrderModel();
+        order.days = 2;
+        order.userid =8;
+        order.startdate="2018-12-29";
+        order.enddate="2018-12-31";
+        order.hotel="四季星酒店";
+        order.roomnumber=1;
+        order.hotelroom="大床房";
+        order.people="邹维";
+        order.phone="15090824065";
+        order.price=580.00;
+        order.status=0;
+        order.ordernumber="1212442132164654";
+        String request = new Gson().toJson(order);
+        mvc.perform(MockMvcRequestBuilders.post("/order/wxPrePay")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(request))
+                .andExpect(MockMvcResultMatchers.status().isOk()) //400错误请求
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+    }
 
 }

@@ -12,13 +12,11 @@ import com.hotelreserve.mapper.UserMapper;
 import com.hotelreserve.model.Order;
 import com.hotelreserve.model.User;
 import com.hotelreserve.utils.LogUtils;
-import com.hotelreserve.utils.XcxUtils;
 import com.hotelreserve.wxpay.PayUtils;
 import com.hotelreserve.wxpay.WxPayConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,7 +65,7 @@ public class OrderService {
             //生成的随机字符串
             String nonce_str = PayUtils.getRandomStringByLength(32);
             //商品名称
-            String body = model.hotel+model.hotelroom+"预订";
+            String body = "reserve";
 //            //获取客户端的ip地址
 //            String spbill_create_ip = IpUtil.getIpAddr(request);
 
@@ -85,13 +83,13 @@ public class OrderService {
             packageParams.put("openid", openid);
 
             String prestr = PayUtils.createLinkString(packageParams); // 把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
-
+            LogUtils.info("prestr = " + prestr);
             //MD5运算生成签名，这里是第一次签名，用于调用统一下单接口
             String mysign = PayUtils.sign(prestr, WxPayConfig.key, "utf-8").toUpperCase();
-
+            LogUtils.info("MD5生成签名" + mysign);
             //拼接统一下单接口使用的xml数据，要将上一步生成的签名一起拼接进去
             String xml = "<xml>" + "<appid>" + WxPayConfig.appid + "</appid>"
-                    + "<body><![CDATA[" + body + "]]></body>"
+                    + "<body>" + body + "</body>"
                     + "<mch_id>" + WxPayConfig.mch_id + "</mch_id>"
                     + "<nonce_str>" + nonce_str + "</nonce_str>"
                     + "<notify_url>" + WxPayConfig.notify_url + "</notify_url>"
