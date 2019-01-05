@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  * Created by zouwei on 2018/12/7.
  */
 @Controller
-@RequestMapping(value = "/hotelInfo")
+@RequestMapping(value = "/api/hotelInfo")
 public class HotelInfoController {
     @Autowired
     private HotelService mHotelService;

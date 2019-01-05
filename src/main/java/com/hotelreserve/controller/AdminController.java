@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  * Created by zouwei on 2018/12/12.
  */
 @Controller
-@RequestMapping(value = "/admin")
+@RequestMapping(value = "/api/admin")
 public class AdminController {
     @Autowired
     private AdminService mAdminService;

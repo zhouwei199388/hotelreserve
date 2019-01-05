@@ -67,7 +67,7 @@ public class OrderControllerTest {
     public void wxPrePay() throws Exception {
         OrderModel order = new OrderModel();
         order.days = 2;
-        order.userid =8;
+        order.userid =11;
         order.startdate="2018-12-29";
         order.enddate="2018-12-31";
         order.hotel="四季星酒店";

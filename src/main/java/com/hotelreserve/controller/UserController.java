@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  * Created by 15090 on 2018/12/2.
  */
 @Controller
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/api/user")
 public class UserController {
     @Autowired
     private UserService mUserService;

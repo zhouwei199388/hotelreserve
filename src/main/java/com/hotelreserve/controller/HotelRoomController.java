@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  * Created by 15090 on 2018/12/14.
  */
 @Controller
-@RequestMapping(value = "/room" ,method = RequestMethod.POST)
+@RequestMapping(value = "/api/room" ,method = RequestMethod.POST)
 public class HotelRoomController {
 
 

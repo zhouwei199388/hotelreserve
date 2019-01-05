@@ -29,7 +29,7 @@ import java.util.Map;
  * Created by 15090 on 2018/12/29.
  */
 @Controller
-@RequestMapping(value = "/order")
+@RequestMapping(value = "/api/order")
 public class OrderController {
 
     @Autowired

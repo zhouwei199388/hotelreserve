@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class IndexController {
-    @RequestMapping(value = "/index",method = RequestMethod.GET)
+    @RequestMapping(value = "/api/index",method = RequestMethod.GET)
     @ResponseBody
     public String getIndex(){
         return "欢迎使用四季星";

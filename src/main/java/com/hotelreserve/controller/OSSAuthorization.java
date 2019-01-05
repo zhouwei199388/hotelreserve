@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  * Created by 15090 on 2018/12/17.
  */
 @Controller
-@RequestMapping(value = "/OSS")
+@RequestMapping(value = "/api/OSS")
 public class OSSAuthorization {
     @Autowired
     private AliStsService mAliStsService;
