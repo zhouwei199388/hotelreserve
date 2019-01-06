@@ -79,7 +79,7 @@ public class OrderControllerTest {
         order.status=0;
         order.ordernumber="1212442132164654";
         String request = new Gson().toJson(order);
-        mvc.perform(MockMvcRequestBuilders.post("/order/wxPrePay")
+        mvc.perform(MockMvcRequestBuilders.post("/api/order/wxPrePay")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(request))
                 .andExpect(MockMvcResultMatchers.status().isOk()) //400错误请求

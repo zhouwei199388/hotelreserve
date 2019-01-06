@@ -11,7 +11,7 @@ public class WxPayConfig {
     //微信支付的商户密钥
     public static final String key = "42098419930501635x42098419930501";
     //支付成功后的服务器回调url
-    public static final String notify_url = "http://101.132.195.191/weixin/api/wxNotify";
+    public static final String notify_url = "https://zwwjj1314.com/api/wxNotify";
     //签名方式，固定值
     public static final String SIGNTYPE = "MD5";
     //交易类型，小程序支付的固定值为JSAPI
