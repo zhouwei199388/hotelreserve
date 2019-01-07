@@ -52,5 +52,10 @@ public class OrderModel {
         return order;
     }
 
+    public String getPrice(){
+        int price = (int)(this.price*100);
+        return String.valueOf(price);
+    }
+
 
 }

@@ -67,7 +67,7 @@ public class OrderControllerTest {
     public void wxPrePay() throws Exception {
         OrderModel order = new OrderModel();
         order.days = 2;
-        order.userid =11;
+        order.userid =8;
         order.startdate="2018-12-29";
         order.enddate="2018-12-31";
         order.hotel="四季星酒店";
@@ -75,7 +75,7 @@ public class OrderControllerTest {
         order.hotelroom="大床房";
         order.people="邹维";
         order.phone="15090824065";
-        order.price=580.00;
+        order.price=580.0;
         order.status=0;
         order.ordernumber="1212442132164654";
         String request = new Gson().toJson(order);

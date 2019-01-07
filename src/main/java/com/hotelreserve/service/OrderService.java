@@ -2,10 +2,8 @@ package com.hotelreserve.service;
 
 import com.google.gson.Gson;
 import com.hotelreserve.http.ConnectionMessage;
-import com.hotelreserve.http.WXmessage;
 import com.hotelreserve.http.model.OrderModel;
 import com.hotelreserve.http.model.ResponseHeader;
-import com.hotelreserve.http.model.WxModel;
 import com.hotelreserve.http.response.OrderResponse;
 import com.hotelreserve.mapper.OrderMapper;
 import com.hotelreserve.mapper.UserMapper;
@@ -30,6 +28,7 @@ public class OrderService {
     private OrderMapper mOrderMapper;
     @Autowired
     private UserMapper mUserMapper;
+
     public OrderResponse addOrder(Order order) {
         OrderResponse response = new OrderResponse();
         ResponseHeader header = new ResponseHeader();
@@ -46,26 +45,27 @@ public class OrderService {
         OrderResponse response = new OrderResponse();
         ResponseHeader header = new ResponseHeader();
         User user = mUserMapper.selectByPrimaryKey(orderModel.userid);
-        if (user==null) {
+        if (user == null) {
             header.msg = ConnectionMessage.USER_NOT_EXISTS;
             response.header = header;
             return response;
         }
-        Map<String, Object> map =  wxPrePay(user.getOpenid(),orderModel);
-        LogUtils.info(map.toString());
+        response = wxPrePay(user.getOpenid(), orderModel);
+
+        LogUtils.info(new Gson().toJson(response));
         return response;
     }
 
     /**
-     * @Description: 发起微信支付
      * @param model
+     * @Description: 同一订单支付
      */
-    public Map<String, Object> wxPrePay(String openid, OrderModel model){
-        try{
+    public OrderResponse wxPrePay(String openid, OrderModel model) {
+        try {
             //生成的随机字符串
             String nonce_str = PayUtils.getRandomStringByLength(32);
             //商品名称
-            String body = "reserve";
+            String body = model.hotelroom+"预订";
 //            //获取客户端的ip地址
 //            String spbill_create_ip = IpUtil.getIpAddr(request);
 
@@ -74,9 +74,10 @@ public class OrderService {
             packageParams.put("appid", WxPayConfig.appid);
             packageParams.put("mch_id", WxPayConfig.mch_id);
             packageParams.put("nonce_str", nonce_str);
-            packageParams.put("body", body);
             packageParams.put("out_trade_no", model.ordernumber);//商户订单号
-            packageParams.put("total_fee", model.price.toString());//支付金额，这边需要转成字符串类型，否则后面的签名会失败
+            packageParams.put("body", body);
+
+            packageParams.put("total_fee", model.getPrice());//支付金额，这边需要转成字符串类型，否则后面的签名会失败
 //            packageParams.put("spbill_create_ip", spbill_create_ip);
             packageParams.put("notify_url", WxPayConfig.notify_url);//支付成功后的回调地址
             packageParams.put("trade_type", WxPayConfig.TRADETYPE);//支付方式
@@ -94,8 +95,8 @@ public class OrderService {
                     + "<nonce_str>" + nonce_str + "</nonce_str>"
                     + "<notify_url>" + WxPayConfig.notify_url + "</notify_url>"
                     + "<openid>" + openid + "</openid>"
-                    + "<out_trade_no>" + "123456789" + "</out_trade_no>"
-                    + "<total_fee>" + "1" + "</total_fee>"
+                    + "<out_trade_no>" + model.ordernumber + "</out_trade_no>"
+                    + "<total_fee>" + model.getPrice() + "</total_fee>"
                     + "<trade_type>" + WxPayConfig.TRADETYPE + "</trade_type>"
                     + "<sign>" + mysign + "</sign>"
                     + "</xml>";
@@ -110,23 +111,24 @@ public class OrderService {
 
             String return_code = (String) map.get("return_code");//返回状态码
 
-            Map<String, Object> response = new HashMap<String, Object>();//返回给小程序端需要的参数
-            if(return_code.equals("SUCCESS")){
+            OrderResponse response =null;//返回给小程序端需要的参数
+
+            if (return_code.equals("SUCCESS")) {
+                response = new OrderResponse();
                 String prepay_id = (String) map.get("prepay_id");//返回的预付单信息
-                response.put("nonceStr", nonce_str);
-                response.put("package", "prepay_id=" + prepay_id);
+                response.nonceStr = nonce_str;
+                response.packageStr = "prepay_id=" + prepay_id;
                 Long timeStamp = System.currentTimeMillis() / 1000;
-                response.put("timeStamp", timeStamp + "");//这边要将返回的时间戳转化成字符串，不然小程序端调用wx.requestPayment方法会报签名错误
+                response.timeStamap = timeStamp + "";//这边要将返回的时间戳转化成字符串，不然小程序端调用wx.requestPayment方法会报签名错误
                 //拼接签名需要的参数
-                String stringSignTemp = "appId=" + WxPayConfig.appid + "&nonceStr=" + nonce_str + "&package=prepay_id=" + prepay_id+ "&signType=MD5&timeStamp=" + timeStamp;
+                String stringSignTemp = "appId=" + WxPayConfig.appid + "&nonceStr=" + nonce_str + "&package=prepay_id=" + prepay_id + "&signType=MD5&timeStamp=" + timeStamp;
                 //再次签名，这个签名用于小程序端调用wx.requesetPayment方法
                 String paySign = PayUtils.sign(stringSignTemp, WxPayConfig.key, "utf-8").toUpperCase();
-
-                response.put("paySign", paySign);
+                response.paySign = paySign;
+                response.appId = WxPayConfig.appid;
             }
-            response.put("appid", WxPayConfig.appid);
             return response;
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

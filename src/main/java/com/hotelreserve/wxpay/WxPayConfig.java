@@ -4,6 +4,9 @@ package com.hotelreserve.wxpay;
  * Created by 15090 on 2019/1/2.
  */
 public class WxPayConfig {
+
+    public static final String FIELD_SIGN = "sign";
+    public static final String FIELD_SIGN_TYPE = "sign_type";
     //小程序appid
     public static final String appid = "wxe7b86a74f9e96203";
     //微信支付的商户id
