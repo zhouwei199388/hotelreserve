@@ -46,6 +46,7 @@ public class OrderController {
     @RequestMapping(value = "/wxPrePay", method = RequestMethod.POST)
     public void wxPrePay(HttpServletResponse response,@RequestBody OrderModel order) {
         OrderResponse orderResponse = mOrderService.wxPrePay(order);
+        LogUtils.info(new Gson().toJson(orderResponse));
         ResponseUtils.renderJson(response,new Gson().toJson(orderResponse));
     }
 

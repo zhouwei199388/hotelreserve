@@ -51,8 +51,6 @@ public class OrderService {
             return response;
         }
         response = wxPrePay(user.getOpenid(), orderModel);
-
-        LogUtils.info(new Gson().toJson(response));
         return response;
     }
 
@@ -111,8 +109,8 @@ public class OrderService {
 
             String return_code = (String) map.get("return_code");//返回状态码
 
-            OrderResponse response =null;//返回给小程序端需要的参数
-
+            OrderResponse response =new OrderResponse();//返回给小程序端需要的参数
+            ResponseHeader header = new ResponseHeader();
             if (return_code.equals("SUCCESS")) {
                 response = new OrderResponse();
                 String prepay_id = (String) map.get("prepay_id");//返回的预付单信息
@@ -126,6 +124,8 @@ public class OrderService {
                 String paySign = PayUtils.sign(stringSignTemp, WxPayConfig.key, "utf-8").toUpperCase();
                 response.paySign = paySign;
                 response.appId = WxPayConfig.appid;
+                header.setSuccess();
+                response.header = header;
             }
             return response;
         } catch (Exception e) {

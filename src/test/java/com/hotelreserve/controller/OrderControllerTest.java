@@ -20,6 +20,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Date;
+
 
 /**
  * Created by zouwei on 2018/12/4.
@@ -77,7 +79,7 @@ public class OrderControllerTest {
         order.phone="15090824065";
         order.price=580.0;
         order.status=0;
-        order.ordernumber="1212442132164654";
+        order.ordernumber= String.valueOf(new Date().getTime());
         String request = new Gson().toJson(order);
         mvc.perform(MockMvcRequestBuilders.post("/api/order/wxPrePay")
                 .contentType(MediaType.APPLICATION_JSON)
