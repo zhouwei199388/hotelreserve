@@ -14,6 +14,7 @@ import com.hotelreserve.wxpay.PayUtils;
 import com.hotelreserve.wxpay.WxPayConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,6 +59,7 @@ public class OrderService {
      * @param model
      * @Description: 同一订单支付
      */
+    @Transactional
     public OrderResponse wxPrePay(String openid, OrderModel model) {
         try {
             //生成的随机字符串
@@ -113,6 +115,11 @@ public class OrderService {
             ResponseHeader header = new ResponseHeader();
             if (return_code.equals("SUCCESS")) {
                 response = new OrderResponse();
+                int resultCode = mOrderMapper.insert(model.copyToHotel());
+                if(resultCode!=1){
+                    response.header = header;
+                    return response;
+                }
                 String prepay_id = (String) map.get("prepay_id");//返回的预付单信息
                 response.nonceStr = nonce_str;
                 response.packageStr = "prepay_id=" + prepay_id;

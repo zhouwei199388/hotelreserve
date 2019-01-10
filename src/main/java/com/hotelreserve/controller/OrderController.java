@@ -68,7 +68,7 @@ public class OrderController {
         //sb为微信返回的xml
         String notityXml = sb.toString();
         String resXml = "";
-        System.out.println("接收到的报文：" + notityXml);
+        LogUtils.info("接收到的报文：" + notityXml);
 
         Map map = PayUtils.doXMLParse(notityXml);
 
@@ -82,6 +82,9 @@ public class OrderController {
             if (sign.equals(map.get("sign"))) {
                 /**此处添加自己的业务逻辑代码start**/
 
+                Order order = new Order();
+                order.setStatus(1);
+
 
                 /**此处添加自己的业务逻辑代码end**/
                 //通知微信服务器已经支付成功
@@ -92,8 +95,8 @@ public class OrderController {
             resXml = "<xml>" + "<return_code><![CDATA[FAIL]]></return_code>"
                     + "<return_msg><![CDATA[报文为空]]></return_msg>" + "</xml> ";
         }
-        System.out.println(resXml);
-        System.out.println("微信支付回调数据结束");
+        LogUtils.info(resXml);
+        LogUtils.info("微信支付回调数据结束");
 
 
         BufferedOutputStream out = new BufferedOutputStream(

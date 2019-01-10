@@ -43,6 +43,8 @@ public class OrderModel {
         order.setOrdernumber(this.ordernumber);
         order.setRoomnumber(this.roomnumber);
         order.setPeople(this.people);
+        order.setPhone(this.phone);
+        order.setPrice(this.price);
         order.setNote(this.note);
         order.setStatus(this.status);
         order.setStartdate(this.startdate);
