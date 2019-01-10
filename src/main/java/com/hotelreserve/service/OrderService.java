@@ -8,6 +8,7 @@ import com.hotelreserve.http.response.OrderResponse;
 import com.hotelreserve.mapper.OrderMapper;
 import com.hotelreserve.mapper.UserMapper;
 import com.hotelreserve.model.Order;
+import com.hotelreserve.model.OrderExample;
 import com.hotelreserve.model.User;
 import com.hotelreserve.utils.LogUtils;
 import com.hotelreserve.wxpay.PayUtils;
@@ -139,5 +140,43 @@ public class OrderService {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    /**
+     * 支付成功回调
+     * @param status
+     * @param orderNumber
+     * @return
+     */
+    public boolean updateOrderStatus(int status,String orderNumber){
+        Order order = new Order();
+        order.setStatus(status);
+        OrderExample example = new OrderExample();
+        OrderExample.Criteria  criteria = example.createCriteria();
+        criteria.andOrdernumberEqualTo(orderNumber);
+        int result = mOrderMapper.updateByExampleSelective(order,example);
+        if(result==0){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 修改订单状态
+     * @param id
+     * @param status
+     * @return
+     */
+    public ResponseHeader updateOrderStatus(int id,int status){
+        ResponseHeader header = new ResponseHeader();
+        Order order = new Order();
+        order.setId(id);
+        order.setStatus(status);
+        int result = mOrderMapper.updateByPrimaryKeySelective(order);
+        if(result!=0){
+            header.setSuccess();
+        }
+        return header;
     }
 }

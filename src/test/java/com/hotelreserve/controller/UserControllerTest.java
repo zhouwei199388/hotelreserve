@@ -77,7 +77,10 @@ public class UserControllerTest {
 
     @Test
     public void getUser() throws Exception {
-
+        mvc.perform(MockMvcRequestBuilders.get("/api/user/getAllUser"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
     }
 
 }

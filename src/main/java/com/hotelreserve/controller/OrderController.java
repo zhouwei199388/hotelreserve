@@ -78,13 +78,12 @@ public class OrderController {
             Map<String, String> validParams = PayUtils.paraFilter(map);  //回调验签时需要去除sign和空值参数
             String validStr = PayUtils.createLinkString(validParams);//把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
             String sign = PayUtils.sign(validStr, WxPayConfig.key, "utf-8").toUpperCase();//拼装生成服务器端验证的签名
+            String orderNumber = (String) map.get("out_trade_no");
             //根据微信官网的介绍，此处不仅对回调的参数进行验签，还需要对返回的金额与系统订单的金额进行比对等
             if (sign.equals(map.get("sign"))) {
                 /**此处添加自己的业务逻辑代码start**/
 
-                Order order = new Order();
-                order.setStatus(1);
-
+                mOrderService.updateOrderStatus(WxPayConfig.TO_SIGN_IN,orderNumber);
 
                 /**此处添加自己的业务逻辑代码end**/
                 //通知微信服务器已经支付成功
