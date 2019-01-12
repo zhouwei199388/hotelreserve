@@ -3,6 +3,7 @@ package com.hotelreserve.http.response;
 import com.hotelreserve.http.model.UserModel;
 import com.hotelreserve.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +20,9 @@ public class UserResponse extends BaseResponse {
         for (User user : users) {
             UserModel userModel = new UserModel();
             userModel.copyFromUser(user);
+            if(this.users==null){
+                this.users = new ArrayList<>();
+            }
             this.users.add(userModel);
         }
     }

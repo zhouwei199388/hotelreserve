@@ -5,6 +5,7 @@ import com.hotelreserve.http.ConnectionMessage;
 import com.hotelreserve.http.model.OrderModel;
 import com.hotelreserve.http.model.ResponseHeader;
 import com.hotelreserve.http.response.OrderResponse;
+import com.hotelreserve.http.response.PrePayResponse;
 import com.hotelreserve.mapper.OrderMapper;
 import com.hotelreserve.mapper.UserMapper;
 import com.hotelreserve.model.Order;
@@ -13,11 +14,13 @@ import com.hotelreserve.model.User;
 import com.hotelreserve.utils.LogUtils;
 import com.hotelreserve.wxpay.PayUtils;
 import com.hotelreserve.wxpay.WxPayConfig;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,8 +34,8 @@ public class OrderService {
     @Autowired
     private UserMapper mUserMapper;
 
-    public OrderResponse addOrder(Order order) {
-        OrderResponse response = new OrderResponse();
+    public PrePayResponse addOrder(Order order) {
+        PrePayResponse response = new PrePayResponse();
         ResponseHeader header = new ResponseHeader();
         int type = mOrderMapper.insert(order);
         if (type != 0) {
@@ -42,9 +45,9 @@ public class OrderService {
         return response;
     }
 
-    public OrderResponse wxPrePay(OrderModel orderModel) {
+    public PrePayResponse wxPrePay(OrderModel orderModel) {
         LogUtils.info(new Gson().toJson(orderModel));
-        OrderResponse response = new OrderResponse();
+        PrePayResponse response = new PrePayResponse();
         ResponseHeader header = new ResponseHeader();
         User user = mUserMapper.selectByPrimaryKey(orderModel.userid);
         if (user == null) {
@@ -61,7 +64,7 @@ public class OrderService {
      * @Description: 同一订单支付
      */
     @Transactional
-    public OrderResponse wxPrePay(String openid, OrderModel model) {
+    public PrePayResponse wxPrePay(String openid, OrderModel model) {
         try {
             //生成的随机字符串
             String nonce_str = PayUtils.getRandomStringByLength(32);
@@ -112,10 +115,10 @@ public class OrderService {
 
             String return_code = (String) map.get("return_code");//返回状态码
 
-            OrderResponse response =new OrderResponse();//返回给小程序端需要的参数
+            PrePayResponse response =new PrePayResponse();//返回给小程序端需要的参数
             ResponseHeader header = new ResponseHeader();
             if (return_code.equals("SUCCESS")) {
-                response = new OrderResponse();
+                response = new PrePayResponse();
                 int resultCode = mOrderMapper.insert(model.copyToHotel());
                 if(resultCode!=1){
                     response.header = header;
@@ -149,7 +152,7 @@ public class OrderService {
      * @param orderNumber
      * @return
      */
-    public boolean updateOrderStatus(int status,String orderNumber){
+    public boolean updateOrderStatus(int status,String orderNumber,String price){
         Order order = new Order();
         order.setStatus(status);
         OrderExample example = new OrderExample();
@@ -179,4 +182,21 @@ public class OrderService {
         }
         return header;
     }
+
+    /**
+     * 获取所有订单
+     * @return
+     */
+    public OrderResponse getAllOrder(){
+        OrderResponse response = new OrderResponse();
+        ResponseHeader header = new ResponseHeader();
+        List<Order> orders = mOrderMapper.selectByExample(new OrderExample());
+        if(orders.size()!=0){
+            header.setSuccess();
+        }
+        response.header = header;
+        response.orders = orders;
+        return response;
+    }
+
 }

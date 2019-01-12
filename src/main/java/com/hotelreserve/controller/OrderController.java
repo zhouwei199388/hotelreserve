@@ -2,8 +2,8 @@ package com.hotelreserve.controller;
 
 import com.google.gson.Gson;
 import com.hotelreserve.http.model.OrderModel;
-import com.hotelreserve.http.model.ResponseHeader;
 import com.hotelreserve.http.response.OrderResponse;
+import com.hotelreserve.http.response.PrePayResponse;
 import com.hotelreserve.model.Order;
 import com.hotelreserve.service.OrderService;
 import com.hotelreserve.utils.LogUtils;
@@ -38,16 +38,16 @@ public class OrderController {
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public void addOrder(HttpServletResponse response, @RequestBody Order order){
         LogUtils.info(new Gson().toJson(order));
-        OrderResponse orderResponse = mOrderService.addOrder(order);
-        ResponseUtils.renderJson(response,new Gson().toJson(orderResponse));
+        PrePayResponse prePayResponse = mOrderService.addOrder(order);
+        ResponseUtils.renderJson(response,new Gson().toJson(prePayResponse));
     }
 
     @ResponseBody
     @RequestMapping(value = "/wxPrePay", method = RequestMethod.POST)
     public void wxPrePay(HttpServletResponse response,@RequestBody OrderModel order) {
-        OrderResponse orderResponse = mOrderService.wxPrePay(order);
-        LogUtils.info(new Gson().toJson(orderResponse));
-        ResponseUtils.renderJson(response,new Gson().toJson(orderResponse));
+        PrePayResponse prePayResponse = mOrderService.wxPrePay(order);
+        LogUtils.info(new Gson().toJson(prePayResponse));
+        ResponseUtils.renderJson(response,new Gson().toJson(prePayResponse));
     }
 
     /**
@@ -78,12 +78,13 @@ public class OrderController {
             Map<String, String> validParams = PayUtils.paraFilter(map);  //回调验签时需要去除sign和空值参数
             String validStr = PayUtils.createLinkString(validParams);//把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
             String sign = PayUtils.sign(validStr, WxPayConfig.key, "utf-8").toUpperCase();//拼装生成服务器端验证的签名
-            String orderNumber = (String) map.get("out_trade_no");
+
             //根据微信官网的介绍，此处不仅对回调的参数进行验签，还需要对返回的金额与系统订单的金额进行比对等
             if (sign.equals(map.get("sign"))) {
                 /**此处添加自己的业务逻辑代码start**/
-
-                mOrderService.updateOrderStatus(WxPayConfig.TO_SIGN_IN,orderNumber);
+                String orderNumber = (String) map.get("out_trade_no");
+                String price = (String) map.get("total_fee");
+                mOrderService.updateOrderStatus(WxPayConfig.TO_SIGN_IN,orderNumber,price);
 
                 /**此处添加自己的业务逻辑代码end**/
                 //通知微信服务器已经支付成功
@@ -103,6 +104,13 @@ public class OrderController {
         out.write(resXml.getBytes());
         out.flush();
         out.close();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getAllOrder" ,method = RequestMethod.GET)
+    public void getAllOrder(HttpServletResponse response){
+        OrderResponse orderResponse = mOrderService.getAllOrder();
+        ResponseUtils.renderJson(response,new Gson().toJson(orderResponse));
     }
 
 }

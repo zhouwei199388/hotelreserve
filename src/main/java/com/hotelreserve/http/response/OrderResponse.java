@@ -1,19 +1,13 @@
 package com.hotelreserve.http.response;
 
+import com.hotelreserve.model.Order;
 
-import java.util.Map;
+import java.util.List;
 
 /**
- * Created by 15090 on 2018/12/29.
+ * Created by zouwei on 2019/1/12.
  */
-public class OrderResponse extends BaseResponse{
-    public String appId;
-    public String timeStamap;
-    public String nonceStr;
-    public String packageStr;
-    public String paySign;
+public class OrderResponse extends BaseResponse {
 
-    public void setData(Map<String,Object> map){
-
-    }
+    public List<Order> orders;
 }
