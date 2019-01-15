@@ -1,7 +1,7 @@
 package com.hotelreserve.controller;
 
 import com.google.gson.Gson;
-import com.hotelreserve.http.model.OrderModel;
+import com.hotelreserve.http.request.OrderRequest;
 import com.hotelreserve.http.response.OrderResponse;
 import com.hotelreserve.http.response.PrePayResponse;
 import com.hotelreserve.model.Order;
@@ -34,17 +34,10 @@ public class OrderController {
 
     @Autowired
     private OrderService mOrderService;
-    @ResponseBody
-    @RequestMapping(value = "/add",method = RequestMethod.POST)
-    public void addOrder(HttpServletResponse response, @RequestBody Order order){
-        LogUtils.info(new Gson().toJson(order));
-        PrePayResponse prePayResponse = mOrderService.addOrder(order);
-        ResponseUtils.renderJson(response,new Gson().toJson(prePayResponse));
-    }
 
     @ResponseBody
     @RequestMapping(value = "/wxPrePay", method = RequestMethod.POST)
-    public void wxPrePay(HttpServletResponse response,@RequestBody OrderModel order) {
+    public void wxPrePay(HttpServletResponse response,@RequestBody OrderRequest order) {
         PrePayResponse prePayResponse = mOrderService.wxPrePay(order);
         LogUtils.info(new Gson().toJson(prePayResponse));
         ResponseUtils.renderJson(response,new Gson().toJson(prePayResponse));

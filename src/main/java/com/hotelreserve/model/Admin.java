@@ -9,16 +9,6 @@ public class Admin {
 
     private Integer permission;
 
-    @Override
-    public String toString() {
-        return "Admin{" +
-                "id=" + id +
-                ", user='" + user + '\'' +
-                ", password='" + password + '\'' +
-                ", permission=" + permission +
-                '}';
-    }
-
     public Integer getId() {
         return id;
     }

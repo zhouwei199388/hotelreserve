@@ -1,90 +1,67 @@
 package com.hotelreserve.mapper;
 
-import com.hotelreserve.model.Order;
-import com.hotelreserve.model.OrderExample.Criteria;
-import com.hotelreserve.model.OrderExample.Criterion;
-import com.hotelreserve.model.OrderExample;
+import com.hotelreserve.model.PreOrderResponse;
+import com.hotelreserve.model.PreOrderResponseExample.Criteria;
+import com.hotelreserve.model.PreOrderResponseExample.Criterion;
+import com.hotelreserve.model.PreOrderResponseExample;
 import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.jdbc.SQL;
 
-public class OrderSqlProvider {
+public class PreOrderResponseSqlProvider {
 
-    public String insertSelective(Order record) {
+    public String deleteByExample(PreOrderResponseExample example) {
         SQL sql = new SQL();
-        sql.INSERT_INTO("hotel_order");
+        sql.DELETE_FROM("preorderresponse");
+        applyWhere(sql, example, false);
+        return sql.toString();
+    }
+
+    public String insertSelective(PreOrderResponse record) {
+        SQL sql = new SQL();
+        sql.INSERT_INTO("preorderresponse");
         
-        if (record.getUserid() != null) {
-            sql.VALUES("userId", "#{userid,jdbcType=INTEGER}");
+        if (record.getOrderid() != null) {
+            sql.VALUES("orderId", "#{orderid,jdbcType=INTEGER}");
         }
         
-        if (record.getHotelid() != null) {
-            sql.VALUES("hotelId", "#{hotelid,jdbcType=INTEGER}");
+        if (record.getNoncestr() != null) {
+            sql.VALUES("nonceStr", "#{noncestr,jdbcType=VARCHAR}");
         }
         
-        if (record.getRoomid() != null) {
-            sql.VALUES("roomId", "#{roomid,jdbcType=INTEGER}");
+        if (record.getPackagestr() != null) {
+            sql.VALUES("packageStr", "#{packagestr,jdbcType=VARCHAR}");
         }
         
-        if (record.getOrdernumber() != null) {
-            sql.VALUES("orderNumber", "#{ordernumber,jdbcType=VARCHAR}");
+        if (record.getTimestamap() != null) {
+            sql.VALUES("timeStamap", "#{timestamap,jdbcType=VARCHAR}");
         }
         
-        if (record.getRoomnumber() != null) {
-            sql.VALUES("roomNumber", "#{roomnumber,jdbcType=INTEGER}");
+        if (record.getPaysign() != null) {
+            sql.VALUES("paySign", "#{paysign,jdbcType=VARCHAR}");
         }
         
-        if (record.getNote() != null) {
-            sql.VALUES("note", "#{note,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getStatus() != null) {
-            sql.VALUES("status", "#{status,jdbcType=INTEGER}");
-        }
-        
-        if (record.getDays() != null) {
-            sql.VALUES("days", "#{days,jdbcType=INTEGER}");
-        }
-        
-        if (record.getPrice() != null) {
-            sql.VALUES("price", "#{price,jdbcType=DOUBLE}");
-        }
-        
-        if (record.getStartdate() != null) {
-            sql.VALUES("startDate", "#{startdate,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getEnddate() != null) {
-            sql.VALUES("endDate", "#{enddate,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getCreatetime() != null) {
-            sql.VALUES("createTime", "#{createtime,jdbcType=TIMESTAMP}");
+        if (record.getAppid() != null) {
+            sql.VALUES("appId", "#{appid,jdbcType=VARCHAR}");
         }
         
         return sql.toString();
     }
 
-    public String selectByExample(OrderExample example) {
+    public String selectByExample(PreOrderResponseExample example) {
         SQL sql = new SQL();
         if (example != null && example.isDistinct()) {
             sql.SELECT_DISTINCT("id");
         } else {
             sql.SELECT("id");
         }
-        sql.SELECT("userId");
-        sql.SELECT("hotelId");
-        sql.SELECT("roomId");
-        sql.SELECT("orderNumber");
-        sql.SELECT("roomNumber");
-        sql.SELECT("note");
-        sql.SELECT("status");
-        sql.SELECT("days");
-        sql.SELECT("price");
-        sql.SELECT("startDate");
-        sql.SELECT("endDate");
-        sql.SELECT("createTime");
-        sql.FROM("hotel_order");
+        sql.SELECT("orderId");
+        sql.SELECT("nonceStr");
+        sql.SELECT("packageStr");
+        sql.SELECT("timeStamap");
+        sql.SELECT("paySign");
+        sql.SELECT("appId");
+        sql.FROM("preorderresponse");
         applyWhere(sql, example, false);
         
         if (example != null && example.getOrderByClause() != null) {
@@ -95,62 +72,38 @@ public class OrderSqlProvider {
     }
 
     public String updateByExampleSelective(Map<String, Object> parameter) {
-        Order record = (Order) parameter.get("record");
-        OrderExample example = (OrderExample) parameter.get("example");
+        PreOrderResponse record = (PreOrderResponse) parameter.get("record");
+        PreOrderResponseExample example = (PreOrderResponseExample) parameter.get("example");
         
         SQL sql = new SQL();
-        sql.UPDATE("hotel_order");
+        sql.UPDATE("preorderresponse");
         
         if (record.getId() != null) {
             sql.SET("id = #{record.id,jdbcType=INTEGER}");
         }
         
-        if (record.getUserid() != null) {
-            sql.SET("userId = #{record.userid,jdbcType=INTEGER}");
+        if (record.getOrderid() != null) {
+            sql.SET("orderId = #{record.orderid,jdbcType=INTEGER}");
         }
         
-        if (record.getHotelid() != null) {
-            sql.SET("hotelId = #{record.hotelid,jdbcType=INTEGER}");
+        if (record.getNoncestr() != null) {
+            sql.SET("nonceStr = #{record.noncestr,jdbcType=VARCHAR}");
         }
         
-        if (record.getRoomid() != null) {
-            sql.SET("roomId = #{record.roomid,jdbcType=INTEGER}");
+        if (record.getPackagestr() != null) {
+            sql.SET("packageStr = #{record.packagestr,jdbcType=VARCHAR}");
         }
         
-        if (record.getOrdernumber() != null) {
-            sql.SET("orderNumber = #{record.ordernumber,jdbcType=VARCHAR}");
+        if (record.getTimestamap() != null) {
+            sql.SET("timeStamap = #{record.timestamap,jdbcType=VARCHAR}");
         }
         
-        if (record.getRoomnumber() != null) {
-            sql.SET("roomNumber = #{record.roomnumber,jdbcType=INTEGER}");
+        if (record.getPaysign() != null) {
+            sql.SET("paySign = #{record.paysign,jdbcType=VARCHAR}");
         }
         
-        if (record.getNote() != null) {
-            sql.SET("note = #{record.note,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getStatus() != null) {
-            sql.SET("status = #{record.status,jdbcType=INTEGER}");
-        }
-        
-        if (record.getDays() != null) {
-            sql.SET("days = #{record.days,jdbcType=INTEGER}");
-        }
-        
-        if (record.getPrice() != null) {
-            sql.SET("price = #{record.price,jdbcType=DOUBLE}");
-        }
-        
-        if (record.getStartdate() != null) {
-            sql.SET("startDate = #{record.startdate,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getEnddate() != null) {
-            sql.SET("endDate = #{record.enddate,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getCreatetime() != null) {
-            sql.SET("createTime = #{record.createtime,jdbcType=TIMESTAMP}");
+        if (record.getAppid() != null) {
+            sql.SET("appId = #{record.appid,jdbcType=VARCHAR}");
         }
         
         applyWhere(sql, example, true);
@@ -159,77 +112,47 @@ public class OrderSqlProvider {
 
     public String updateByExample(Map<String, Object> parameter) {
         SQL sql = new SQL();
-        sql.UPDATE("hotel_order");
+        sql.UPDATE("preorderresponse");
         
         sql.SET("id = #{record.id,jdbcType=INTEGER}");
-        sql.SET("userId = #{record.userid,jdbcType=INTEGER}");
-        sql.SET("hotelId = #{record.hotelid,jdbcType=INTEGER}");
-        sql.SET("roomId = #{record.roomid,jdbcType=INTEGER}");
-        sql.SET("orderNumber = #{record.ordernumber,jdbcType=VARCHAR}");
-        sql.SET("roomNumber = #{record.roomnumber,jdbcType=INTEGER}");
-        sql.SET("note = #{record.note,jdbcType=VARCHAR}");
-        sql.SET("status = #{record.status,jdbcType=INTEGER}");
-        sql.SET("days = #{record.days,jdbcType=INTEGER}");
-        sql.SET("price = #{record.price,jdbcType=DOUBLE}");
-        sql.SET("startDate = #{record.startdate,jdbcType=VARCHAR}");
-        sql.SET("endDate = #{record.enddate,jdbcType=VARCHAR}");
-        sql.SET("createTime = #{record.createtime,jdbcType=TIMESTAMP}");
+        sql.SET("orderId = #{record.orderid,jdbcType=INTEGER}");
+        sql.SET("nonceStr = #{record.noncestr,jdbcType=VARCHAR}");
+        sql.SET("packageStr = #{record.packagestr,jdbcType=VARCHAR}");
+        sql.SET("timeStamap = #{record.timestamap,jdbcType=VARCHAR}");
+        sql.SET("paySign = #{record.paysign,jdbcType=VARCHAR}");
+        sql.SET("appId = #{record.appid,jdbcType=VARCHAR}");
         
-        OrderExample example = (OrderExample) parameter.get("example");
+        PreOrderResponseExample example = (PreOrderResponseExample) parameter.get("example");
         applyWhere(sql, example, true);
         return sql.toString();
     }
 
-    public String updateByPrimaryKeySelective(Order record) {
+    public String updateByPrimaryKeySelective(PreOrderResponse record) {
         SQL sql = new SQL();
-        sql.UPDATE("hotel_order");
+        sql.UPDATE("preorderresponse");
         
-        if (record.getUserid() != null) {
-            sql.SET("userId = #{userid,jdbcType=INTEGER}");
+        if (record.getOrderid() != null) {
+            sql.SET("orderId = #{orderid,jdbcType=INTEGER}");
         }
         
-        if (record.getHotelid() != null) {
-            sql.SET("hotelId = #{hotelid,jdbcType=INTEGER}");
+        if (record.getNoncestr() != null) {
+            sql.SET("nonceStr = #{noncestr,jdbcType=VARCHAR}");
         }
         
-        if (record.getRoomid() != null) {
-            sql.SET("roomId = #{roomid,jdbcType=INTEGER}");
+        if (record.getPackagestr() != null) {
+            sql.SET("packageStr = #{packagestr,jdbcType=VARCHAR}");
         }
         
-        if (record.getOrdernumber() != null) {
-            sql.SET("orderNumber = #{ordernumber,jdbcType=VARCHAR}");
+        if (record.getTimestamap() != null) {
+            sql.SET("timeStamap = #{timestamap,jdbcType=VARCHAR}");
         }
         
-        if (record.getRoomnumber() != null) {
-            sql.SET("roomNumber = #{roomnumber,jdbcType=INTEGER}");
+        if (record.getPaysign() != null) {
+            sql.SET("paySign = #{paysign,jdbcType=VARCHAR}");
         }
         
-        if (record.getNote() != null) {
-            sql.SET("note = #{note,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getStatus() != null) {
-            sql.SET("status = #{status,jdbcType=INTEGER}");
-        }
-        
-        if (record.getDays() != null) {
-            sql.SET("days = #{days,jdbcType=INTEGER}");
-        }
-        
-        if (record.getPrice() != null) {
-            sql.SET("price = #{price,jdbcType=DOUBLE}");
-        }
-        
-        if (record.getStartdate() != null) {
-            sql.SET("startDate = #{startdate,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getEnddate() != null) {
-            sql.SET("endDate = #{enddate,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getCreatetime() != null) {
-            sql.SET("createTime = #{createtime,jdbcType=TIMESTAMP}");
+        if (record.getAppid() != null) {
+            sql.SET("appId = #{appid,jdbcType=VARCHAR}");
         }
         
         sql.WHERE("id = #{id,jdbcType=INTEGER}");
@@ -237,7 +160,7 @@ public class OrderSqlProvider {
         return sql.toString();
     }
 
-    protected void applyWhere(SQL sql, OrderExample example, boolean includeExamplePhrase) {
+    protected void applyWhere(SQL sql, PreOrderResponseExample example, boolean includeExamplePhrase) {
         if (example == null) {
             return;
         }

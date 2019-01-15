@@ -24,18 +24,18 @@ public interface OrderMapper {
     int deleteByPrimaryKey(Integer id);
 
     @Insert({
-        "insert into hotel_order (userId, orderNumber, ",
-        "roomNumber, people, ",
-        "phone, note, status, ",
-        "price, startDate, ",
-        "endDate, hotel, ",
-        "hotelroom)",
-        "values (#{userid,jdbcType=INTEGER}, #{ordernumber,jdbcType=VARCHAR}, ",
-        "#{roomnumber,jdbcType=INTEGER}, #{people,jdbcType=VARCHAR}, ",
-        "#{phone,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, ",
-        "#{price,jdbcType=DOUBLE}, #{startdate,jdbcType=VARCHAR}, ",
-        "#{enddate,jdbcType=VARCHAR}, #{hotel,jdbcType=VARCHAR}, ",
-        "#{hotelroom,jdbcType=VARCHAR})"
+        "insert into hotel_order (userId, hotelId, ",
+        "roomId, orderNumber, ",
+        "roomNumber, note, ",
+        "status, days, price, ",
+        "startDate, endDate, ",
+        "createTime)",
+        "values (#{userid,jdbcType=INTEGER}, #{hotelid,jdbcType=INTEGER}, ",
+        "#{roomid,jdbcType=INTEGER}, #{ordernumber,jdbcType=VARCHAR}, ",
+        "#{roomnumber,jdbcType=INTEGER}, #{note,jdbcType=VARCHAR}, ",
+        "#{status,jdbcType=INTEGER}, #{days,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE}, ",
+        "#{startdate,jdbcType=VARCHAR}, #{enddate,jdbcType=VARCHAR}, ",
+        "#{createtime,jdbcType=TIMESTAMP})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
     int insert(Order record);
@@ -48,41 +48,41 @@ public interface OrderMapper {
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="userId", property="userid", jdbcType=JdbcType.INTEGER),
+        @Result(column="hotelId", property="hotelid", jdbcType=JdbcType.INTEGER),
+        @Result(column="roomId", property="roomid", jdbcType=JdbcType.INTEGER),
         @Result(column="orderNumber", property="ordernumber", jdbcType=JdbcType.VARCHAR),
         @Result(column="roomNumber", property="roomnumber", jdbcType=JdbcType.INTEGER),
-        @Result(column="people", property="people", jdbcType=JdbcType.VARCHAR),
-        @Result(column="phone", property="phone", jdbcType=JdbcType.VARCHAR),
         @Result(column="note", property="note", jdbcType=JdbcType.VARCHAR),
         @Result(column="status", property="status", jdbcType=JdbcType.INTEGER),
+        @Result(column="days", property="days", jdbcType=JdbcType.INTEGER),
         @Result(column="price", property="price", jdbcType=JdbcType.DOUBLE),
         @Result(column="startDate", property="startdate", jdbcType=JdbcType.VARCHAR),
         @Result(column="endDate", property="enddate", jdbcType=JdbcType.VARCHAR),
-        @Result(column="hotel", property="hotel", jdbcType=JdbcType.VARCHAR),
-        @Result(column="hotelroom", property="hotelroom", jdbcType=JdbcType.VARCHAR)
+        @Result(column="createTime", property="createtime", jdbcType=JdbcType.TIMESTAMP)
     })
     List<Order> selectByExample(OrderExample example);
 
     @Select({
         "select",
-        "id, userId, orderNumber, roomNumber, people, phone, note, status, price, startDate, ",
-        "endDate, hotel, hotelroom",
+        "id, userId, hotelId, roomId, orderNumber, roomNumber, note, status, days, price, ",
+        "startDate, endDate, createTime",
         "from hotel_order",
         "where id = #{id,jdbcType=INTEGER}"
     })
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="userId", property="userid", jdbcType=JdbcType.INTEGER),
+        @Result(column="hotelId", property="hotelid", jdbcType=JdbcType.INTEGER),
+        @Result(column="roomId", property="roomid", jdbcType=JdbcType.INTEGER),
         @Result(column="orderNumber", property="ordernumber", jdbcType=JdbcType.VARCHAR),
         @Result(column="roomNumber", property="roomnumber", jdbcType=JdbcType.INTEGER),
-        @Result(column="people", property="people", jdbcType=JdbcType.VARCHAR),
-        @Result(column="phone", property="phone", jdbcType=JdbcType.VARCHAR),
         @Result(column="note", property="note", jdbcType=JdbcType.VARCHAR),
         @Result(column="status", property="status", jdbcType=JdbcType.INTEGER),
+        @Result(column="days", property="days", jdbcType=JdbcType.INTEGER),
         @Result(column="price", property="price", jdbcType=JdbcType.DOUBLE),
         @Result(column="startDate", property="startdate", jdbcType=JdbcType.VARCHAR),
         @Result(column="endDate", property="enddate", jdbcType=JdbcType.VARCHAR),
-        @Result(column="hotel", property="hotel", jdbcType=JdbcType.VARCHAR),
-        @Result(column="hotelroom", property="hotelroom", jdbcType=JdbcType.VARCHAR)
+        @Result(column="createTime", property="createtime", jdbcType=JdbcType.TIMESTAMP)
     })
     Order selectByPrimaryKey(Integer id);
 
@@ -98,17 +98,17 @@ public interface OrderMapper {
     @Update({
         "update hotel_order",
         "set userId = #{userid,jdbcType=INTEGER},",
+          "hotelId = #{hotelid,jdbcType=INTEGER},",
+          "roomId = #{roomid,jdbcType=INTEGER},",
           "orderNumber = #{ordernumber,jdbcType=VARCHAR},",
           "roomNumber = #{roomnumber,jdbcType=INTEGER},",
-          "people = #{people,jdbcType=VARCHAR},",
-          "phone = #{phone,jdbcType=VARCHAR},",
           "note = #{note,jdbcType=VARCHAR},",
           "status = #{status,jdbcType=INTEGER},",
+          "days = #{days,jdbcType=INTEGER},",
           "price = #{price,jdbcType=DOUBLE},",
           "startDate = #{startdate,jdbcType=VARCHAR},",
           "endDate = #{enddate,jdbcType=VARCHAR},",
-          "hotel = #{hotel,jdbcType=VARCHAR},",
-          "hotelroom = #{hotelroom,jdbcType=VARCHAR}",
+          "createTime = #{createtime,jdbcType=TIMESTAMP}",
         "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Order record);

@@ -1,21 +1,25 @@
 package com.hotelreserve.model;
 
+import java.util.Date;
+
 public class Order {
     private Integer id;
 
     private Integer userid;
 
+    private Integer hotelid;
+
+    private Integer roomid;
+
     private String ordernumber;
 
     private Integer roomnumber;
 
-    private String people;
-
-    private String phone;
-
     private String note;
 
     private Integer status;
+
+    private Integer days;
 
     private Double price;
 
@@ -23,9 +27,7 @@ public class Order {
 
     private String enddate;
 
-    private String hotel;
-
-    private String hotelroom;
+    private Date createtime;
 
     public Integer getId() {
         return id;
@@ -41,6 +43,22 @@ public class Order {
 
     public void setUserid(Integer userid) {
         this.userid = userid;
+    }
+
+    public Integer getHotelid() {
+        return hotelid;
+    }
+
+    public void setHotelid(Integer hotelid) {
+        this.hotelid = hotelid;
+    }
+
+    public Integer getRoomid() {
+        return roomid;
+    }
+
+    public void setRoomid(Integer roomid) {
+        this.roomid = roomid;
     }
 
     public String getOrdernumber() {
@@ -59,22 +77,6 @@ public class Order {
         this.roomnumber = roomnumber;
     }
 
-    public String getPeople() {
-        return people;
-    }
-
-    public void setPeople(String people) {
-        this.people = people == null ? null : people.trim();
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
-    }
-
     public String getNote() {
         return note;
     }
@@ -89,6 +91,14 @@ public class Order {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getDays() {
+        return days;
+    }
+
+    public void setDays(Integer days) {
+        this.days = days;
     }
 
     public Double getPrice() {
@@ -115,19 +125,11 @@ public class Order {
         this.enddate = enddate == null ? null : enddate.trim();
     }
 
-    public String getHotel() {
-        return hotel;
+    public Date getCreatetime() {
+        return createtime;
     }
 
-    public void setHotel(String hotel) {
-        this.hotel = hotel == null ? null : hotel.trim();
-    }
-
-    public String getHotelroom() {
-        return hotelroom;
-    }
-
-    public void setHotelroom(String hotelroom) {
-        this.hotelroom = hotelroom == null ? null : hotelroom.trim();
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
     }
 }

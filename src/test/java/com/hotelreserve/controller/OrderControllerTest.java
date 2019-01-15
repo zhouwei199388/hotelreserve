@@ -1,8 +1,7 @@
 package com.hotelreserve.controller;
 
 import com.google.gson.Gson;
-import com.hotelreserve.http.model.OrderModel;
-import com.hotelreserve.model.Admin;
+import com.hotelreserve.http.request.OrderRequest;
 import com.hotelreserve.model.Order;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,11 +47,7 @@ public class OrderControllerTest {
         Order order = new Order();
         order.setStartdate("2018-12-29");
         order.setEnddate("2018-12-31");
-        order.setHotel("四季星酒店");
         order.setRoomnumber(1);
-        order.setHotelroom("大床房");
-        order.setPeople("邹维");
-        order.setPhone("15090824065");
         order.setPrice(580.00);
         order.setStatus(0);
         order.setOrdernumber("1212442132164654");
@@ -67,19 +62,18 @@ public class OrderControllerTest {
 
     @Test
     public void wxPrePay() throws Exception {
-        OrderModel order = new OrderModel();
-        order.days = 2;
+        OrderRequest order = new OrderRequest();
+        Date date = new Date();
+        order.hotelid = 1;
+        order.roomid =16;
         order.userid =8;
+        order.ordernumber= String.valueOf(date.getTime());
+        order.roomnumber=1;
         order.startdate="2018-12-29";
         order.enddate="2018-12-31";
-        order.hotel="四季星酒店";
-        order.roomnumber=1;
-        order.hotelroom="大床房";
-        order.people="邹维";
-        order.phone="15090824065";
+        order.days = 2;
         order.price=580.0;
         order.status=0;
-        order.ordernumber= String.valueOf(new Date().getTime());
         String request = new Gson().toJson(order);
         mvc.perform(MockMvcRequestBuilders.post("/api/order/wxPrePay")
                 .contentType(MediaType.APPLICATION_JSON)
