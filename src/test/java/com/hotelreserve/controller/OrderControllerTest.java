@@ -65,19 +65,38 @@ public class OrderControllerTest {
         OrderRequest order = new OrderRequest();
         Date date = new Date();
         order.hotelid = 1;
-        order.roomid =16;
-        order.userid =8;
-        order.ordernumber= String.valueOf(date.getTime());
-        order.roomnumber=1;
-        order.startdate="2018-12-29";
-        order.enddate="2018-12-31";
+        order.roomid = 16;
+        order.userid = 8;
+        order.ordernumber = String.valueOf(date.getTime());
+        order.roomnumber = 1;
+        order.startdate = "2018-12-29";
+        order.enddate = "2018-12-31";
         order.days = 2;
-        order.price=580.0;
-        order.status=0;
+        order.price = 580.0;
         String request = new Gson().toJson(order);
         mvc.perform(MockMvcRequestBuilders.post("/api/order/wxPrePay")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(request))
+                .andExpect(MockMvcResultMatchers.status().isOk()) //400错误请求
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+    }
+
+    @Test
+    public void getAllOrder() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/api/order/getAllOrder")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk()) //400错误请求
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+    }
+
+    @Test
+    public void getMyOrder() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/api/order/getMyOrder")
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("userId", "8")
+                .param("status", "0"))
                 .andExpect(MockMvcResultMatchers.status().isOk()) //400错误请求
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();

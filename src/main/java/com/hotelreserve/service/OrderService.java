@@ -15,6 +15,7 @@ import com.hotelreserve.wxpay.WxPayConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -125,12 +126,12 @@ public class OrderService {
             if (return_code.equals("SUCCESS")) {
                 response = new PrePayResponse();
                 Order order = model.copyToHotel();
+                order.setStatus(0);
                 int resultCode = mOrderMapper.insert(order);
                 if(resultCode!=1){
                     response.header = header;
                     return response;
                 }
-
                 preOrderResponse.setNoncestr(nonce_str);
                 String prepay_id = (String) map.get("prepay_id");//返回的预付单信息
                 preOrderResponse.setPackagestr( "prepay_id=" + prepay_id);
@@ -166,13 +167,21 @@ public class OrderService {
      * @return
      */
     public boolean updateOrderStatus(int status,String orderNumber,String price){
-        Order order = new Order();
-        order.setStatus(status);
+
         OrderExample example = new OrderExample();
         OrderExample.Criteria  criteria = example.createCriteria();
         criteria.andOrdernumberEqualTo(orderNumber);
-        int result = mOrderMapper.updateByExampleSelective(order,example);
+        List<Order> orders = mOrderMapper.selectByExample(example);
+        if(orders.size()==0){
+            LogUtils.info("订单不存在");
+            return false;
+        }
+        Order order = orders.get(0);
+        order.setStatus(status);
+        int result = mOrderMapper.updateByPrimaryKey(order);
         if(result==0){
+            LogUtils.info(new Gson().toJson(order));
+            LogUtils.info("状态修改失败");
             return false;
         }
         PreOrderResponseExample example1 = new PreOrderResponseExample();
@@ -180,6 +189,7 @@ public class OrderService {
         preCriteria.andOrderidEqualTo(order.getId());
         int preResult = mPreOrderMapper.deleteByExample(example1);
         if(preResult==0){
+            LogUtils.info("订单支付参数删除失败");
             return false;
         }
         return true;
@@ -211,25 +221,75 @@ public class OrderService {
         OrderResponse response = new OrderResponse();
         ResponseHeader header = new ResponseHeader();
         OrderExample orderExample = new OrderExample();
-        orderExample.setOrderByClause("ORDER BY creteTime ASC");
+        orderExample.setOrderByClause("'creteTime' ASC");
         List<Order> orders = mOrderMapper.selectByExample(orderExample);
+        LogUtils.info(new Gson().toJson(orders));
         List<OrderModel> orderModels = new ArrayList<>();
         for(Order order :orders){
             OrderModel model = new OrderModel();
-         HotelInfo hotelInfo = mHotelInfoMapper.selectByPrimaryKey(order.getUserid());
+         HotelInfo hotelInfo = mHotelInfoMapper.selectByPrimaryKey(order.getHotelid());
          HotelRoom hotelRoom = mHotelRoomMapper.selectByPrimaryKey(order.getRoomid());
          User user = mUserMapper.selectByPrimaryKey(order.getUserid());
          PreOrderResponseExample example = new PreOrderResponseExample();
          PreOrderResponseExample.Criteria criteria = example.createCriteria();
          criteria.andOrderidEqualTo(order.getId());
          List<PreOrderResponse> preOrder = mPreOrderMapper.selectByExample(example);
-         user.setOpenid("");
-         user.setSessionkey("");
+         user.setOpenid(null);
+         user.setSessionkey(null);
          model.hotelInfo = hotelInfo;
          model.hotelRoom = hotelRoom;
-         model.preOrder = preOrder.get(0);
+         if(preOrder.size()!=0){
+             model.preOrder = preOrder.get(0);
+         }
+         model.setOrder(order);
          model.user = user;
+         orderModels.add(model);
         }
+        header.setSuccess();
+        response.header = header;
+        response.orders = orderModels;
+        return response;
+    }
+
+    /**
+     *
+     * @param userId
+     * @return
+     */
+    public OrderResponse getMyOrder(int userId,int status){
+        OrderResponse response = new OrderResponse();
+        ResponseHeader header = new ResponseHeader();
+        OrderExample orderExample = new OrderExample();
+        OrderExample.Criteria orderCriteria = orderExample.createCriteria();
+        orderCriteria.andUseridEqualTo(userId);
+        if(status!=-1){
+            orderCriteria.andStatusEqualTo(status);
+        }
+        orderExample.setOrderByClause("'creteTime' ASC");
+        List<Order> orders = mOrderMapper.selectByExample(orderExample);
+        LogUtils.info(new Gson().toJson(orders));
+        List<OrderModel> orderModels = new ArrayList<>();
+        for(Order order :orders){
+            OrderModel model = new OrderModel();
+            HotelInfo hotelInfo = mHotelInfoMapper.selectByPrimaryKey(order.getHotelid());
+            HotelRoom hotelRoom = mHotelRoomMapper.selectByPrimaryKey(order.getRoomid());
+            User user = mUserMapper.selectByPrimaryKey(order.getUserid());
+            PreOrderResponseExample example = new PreOrderResponseExample();
+            PreOrderResponseExample.Criteria criteria = example.createCriteria();
+            criteria.andOrderidEqualTo(order.getId());
+            List<PreOrderResponse> preOrder = mPreOrderMapper.selectByExample(example);
+            user.setOpenid(null);
+            user.setSessionkey(null);
+            model.hotelInfo = hotelInfo;
+            model.hotelRoom = hotelRoom;
+            if(preOrder.size()!=0){
+                model.preOrder = preOrder.get(0);
+            }
+            model.setOrder(order);
+            model.user = user;
+            orderModels.add(model);
+        }
+        header.setSuccess();
         response.header = header;
         response.orders = orderModels;
         return response;

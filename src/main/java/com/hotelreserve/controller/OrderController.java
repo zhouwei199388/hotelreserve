@@ -11,6 +11,7 @@ import com.hotelreserve.utils.ResponseUtils;
 import com.hotelreserve.wxpay.PayUtils;
 import com.hotelreserve.wxpay.WxPayConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -103,6 +104,14 @@ public class OrderController {
     @RequestMapping(value = "/getAllOrder" ,method = RequestMethod.GET)
     public void getAllOrder(HttpServletResponse response){
         OrderResponse orderResponse = mOrderService.getAllOrder();
+        ResponseUtils.renderJson(response,new Gson().toJson(orderResponse));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getMyOrder",method = RequestMethod.GET)
+    public void getMyOrder(HttpServletResponse response,int userId,int status){
+        LogUtils.info("userId:"+userId+"  status:"+status);
+        OrderResponse orderResponse = mOrderService.getMyOrder(userId,status);
         ResponseUtils.renderJson(response,new Gson().toJson(orderResponse));
     }
 
