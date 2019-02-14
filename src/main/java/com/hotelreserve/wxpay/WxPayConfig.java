@@ -15,6 +15,8 @@ public class WxPayConfig {
     public static final String FIELD_SIGN_TYPE = "sign_type";
     //小程序appid
     public static final String appid = "wxe7b86a74f9e96203";
+    //小程序secret
+    public static final String appsecret = "wxe7b86a74f9e96203";
     //微信支付的商户id
     public static final String mch_id = "1519070531";
     //微信支付的商户密钥

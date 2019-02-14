@@ -2,6 +2,7 @@ package com.hotelreserve.service;
 
 import com.google.gson.Gson;
 import com.hotelreserve.http.ConnectionMessage;
+import com.hotelreserve.http.WXmessage;
 import com.hotelreserve.http.model.OrderModel;
 import com.hotelreserve.http.request.OrderRequest;
 import com.hotelreserve.http.model.ResponseHeader;
@@ -9,18 +10,19 @@ import com.hotelreserve.http.response.OrderResponse;
 import com.hotelreserve.http.response.PrePayResponse;
 import com.hotelreserve.mapper.*;
 import com.hotelreserve.model.*;
+import com.hotelreserve.utils.ClientCustomSSL;
 import com.hotelreserve.utils.LogUtils;
+import com.hotelreserve.utils.RequestHandler;
 import com.hotelreserve.wxpay.PayUtils;
 import com.hotelreserve.wxpay.WxPayConfig;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sun.rmi.runtime.Log;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 /**
  * Created by 15090 on 2018/12/29.
@@ -31,7 +33,7 @@ public class OrderService {
     @Autowired
     private OrderMapper mOrderMapper;
     @Autowired
-    private HotelInfoMapper  mHotelInfoMapper;
+    private HotelInfoMapper mHotelInfoMapper;
     @Autowired
     private HotelRoomMapper mHotelRoomMapper;
     @Autowired
@@ -120,7 +122,7 @@ public class OrderService {
 
             String return_code = (String) map.get("return_code");//返回状态码
 
-            PrePayResponse response =new PrePayResponse();//返回给小程序端需要的参数
+            PrePayResponse response = new PrePayResponse();//返回给小程序端需要的参数
             PreOrderResponse preOrderResponse = new PreOrderResponse();
             ResponseHeader header = new ResponseHeader();
             if (return_code.equals("SUCCESS")) {
@@ -128,13 +130,13 @@ public class OrderService {
                 Order order = model.copyToHotel();
                 order.setStatus(0);
                 int resultCode = mOrderMapper.insert(order);
-                if(resultCode!=1){
+                if (resultCode != 1) {
                     response.header = header;
                     return response;
                 }
                 preOrderResponse.setNoncestr(nonce_str);
                 String prepay_id = (String) map.get("prepay_id");//返回的预付单信息
-                preOrderResponse.setPackagestr( "prepay_id=" + prepay_id);
+                preOrderResponse.setPackagestr("prepay_id=" + prepay_id);
                 Long timeStamp = System.currentTimeMillis() / 1000;
                 preOrderResponse.setTimestamap(timeStamp + "");//这边要将返回的时间戳转化成字符串，不然小程序端调用wx.requestPayment方法会报签名错误
                 //拼接签名需要的参数
@@ -145,7 +147,7 @@ public class OrderService {
                 preOrderResponse.setAppid(WxPayConfig.appid);
                 preOrderResponse.setOrderid(order.getId());
                 int preResult = mPreOrderMapper.insert(preOrderResponse);
-                if(preResult!=0){
+                if (preResult != 0) {
                     response.preOrder = preOrderResponse;
                     header.setSuccess();
                 }
@@ -162,24 +164,25 @@ public class OrderService {
 
     /**
      * 支付成功回调
+     *
      * @param status
      * @param orderNumber
      * @return
      */
-    public boolean updateOrderStatus(int status,String orderNumber,String price){
+    public boolean updateOrderStatus(int status, String orderNumber, String price) {
 
         OrderExample example = new OrderExample();
-        OrderExample.Criteria  criteria = example.createCriteria();
+        OrderExample.Criteria criteria = example.createCriteria();
         criteria.andOrdernumberEqualTo(orderNumber);
         List<Order> orders = mOrderMapper.selectByExample(example);
-        if(orders.size()==0){
+        if (orders.size() == 0) {
             LogUtils.info("订单不存在");
             return false;
         }
         Order order = orders.get(0);
         order.setStatus(status);
         int result = mOrderMapper.updateByPrimaryKey(order);
-        if(result==0){
+        if (result == 0) {
             LogUtils.info(new Gson().toJson(order));
             LogUtils.info("状态修改失败");
             return false;
@@ -188,7 +191,7 @@ public class OrderService {
         PreOrderResponseExample.Criteria preCriteria = example1.createCriteria();
         preCriteria.andOrderidEqualTo(order.getId());
         int preResult = mPreOrderMapper.deleteByExample(example1);
-        if(preResult==0){
+        if (preResult == 0) {
             LogUtils.info("订单支付参数删除失败");
             return false;
         }
@@ -197,17 +200,18 @@ public class OrderService {
 
     /**
      * 修改订单状态
+     *
      * @param id
      * @param status
      * @return
      */
-    public ResponseHeader updateOrderStatus(int id,int status){
+    public ResponseHeader updateOrderStatus(int id, int status) {
         ResponseHeader header = new ResponseHeader();
         Order order = new Order();
         order.setId(id);
         order.setStatus(status);
         int result = mOrderMapper.updateByPrimaryKeySelective(order);
-        if(result!=0){
+        if (result != 0) {
             header.setSuccess();
         }
         return header;
@@ -215,61 +219,18 @@ public class OrderService {
 
     /**
      * 获取所有订单
-     * @return
-     */
-    public OrderResponse getAllOrder(){
-        OrderResponse response = new OrderResponse();
-        ResponseHeader header = new ResponseHeader();
-        OrderExample orderExample = new OrderExample();
-        orderExample.setOrderByClause("'creteTime' ASC");
-        List<Order> orders = mOrderMapper.selectByExample(orderExample);
-        LogUtils.info(new Gson().toJson(orders));
-        List<OrderModel> orderModels = new ArrayList<>();
-        for(Order order :orders){
-            OrderModel model = new OrderModel();
-         HotelInfo hotelInfo = mHotelInfoMapper.selectByPrimaryKey(order.getHotelid());
-         HotelRoom hotelRoom = mHotelRoomMapper.selectByPrimaryKey(order.getRoomid());
-         User user = mUserMapper.selectByPrimaryKey(order.getUserid());
-         PreOrderResponseExample example = new PreOrderResponseExample();
-         PreOrderResponseExample.Criteria criteria = example.createCriteria();
-         criteria.andOrderidEqualTo(order.getId());
-         List<PreOrderResponse> preOrder = mPreOrderMapper.selectByExample(example);
-         user.setOpenid(null);
-         user.setSessionkey(null);
-         model.hotelInfo = hotelInfo;
-         model.hotelRoom = hotelRoom;
-         if(preOrder.size()!=0){
-             model.preOrder = preOrder.get(0);
-         }
-         model.setOrder(order);
-         model.user = user;
-         orderModels.add(model);
-        }
-        header.setSuccess();
-        response.header = header;
-        response.orders = orderModels;
-        return response;
-    }
-
-    /**
      *
-     * @param userId
      * @return
      */
-    public OrderResponse getMyOrder(int userId,int status){
+    public OrderResponse getAllOrder() {
         OrderResponse response = new OrderResponse();
         ResponseHeader header = new ResponseHeader();
         OrderExample orderExample = new OrderExample();
-        OrderExample.Criteria orderCriteria = orderExample.createCriteria();
-        orderCriteria.andUseridEqualTo(userId);
-        if(status!=-1){
-            orderCriteria.andStatusEqualTo(status);
-        }
         orderExample.setOrderByClause("'creteTime' ASC");
         List<Order> orders = mOrderMapper.selectByExample(orderExample);
         LogUtils.info(new Gson().toJson(orders));
         List<OrderModel> orderModels = new ArrayList<>();
-        for(Order order :orders){
+        for (Order order : orders) {
             OrderModel model = new OrderModel();
             HotelInfo hotelInfo = mHotelInfoMapper.selectByPrimaryKey(order.getHotelid());
             HotelRoom hotelRoom = mHotelRoomMapper.selectByPrimaryKey(order.getRoomid());
@@ -282,7 +243,7 @@ public class OrderService {
             user.setSessionkey(null);
             model.hotelInfo = hotelInfo;
             model.hotelRoom = hotelRoom;
-            if(preOrder.size()!=0){
+            if (preOrder.size() != 0) {
                 model.preOrder = preOrder.get(0);
             }
             model.setOrder(order);
@@ -293,6 +254,108 @@ public class OrderService {
         response.header = header;
         response.orders = orderModels;
         return response;
+    }
+
+    /**
+     * @param userId
+     * @return
+     */
+    public OrderResponse getMyOrder(int userId, int status) {
+        OrderResponse response = new OrderResponse();
+        ResponseHeader header = new ResponseHeader();
+        OrderExample orderExample = new OrderExample();
+        OrderExample.Criteria orderCriteria = orderExample.createCriteria();
+        orderCriteria.andUseridEqualTo(userId);
+        if (status != -1) {
+            orderCriteria.andStatusEqualTo(status);
+        }
+        orderExample.setOrderByClause("'creteTime' ASC");
+        List<Order> orders = mOrderMapper.selectByExample(orderExample);
+        LogUtils.info(new Gson().toJson(orders));
+        List<OrderModel> orderModels = new ArrayList<>();
+        for(Order order:orders){
+            OrderModel model = new OrderModel();
+            HotelInfo hotelInfo = mHotelInfoMapper.selectByPrimaryKey(order.getHotelid());
+            HotelRoom hotelRoom = mHotelRoomMapper.selectByPrimaryKey(order.getRoomid());
+            User user = mUserMapper.selectByPrimaryKey(order.getUserid());
+            PreOrderResponseExample example = new PreOrderResponseExample();
+            PreOrderResponseExample.Criteria criteria = example.createCriteria();
+            criteria.andOrderidEqualTo(order.getId());
+            List<PreOrderResponse> preOrder = mPreOrderMapper.selectByExample(example);
+            user.setOpenid(null);
+            user.setSessionkey(null);
+            model.hotelInfo = hotelInfo;
+            model.hotelRoom = hotelRoom;
+            if (preOrder.size() != 0) {
+                model.preOrder = preOrder.get(0);
+            }
+            model.setOrder(order);
+            model.user = user;
+            orderModels.add(model);
+        }
+        header.setSuccess();
+        response.header = header;
+        response.orders = orderModels;
+        return response;
+    }
+
+
+    /**
+     * 退款
+     *
+     * @return
+     */
+    public ResponseHeader wechatRefund(int orderId) {
+        ResponseHeader header = new ResponseHeader();
+        Order order = mOrderMapper.selectByPrimaryKey(orderId);
+        if (order == null) {
+            return header;
+        }
+        String transaction_id = order.getOrdernumber();
+        String total_fee = String.valueOf((order.getPrice()*100));
+        String refund_fee = String.valueOf((order.getPrice()*100));
+
+        String out_refund_no = UUID.randomUUID().toString().substring(0, 32).replace("-", "");
+        String nonce_str = RandomStringUtils.randomAlphanumeric(10);// 随机字符串
+        SortedMap<String, String> packageParams = new TreeMap<String, String>();
+        packageParams.put("appid", WxPayConfig.appid);
+        packageParams.put("mch_id", WxPayConfig.mch_id);
+        packageParams.put("nonce_str", nonce_str);
+        packageParams.put("transaction_id", transaction_id);
+        packageParams.put("out_refund_no", out_refund_no);
+        packageParams.put("total_fee", total_fee);
+        packageParams.put("refund_fee", refund_fee);
+        packageParams.put("op_user_id", WxPayConfig.mch_id);
+        RequestHandler reqHandler = new RequestHandler(null, null);
+        reqHandler.init(WxPayConfig.appid, WxPayConfig.appsecret, WxPayConfig.key);
+
+        String sign = reqHandler.createSign(packageParams);
+        String xml = "<xml>" +
+                "<appid>" + WxPayConfig.appid + "</appid>" +
+                "<mch_id>" + WxPayConfig.mch_id + "</mch_id>" +
+                "<nonce_str>" + nonce_str + "</nonce_str>" +
+                "<sign><![CDATA[" + sign + "]]></sign>" +
+                "<transaction_id>" + transaction_id + "</transaction_id>" +
+                "<out_refund_no>" + out_refund_no + "</out_refund_no>" +
+                "<total_fee>" + total_fee + "</total_fee>" +
+                "<refund_fee>" + refund_fee + "</refund_fee>" +
+                "<op_user_id>" + WxPayConfig.mch_id + "</op_user_id>" +
+                "</xml>";
+
+
+        String createOrderURL = "https://api.mch.weixin.qq.com/secapi/pay/refund";
+        try {
+            ClientCustomSSL ccs = new ClientCustomSSL();
+            Map<String, String> map = ccs.doRefund(createOrderURL, xml);
+            LogUtils.info(map.toString());
+//            return map;
+            //改变支付数据库中的是否退款
+            //新增退款数据库数据
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.hotelreserve.controller;
 
 import com.google.gson.Gson;
+import com.hotelreserve.http.model.ResponseHeader;
 import com.hotelreserve.http.request.OrderRequest;
 import com.hotelreserve.http.response.OrderResponse;
 import com.hotelreserve.http.response.PrePayResponse;
@@ -38,10 +39,18 @@ public class OrderController {
 
     @ResponseBody
     @RequestMapping(value = "/wxPrePay", method = RequestMethod.POST)
-    public void wxPrePay(HttpServletResponse response,@RequestBody OrderRequest order) {
+    public void wxPrePay(HttpServletResponse response, @RequestBody OrderRequest order) {
         PrePayResponse prePayResponse = mOrderService.wxPrePay(order);
         LogUtils.info(new Gson().toJson(prePayResponse));
-        ResponseUtils.renderJson(response,new Gson().toJson(prePayResponse));
+        ResponseUtils.renderJson(response, new Gson().toJson(prePayResponse));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/wxRefund", method = RequestMethod.GET)
+    public void wxRefund(HttpServletResponse response,int orderId) {
+        ResponseHeader header = mOrderService.wechatRefund(orderId);
+        LogUtils.info(new Gson().toJson(header));
+        ResponseUtils.renderJson(response,new Gson().toJson(header));
     }
 
     /**
@@ -78,7 +87,7 @@ public class OrderController {
                 /**此处添加自己的业务逻辑代码start**/
                 String orderNumber = (String) map.get("out_trade_no");
                 String price = (String) map.get("total_fee");
-                mOrderService.updateOrderStatus(WxPayConfig.TO_SIGN_IN,orderNumber,price);
+                mOrderService.updateOrderStatus(WxPayConfig.TO_SIGN_IN, orderNumber, price);
 
                 /**此处添加自己的业务逻辑代码end**/
                 //通知微信服务器已经支付成功
@@ -101,18 +110,18 @@ public class OrderController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/getAllOrder" ,method = RequestMethod.GET)
-    public void getAllOrder(HttpServletResponse response){
+    @RequestMapping(value = "/getAllOrder", method = RequestMethod.GET)
+    public void getAllOrder(HttpServletResponse response) {
         OrderResponse orderResponse = mOrderService.getAllOrder();
-        ResponseUtils.renderJson(response,new Gson().toJson(orderResponse));
+        ResponseUtils.renderJson(response, new Gson().toJson(orderResponse));
     }
 
     @ResponseBody
-    @RequestMapping(value = "/getMyOrder",method = RequestMethod.GET)
-    public void getMyOrder(HttpServletResponse response,int userId,int status){
-        LogUtils.info("userId:"+userId+"  status:"+status);
-        OrderResponse orderResponse = mOrderService.getMyOrder(userId,status);
-        ResponseUtils.renderJson(response,new Gson().toJson(orderResponse));
+    @RequestMapping(value = "/getMyOrder", method = RequestMethod.GET)
+    public void getMyOrder(HttpServletResponse response, int userId, int status) {
+        LogUtils.info("userId:" + userId + "  status:" + status);
+        OrderResponse orderResponse = mOrderService.getMyOrder(userId, status);
+        ResponseUtils.renderJson(response, new Gson().toJson(orderResponse));
     }
 
 }
