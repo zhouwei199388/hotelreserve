@@ -10,11 +10,13 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.springframework.util.ResourceUtils;
 
 import javax.net.ssl.SSLContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.security.KeyStore;
 import java.util.Map;
 
@@ -27,11 +29,13 @@ public class ClientCustomSSL {
         /**
          * 注意PKCS12证书 是从微信商户平台-》账户设置-》 API安全 中下载的
          */
-        String path=this.getClass().getClassLoader().getResource("/").getPath();
-        String pathStr=path+ "apiclient_cert.p12";
-        System.out.println("pathstr-->"+pathStr);
-        KeyStore keyStore  = KeyStore.getInstance("PKCS12");
-        FileInputStream instream = new FileInputStream(new File(pathStr));//P12文件目录
+        KeyStore keyStore = KeyStore.getInstance("PKCS12");
+//        File file= ResourceUtils.getFile("classpath:wx/apiclient_cert.p12");
+//        LogUtils.info(file.getAbsolutePath());
+//        FileInputStream instream = new FileInputStream(file);//P12文件目录
+
+        InputStream instream = Thread.currentThread().getContextClassLoader().getResourceAsStream
+                ("wx/apiclient_cert.p12");
         try {
             /**
              * 此处要改
@@ -50,7 +54,7 @@ public class ClientCustomSSL {
         // Allow TLSv1 protocol only
         SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
                 sslcontext,
-                new String[] { "TLSv1" },
+                new String[]{"TLSv1"},
                 null,
                 SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
         CloseableHttpClient httpclient = HttpClients.custom()
@@ -71,7 +75,7 @@ public class ClientCustomSSL {
                 HttpEntity entity = response.getEntity();
                 String jsonStr = EntityUtils.toString(response.getEntity(), "UTF-8");
                 XmlHelper xmlHelper = XmlHelper.of(jsonStr);
-                Map<String,String> map=xmlHelper.toMap();
+                Map<String, String> map = xmlHelper.toMap();
                 EntityUtils.consume(entity);
                 return map;
             } finally {

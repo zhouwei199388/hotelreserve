@@ -169,7 +169,7 @@ public class OrderService {
      * @param orderNumber
      * @return
      */
-    public boolean updateOrderStatus(int status, String orderNumber, String price) {
+    public boolean updateOrderStatus(int status, String orderNumber, String price,String transactionId) {
 
         OrderExample example = new OrderExample();
         OrderExample.Criteria criteria = example.createCriteria();
@@ -308,20 +308,20 @@ public class OrderService {
     public ResponseHeader wechatRefund(int orderId) {
         ResponseHeader header = new ResponseHeader();
         Order order = mOrderMapper.selectByPrimaryKey(orderId);
+        LogUtils.info(new Gson().toJson(order));
         if (order == null) {
             return header;
         }
         String transaction_id = order.getOrdernumber();
-        String total_fee = String.valueOf((order.getPrice()*100));
-        String refund_fee = String.valueOf((order.getPrice()*100));
+        String total_fee = String.valueOf((int)(order.getPrice()*100));
+        String refund_fee = String.valueOf((int)(order.getPrice()*100));
 
         String out_refund_no = UUID.randomUUID().toString().substring(0, 32).replace("-", "");
-        String nonce_str = RandomStringUtils.randomAlphanumeric(10);// 随机字符串
+        String nonce_str = PayUtils.getRandomStringByLength(32);// 随机字符串
         SortedMap<String, String> packageParams = new TreeMap<String, String>();
         packageParams.put("appid", WxPayConfig.appid);
         packageParams.put("mch_id", WxPayConfig.mch_id);
         packageParams.put("nonce_str", nonce_str);
-        packageParams.put("transaction_id", transaction_id);
         packageParams.put("out_refund_no", out_refund_no);
         packageParams.put("total_fee", total_fee);
         packageParams.put("refund_fee", refund_fee);
@@ -334,8 +334,7 @@ public class OrderService {
                 "<appid>" + WxPayConfig.appid + "</appid>" +
                 "<mch_id>" + WxPayConfig.mch_id + "</mch_id>" +
                 "<nonce_str>" + nonce_str + "</nonce_str>" +
-                "<sign><![CDATA[" + sign + "]]></sign>" +
-                "<transaction_id>" + transaction_id + "</transaction_id>" +
+                "<sign>" + sign + "</sign>" +
                 "<out_refund_no>" + out_refund_no + "</out_refund_no>" +
                 "<total_fee>" + total_fee + "</total_fee>" +
                 "<refund_fee>" + refund_fee + "</refund_fee>" +
@@ -343,6 +342,7 @@ public class OrderService {
                 "</xml>";
 
 
+        LogUtils.info(xml);
         String createOrderURL = "https://api.mch.weixin.qq.com/secapi/pay/refund";
         try {
             ClientCustomSSL ccs = new ClientCustomSSL();

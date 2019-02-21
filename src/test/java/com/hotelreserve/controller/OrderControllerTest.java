@@ -102,4 +102,15 @@ public class OrderControllerTest {
                 .andReturn();
     }
 
+
+    @Test
+    public void wxRefund() throws Exception{
+        mvc.perform(MockMvcRequestBuilders.get("/api/order/wxRefund")
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("orderId", "11"))
+                .andExpect(MockMvcResultMatchers.status().isOk()) //400错误请求
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+    }
+
 }

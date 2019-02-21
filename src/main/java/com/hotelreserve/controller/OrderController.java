@@ -87,7 +87,8 @@ public class OrderController {
                 /**此处添加自己的业务逻辑代码start**/
                 String orderNumber = (String) map.get("out_trade_no");
                 String price = (String) map.get("total_fee");
-                mOrderService.updateOrderStatus(WxPayConfig.TO_SIGN_IN, orderNumber, price);
+                String transactionId = (String) map.get("transaction_id");
+                mOrderService.updateOrderStatus(WxPayConfig.TO_SIGN_IN, orderNumber, price,transactionId);
 
                 /**此处添加自己的业务逻辑代码end**/
                 //通知微信服务器已经支付成功
