@@ -181,6 +181,7 @@ public class OrderService {
         }
         Order order = orders.get(0);
         order.setStatus(status);
+        order.setTransactionid(transactionId);
         int result = mOrderMapper.updateByPrimaryKey(order);
         if (result == 0) {
             LogUtils.info(new Gson().toJson(order));
@@ -305,6 +306,7 @@ public class OrderService {
      *
      * @return
      */
+    @Transactional
     public ResponseHeader wechatRefund(int orderId) {
         ResponseHeader header = new ResponseHeader();
         Order order = mOrderMapper.selectByPrimaryKey(orderId);
@@ -312,16 +314,17 @@ public class OrderService {
         if (order == null) {
             return header;
         }
-        String transaction_id = order.getOrdernumber();
+        String transaction_id = order.getTransactionid();
         String total_fee = String.valueOf((int)(order.getPrice()*100));
         String refund_fee = String.valueOf((int)(order.getPrice()*100));
 
-        String out_refund_no = UUID.randomUUID().toString().substring(0, 32).replace("-", "");
         String nonce_str = PayUtils.getRandomStringByLength(32);// 随机字符串
+        String out_refund_no = UUID.randomUUID().toString().substring(0, 32).replace("-", "");
         SortedMap<String, String> packageParams = new TreeMap<String, String>();
         packageParams.put("appid", WxPayConfig.appid);
         packageParams.put("mch_id", WxPayConfig.mch_id);
         packageParams.put("nonce_str", nonce_str);
+        packageParams.put("transaction_id", transaction_id);
         packageParams.put("out_refund_no", out_refund_no);
         packageParams.put("total_fee", total_fee);
         packageParams.put("refund_fee", refund_fee);
@@ -335,27 +338,47 @@ public class OrderService {
                 "<mch_id>" + WxPayConfig.mch_id + "</mch_id>" +
                 "<nonce_str>" + nonce_str + "</nonce_str>" +
                 "<sign>" + sign + "</sign>" +
+                "<transaction_id>" + transaction_id + "</transaction_id>" +
                 "<out_refund_no>" + out_refund_no + "</out_refund_no>" +
                 "<total_fee>" + total_fee + "</total_fee>" +
                 "<refund_fee>" + refund_fee + "</refund_fee>" +
                 "<op_user_id>" + WxPayConfig.mch_id + "</op_user_id>" +
                 "</xml>";
-
-
         LogUtils.info(xml);
         String createOrderURL = "https://api.mch.weixin.qq.com/secapi/pay/refund";
         try {
             ClientCustomSSL ccs = new ClientCustomSSL();
             Map<String, String> map = ccs.doRefund(createOrderURL, xml);
+            String resultCode = map.get("return_code");
+            if("SUCCESS".equals(resultCode)){
+                if("SUCCESS".equals(map.get("result_code"))){
+                    order.setStatus(3);
+                    int returnCode = mOrderMapper.updateByPrimaryKey(order);
+                    if(returnCode!=0){
+                        header.code= ConnectionMessage.SUCCESS_CODE;
+                        header.msg = "退款成功";
+                    }else{
+                        header.code= ConnectionMessage.SERVER_ERROR_CODE;
+                        header.msg = ConnectionMessage.SERVER_ERROR_TEXT;
+                    }
+                }else{
+                    header.code= ConnectionMessage.SERVER_ERROR_CODE;
+                    header.msg = map.get("err_code_des");
+                }
+            }else{
+                header.code= ConnectionMessage.SERVER_ERROR_CODE;
+                header.msg = map.get("return_msg");
+            }
+
             LogUtils.info(map.toString());
-//            return map;
+            return header;
             //改变支付数据库中的是否退款
             //新增退款数据库数据
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return header;
     }
 
 }

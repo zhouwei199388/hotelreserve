@@ -13,6 +13,8 @@ public class Order {
 
     private String ordernumber;
 
+    private String transactionid;
+
     private Integer roomnumber;
 
     private String note;
@@ -67,6 +69,14 @@ public class Order {
 
     public void setOrdernumber(String ordernumber) {
         this.ordernumber = ordernumber == null ? null : ordernumber.trim();
+    }
+
+    public String getTransactionid() {
+        return transactionid;
+    }
+
+    public void setTransactionid(String transactionid) {
+        this.transactionid = transactionid == null ? null : transactionid.trim();
     }
 
     public Integer getRoomnumber() {

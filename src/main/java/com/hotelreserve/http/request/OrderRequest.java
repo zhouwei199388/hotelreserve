@@ -50,6 +50,7 @@ public class OrderRequest {
         order.setHotelid(this.hotelid);
         order.setRoomid(this.roomid);
         order.setOrdernumber(this.ordernumber);
+        order.setTransactionid("");
         order.setRoomnumber(this.roomnumber);
         order.setPrice(this.price);
         order.setNote(this.note);

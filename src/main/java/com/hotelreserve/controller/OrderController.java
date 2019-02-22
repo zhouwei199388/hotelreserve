@@ -88,6 +88,8 @@ public class OrderController {
                 String orderNumber = (String) map.get("out_trade_no");
                 String price = (String) map.get("total_fee");
                 String transactionId = (String) map.get("transaction_id");
+                LogUtils.info(transactionId);
+                LogUtils.info(map.toString());
                 mOrderService.updateOrderStatus(WxPayConfig.TO_SIGN_IN, orderNumber, price,transactionId);
 
                 /**此处添加自己的业务逻辑代码end**/
