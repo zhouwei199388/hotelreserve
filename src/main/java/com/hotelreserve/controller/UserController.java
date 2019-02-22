@@ -38,6 +38,7 @@ public class UserController {
     public void bindPhone(@RequestBody BindPhoneRequest request, HttpServletResponse response) {
         LogUtils.info(request.toString());
         UserResponse userResponse = mUserService.bindPhone(request);
+        LogUtils.info(new Gson().toJson(userResponse));
         ResponseUtils.renderJson(response, new Gson().toJson(userResponse));
     }
     @ResponseBody

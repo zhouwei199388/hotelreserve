@@ -134,7 +134,10 @@ public class UserService {
             responseHeader.code = ConnectionMessage.SUCCESS_CODE;
             responseHeader.msg = ConnectionMessage.BIND_SUCCESS_TEXT;
         }
+        UserModel userModel = new UserModel();
+        userModel.copyFromUser(user);
         userResponse.header = responseHeader;
+        userResponse.user = userModel;
         return userResponse;
     }
 
