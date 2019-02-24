@@ -17,6 +17,13 @@ public class ConnectionMessage {
     public static final int TIME_OUT_CODE = 2;//超时
 
 
+    //订单状态
+    public static final int  UNPAID = 0;//待支付
+    public static final int  HAVEPAID = 1;//已支付
+    public static final int  PAY_TIMEOUT = 2;//支付超时
+    public static final int  CANCEL = 3;//已取消
+
+
     public static final String SERVER_ERROR_TEXT = "服务器错误";
     public static final String OPENID_ERROR_TEXT = "openid获取失败";
     public static final String CODE_ERROR_TEXT = "code为空";

@@ -3,6 +3,7 @@ package com.hotelreserve.service;
 import com.google.gson.Gson;
 import com.hotelreserve.http.ConnectionMessage;
 import com.hotelreserve.http.WXmessage;
+import com.hotelreserve.http.model.OrderMessage;
 import com.hotelreserve.http.model.OrderModel;
 import com.hotelreserve.http.request.OrderRequest;
 import com.hotelreserve.http.model.ResponseHeader;
@@ -17,12 +18,16 @@ import com.hotelreserve.wxpay.PayUtils;
 import com.hotelreserve.wxpay.WxPayConfig;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sun.rmi.runtime.Log;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.concurrent.DelayQueue;
+import java.util.concurrent.Executors;
 
 /**
  * Created by 15090 on 2018/12/29.
@@ -41,16 +46,83 @@ public class OrderService {
     @Autowired
     private PreOrderResponseMapper mPreOrderMapper;
 
-    public PrePayResponse addOrder(Order order) {
-        PrePayResponse response = new PrePayResponse();
-        ResponseHeader header = new ResponseHeader();
-        int type = mOrderMapper.insert(order);
-        if (type != 0) {
-            header.setSuccess();
+    private static DelayQueue<OrderMessage> delayQueue = new DelayQueue<>();
+
+
+    @PostConstruct
+    public void init() throws Exception {
+        LogUtils.info("start Init");
+        OrderExample example = new OrderExample();
+        OrderExample.Criteria criteria = example.createCriteria();
+        criteria.andStatusEqualTo(ConnectionMessage.UNPAID);
+        List<Order> orderList = mOrderMapper.selectByExample(example);
+        for (Order order : orderList) {
+            long createTime = order.getCreatetime().getTime();
+            OrderMessage orderMessage;
+            if (System.currentTimeMillis() - OrderMessage.DELAY > createTime) {
+                createTime = System.currentTimeMillis();
+                orderMessage = new OrderMessage(order.getId(), createTime, 60);
+            } else {
+                orderMessage = new OrderMessage(order.getId(), createTime);
+            }
+            this.addToOrderDelayQueue(orderMessage);
         }
-        response.header = header;
-        return response;
+
+        Executors.newSingleThreadExecutor().execute(() -> {
+            OrderMessage message = null;
+            while (true) {
+                try {
+                    message = delayQueue.take();
+                    LogUtils.info("修改订单id为----" + message.getOrderId());
+                    this.updateOrderStatus(message.getOrderId(), ConnectionMessage.CANCEL);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
+
+
+    /**
+     * 加入延迟队列
+     *
+     * @param orderMessage
+     * @return
+     */
+    private boolean addToOrderDelayQueue(OrderMessage orderMessage) {
+        LogUtils.info("添加延时订单——" + orderMessage.getOrderId());
+        return delayQueue.add(orderMessage);
+    }
+
+    /**
+     * 从延迟队列中移除
+     *
+     * @param messageId
+     */
+    private void removeOrderDelayQueue(int messageId) {
+        if (messageId == 0) {
+            return;
+        }
+        for (Iterator<OrderMessage> iterator = delayQueue.iterator(); iterator.hasNext(); ) {
+            OrderMessage queue = iterator.next();
+            if (messageId == queue.getOrderId()) {
+                LogUtils.info("移除延时订单——" + messageId);
+                delayQueue.remove(queue);
+            }
+        }
+    }
+
+//    public PrePayResponse addOrder(Order order) {
+//        PrePayResponse response = new PrePayResponse();
+//        ResponseHeader header = new ResponseHeader();
+//        int type = mOrderMapper.insert(order);
+//        if (type != 0) {
+//            header.setSuccess();
+//        }
+//        response.header = header;
+//        return response;
+//    }
 
     public PrePayResponse wxPrePay(OrderRequest orderModel) {
         LogUtils.info(new Gson().toJson(orderModel));
@@ -71,7 +143,7 @@ public class OrderService {
      * @Description: 同一订单支付
      */
     @Transactional
-    public PrePayResponse wxPrePay(String openid, OrderRequest model) {
+    private PrePayResponse wxPrePay(String openid, OrderRequest model) {
         try {
             //生成的随机字符串
             String nonce_str = PayUtils.getRandomStringByLength(32);
@@ -128,12 +200,13 @@ public class OrderService {
             if (return_code.equals("SUCCESS")) {
                 response = new PrePayResponse();
                 Order order = model.copyToHotel();
-                order.setStatus(0);
+                order.setStatus(ConnectionMessage.UNPAID);
                 int resultCode = mOrderMapper.insert(order);
                 if (resultCode != 1) {
                     response.header = header;
                     return response;
                 }
+                this.addToOrderDelayQueue(new OrderMessage(order.getId(), new Date().getTime()));
                 preOrderResponse.setNoncestr(nonce_str);
                 String prepay_id = (String) map.get("prepay_id");//返回的预付单信息
                 preOrderResponse.setPackagestr("prepay_id=" + prepay_id);
@@ -161,7 +234,6 @@ public class OrderService {
         return null;
     }
 
-
     /**
      * 支付成功回调
      *
@@ -169,7 +241,7 @@ public class OrderService {
      * @param orderNumber
      * @return
      */
-    public boolean updateOrderStatus(int status, String orderNumber, String price,String transactionId) {
+    public boolean updateOrderStatus(int status, String orderNumber, String price, String transactionId) {
 
         OrderExample example = new OrderExample();
         OrderExample.Criteria criteria = example.createCriteria();
@@ -188,6 +260,7 @@ public class OrderService {
             LogUtils.info("状态修改失败");
             return false;
         }
+        this.removeOrderDelayQueue(order.getId());
         PreOrderResponseExample example1 = new PreOrderResponseExample();
         PreOrderResponseExample.Criteria preCriteria = example1.createCriteria();
         preCriteria.andOrderidEqualTo(order.getId());
@@ -218,6 +291,7 @@ public class OrderService {
         return header;
     }
 
+
     /**
      * 获取所有订单
      *
@@ -230,6 +304,44 @@ public class OrderService {
         orderExample.setOrderByClause("'creteTime' ASC");
         List<Order> orders = mOrderMapper.selectByExample(orderExample);
         LogUtils.info(new Gson().toJson(orders));
+        List<OrderModel> orderModels = getOrderModels(orders);
+        header.setSuccess();
+        response.header = header;
+        response.orders = orderModels;
+        return response;
+    }
+
+    /**
+     * @param userId
+     * @return
+     */
+    public OrderResponse getMyOrder(int userId, int status) {
+        OrderResponse response = new OrderResponse();
+        ResponseHeader header = new ResponseHeader();
+        OrderExample orderExample = new OrderExample();
+        OrderExample.Criteria orderCriteria = orderExample.createCriteria();
+        orderCriteria.andUseridEqualTo(userId);
+        if (status != -1) {
+            orderCriteria.andStatusEqualTo(status);
+        }
+        orderExample.setOrderByClause("'createTime' DESC");
+        List<Order> orders = mOrderMapper.selectByExample(orderExample);
+        LogUtils.info(new Gson().toJson(orders));
+        List<OrderModel> orderModels = getOrderModels(orders);
+        header.setSuccess();
+        response.header = header;
+        response.orders = orderModels;
+        return response;
+    }
+
+
+    /**
+     * order转换ordermodel
+     *
+     * @param orders
+     * @return
+     */
+    private List<OrderModel> getOrderModels(List<Order> orders) {
         List<OrderModel> orderModels = new ArrayList<>();
         for (Order order : orders) {
             OrderModel model = new OrderModel();
@@ -251,53 +363,7 @@ public class OrderService {
             model.user = user;
             orderModels.add(model);
         }
-        header.setSuccess();
-        response.header = header;
-        response.orders = orderModels;
-        return response;
-    }
-
-    /**
-     * @param userId
-     * @return
-     */
-    public OrderResponse getMyOrder(int userId, int status) {
-        OrderResponse response = new OrderResponse();
-        ResponseHeader header = new ResponseHeader();
-        OrderExample orderExample = new OrderExample();
-        OrderExample.Criteria orderCriteria = orderExample.createCriteria();
-        orderCriteria.andUseridEqualTo(userId);
-        if (status != -1) {
-            orderCriteria.andStatusEqualTo(status);
-        }
-        orderExample.setOrderByClause("'creteTime' ASC");
-        List<Order> orders = mOrderMapper.selectByExample(orderExample);
-        LogUtils.info(new Gson().toJson(orders));
-        List<OrderModel> orderModels = new ArrayList<>();
-        for(Order order:orders){
-            OrderModel model = new OrderModel();
-            HotelInfo hotelInfo = mHotelInfoMapper.selectByPrimaryKey(order.getHotelid());
-            HotelRoom hotelRoom = mHotelRoomMapper.selectByPrimaryKey(order.getRoomid());
-            User user = mUserMapper.selectByPrimaryKey(order.getUserid());
-            PreOrderResponseExample example = new PreOrderResponseExample();
-            PreOrderResponseExample.Criteria criteria = example.createCriteria();
-            criteria.andOrderidEqualTo(order.getId());
-            List<PreOrderResponse> preOrder = mPreOrderMapper.selectByExample(example);
-            user.setOpenid(null);
-            user.setSessionkey(null);
-            model.hotelInfo = hotelInfo;
-            model.hotelRoom = hotelRoom;
-            if (preOrder.size() != 0) {
-                model.preOrder = preOrder.get(0);
-            }
-            model.setOrder(order);
-            model.user = user;
-            orderModels.add(model);
-        }
-        header.setSuccess();
-        response.header = header;
-        response.orders = orderModels;
-        return response;
+        return orderModels;
     }
 
 
@@ -315,8 +381,8 @@ public class OrderService {
             return header;
         }
         String transaction_id = order.getTransactionid();
-        String total_fee = String.valueOf((int)(order.getPrice()*100));
-        String refund_fee = String.valueOf((int)(order.getPrice()*100));
+        String total_fee = String.valueOf((int) (order.getPrice() * 100));
+        String refund_fee = String.valueOf((int) (order.getPrice() * 100));
 
         String nonce_str = PayUtils.getRandomStringByLength(32);// 随机字符串
         String out_refund_no = UUID.randomUUID().toString().substring(0, 32).replace("-", "");
@@ -350,23 +416,23 @@ public class OrderService {
             ClientCustomSSL ccs = new ClientCustomSSL();
             Map<String, String> map = ccs.doRefund(createOrderURL, xml);
             String resultCode = map.get("return_code");
-            if("SUCCESS".equals(resultCode)){
-                if("SUCCESS".equals(map.get("result_code"))){
-                    order.setStatus(3);
+            if ("SUCCESS".equals(resultCode)) {
+                if ("SUCCESS".equals(map.get("result_code"))) {
+                    order.setStatus(ConnectionMessage.CANCEL);
                     int returnCode = mOrderMapper.updateByPrimaryKey(order);
-                    if(returnCode!=0){
-                        header.code= ConnectionMessage.SUCCESS_CODE;
+                    if (returnCode != 0) {
+                        header.code = ConnectionMessage.SUCCESS_CODE;
                         header.msg = "退款成功";
-                    }else{
-                        header.code= ConnectionMessage.SERVER_ERROR_CODE;
+                    } else {
+                        header.code = ConnectionMessage.SERVER_ERROR_CODE;
                         header.msg = ConnectionMessage.SERVER_ERROR_TEXT;
                     }
-                }else{
-                    header.code= ConnectionMessage.SERVER_ERROR_CODE;
+                } else {
+                    header.code = ConnectionMessage.SERVER_ERROR_CODE;
                     header.msg = map.get("err_code_des");
                 }
-            }else{
-                header.code= ConnectionMessage.SERVER_ERROR_CODE;
+            } else {
+                header.code = ConnectionMessage.SERVER_ERROR_CODE;
                 header.msg = map.get("return_msg");
             }
 
