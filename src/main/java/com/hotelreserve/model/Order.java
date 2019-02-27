@@ -1,7 +1,5 @@
 package com.hotelreserve.model;
 
-import java.util.Date;
-
 public class Order {
     private Integer id;
 
@@ -29,7 +27,7 @@ public class Order {
 
     private String enddate;
 
-    private Date createtime;
+    private Long createtime;
 
     public Integer getId() {
         return id;
@@ -135,11 +133,11 @@ public class Order {
         this.enddate = enddate == null ? null : enddate.trim();
     }
 
-    public Date getCreatetime() {
+    public Long getCreatetime() {
         return createtime;
     }
 
-    public void setCreatetime(Date createtime) {
+    public void setCreatetime(Long createtime) {
         this.createtime = createtime;
     }
 }

@@ -25,7 +25,7 @@ public class OrderModel {
 
     public String enddate;
 
-    public Date createtime;
+    public Long createtime;
 
     public User user;
     public HotelInfo hotelInfo;

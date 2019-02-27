@@ -32,8 +32,8 @@ public class OrderRequest {
 
     public String enddate;
 
-    public Date createtime;
-    public void copyFromHotel(Order order) {
+    public long createtime;
+    public void copyFromOrder(Order order) {
         this.userid = order.getUserid();
         this.ordernumber = order.getOrdernumber();
         this.roomnumber = order.getRoomnumber();
@@ -42,9 +42,10 @@ public class OrderRequest {
         this.price = order.getPrice();
         this.startdate = order.getStartdate();
         this.enddate = order.getEnddate();
+        this.createtime = order.getCreatetime();
     }
 
-    public Order copyToHotel() {
+    public Order copyToOrder() {
         Order order = new Order();
         order.setUserid(this.userid);
         order.setHotelid(this.hotelid);

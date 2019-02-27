@@ -63,7 +63,7 @@ public class OrderSqlProvider {
         }
         
         if (record.getCreatetime() != null) {
-            sql.VALUES("createTime", "#{createtime,jdbcType=TIMESTAMP}");
+            sql.VALUES("createTime", "#{createtime,jdbcType=BIGINT}");
         }
         
         return sql.toString();
@@ -159,7 +159,7 @@ public class OrderSqlProvider {
         }
         
         if (record.getCreatetime() != null) {
-            sql.SET("createTime = #{record.createtime,jdbcType=TIMESTAMP}");
+            sql.SET("createTime = #{record.createtime,jdbcType=BIGINT}");
         }
         
         applyWhere(sql, example, true);
@@ -183,7 +183,7 @@ public class OrderSqlProvider {
         sql.SET("price = #{record.price,jdbcType=DOUBLE}");
         sql.SET("startDate = #{record.startdate,jdbcType=VARCHAR}");
         sql.SET("endDate = #{record.enddate,jdbcType=VARCHAR}");
-        sql.SET("createTime = #{record.createtime,jdbcType=TIMESTAMP}");
+        sql.SET("createTime = #{record.createtime,jdbcType=BIGINT}");
         
         OrderExample example = (OrderExample) parameter.get("example");
         applyWhere(sql, example, true);
@@ -243,7 +243,7 @@ public class OrderSqlProvider {
         }
         
         if (record.getCreatetime() != null) {
-            sql.SET("createTime = #{createtime,jdbcType=TIMESTAMP}");
+            sql.SET("createTime = #{createtime,jdbcType=BIGINT}");
         }
         
         sql.WHERE("id = #{id,jdbcType=INTEGER}");

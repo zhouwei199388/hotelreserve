@@ -57,7 +57,7 @@ public class OrderService {
         criteria.andStatusEqualTo(ConnectionMessage.UNPAID);
         List<Order> orderList = mOrderMapper.selectByExample(example);
         for (Order order : orderList) {
-            long createTime = order.getCreatetime().getTime();
+            long createTime = order.getCreatetime();
             OrderMessage orderMessage;
             if (System.currentTimeMillis() - OrderMessage.DELAY > createTime) {
                 createTime = System.currentTimeMillis();
@@ -144,6 +144,8 @@ public class OrderService {
      */
     @Transactional
     private PrePayResponse wxPrePay(String openid, OrderRequest model) {
+        PrePayResponse response = new PrePayResponse();
+        ResponseHeader header = new ResponseHeader();
         try {
             //生成的随机字符串
             String nonce_str = PayUtils.getRandomStringByLength(32);
@@ -194,13 +196,12 @@ public class OrderService {
 
             String return_code = (String) map.get("return_code");//返回状态码
 
-            PrePayResponse response = new PrePayResponse();//返回给小程序端需要的参数
             PreOrderResponse preOrderResponse = new PreOrderResponse();
-            ResponseHeader header = new ResponseHeader();
             if (return_code.equals("SUCCESS")) {
                 response = new PrePayResponse();
-                Order order = model.copyToHotel();
+                Order order = model.copyToOrder();
                 order.setStatus(ConnectionMessage.UNPAID);
+                order.setCreatetime(System.currentTimeMillis());
                 int resultCode = mOrderMapper.insert(order);
                 if (resultCode != 1) {
                     response.header = header;
@@ -231,7 +232,8 @@ public class OrderService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        response.header = header;
+        return response;
     }
 
     /**
@@ -301,7 +303,7 @@ public class OrderService {
         OrderResponse response = new OrderResponse();
         ResponseHeader header = new ResponseHeader();
         OrderExample orderExample = new OrderExample();
-        orderExample.setOrderByClause("'creteTime' ASC");
+        orderExample.setOrderByClause("createTime DESC");
         List<Order> orders = mOrderMapper.selectByExample(orderExample);
         LogUtils.info(new Gson().toJson(orders));
         List<OrderModel> orderModels = getOrderModels(orders);
@@ -319,12 +321,12 @@ public class OrderService {
         OrderResponse response = new OrderResponse();
         ResponseHeader header = new ResponseHeader();
         OrderExample orderExample = new OrderExample();
+        orderExample.setOrderByClause(" createTime DESC");
         OrderExample.Criteria orderCriteria = orderExample.createCriteria();
         orderCriteria.andUseridEqualTo(userId);
         if (status != -1) {
             orderCriteria.andStatusEqualTo(status);
         }
-        orderExample.setOrderByClause("'createTime' DESC");
         List<Order> orders = mOrderMapper.selectByExample(orderExample);
         LogUtils.info(new Gson().toJson(orders));
         List<OrderModel> orderModels = getOrderModels(orders);

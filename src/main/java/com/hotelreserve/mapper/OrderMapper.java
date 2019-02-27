@@ -35,7 +35,7 @@ public interface OrderMapper {
         "#{transactionid,jdbcType=VARCHAR}, #{roomnumber,jdbcType=INTEGER}, ",
         "#{note,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{days,jdbcType=INTEGER}, ",
         "#{price,jdbcType=DOUBLE}, #{startdate,jdbcType=VARCHAR}, ",
-        "#{enddate,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP})"
+        "#{enddate,jdbcType=VARCHAR}, #{createtime,jdbcType=BIGINT})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
     int insert(Order record);
@@ -59,7 +59,7 @@ public interface OrderMapper {
         @Result(column="price", property="price", jdbcType=JdbcType.DOUBLE),
         @Result(column="startDate", property="startdate", jdbcType=JdbcType.VARCHAR),
         @Result(column="endDate", property="enddate", jdbcType=JdbcType.VARCHAR),
-        @Result(column="createTime", property="createtime", jdbcType=JdbcType.TIMESTAMP)
+        @Result(column="createTime", property="createtime", jdbcType=JdbcType.BIGINT)
     })
     List<Order> selectByExample(OrderExample example);
 
@@ -84,7 +84,7 @@ public interface OrderMapper {
         @Result(column="price", property="price", jdbcType=JdbcType.DOUBLE),
         @Result(column="startDate", property="startdate", jdbcType=JdbcType.VARCHAR),
         @Result(column="endDate", property="enddate", jdbcType=JdbcType.VARCHAR),
-        @Result(column="createTime", property="createtime", jdbcType=JdbcType.TIMESTAMP)
+        @Result(column="createTime", property="createtime", jdbcType=JdbcType.BIGINT)
     })
     Order selectByPrimaryKey(Integer id);
 
@@ -111,7 +111,7 @@ public interface OrderMapper {
           "price = #{price,jdbcType=DOUBLE},",
           "startDate = #{startdate,jdbcType=VARCHAR},",
           "endDate = #{enddate,jdbcType=VARCHAR},",
-          "createTime = #{createtime,jdbcType=TIMESTAMP}",
+          "createTime = #{createtime,jdbcType=BIGINT}",
         "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Order record);
