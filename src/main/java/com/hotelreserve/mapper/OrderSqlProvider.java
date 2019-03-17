@@ -26,12 +26,16 @@ public class OrderSqlProvider {
             sql.VALUES("roomId", "#{roomid,jdbcType=INTEGER}");
         }
         
-        if (record.getOrdernumber() != null) {
-            sql.VALUES("orderNumber", "#{ordernumber,jdbcType=VARCHAR}");
+        if (record.getTransactionid() != null) {
+            sql.VALUES("transactionid", "#{transactionid,jdbcType=VARCHAR}");
         }
         
-        if (record.getTransactionid() != null) {
-            sql.VALUES("transactionId", "#{transactionid,jdbcType=VARCHAR}");
+        if (record.getDays() != null) {
+            sql.VALUES("days", "#{days,jdbcType=INTEGER}");
+        }
+        
+        if (record.getOrdernumber() != null) {
+            sql.VALUES("orderNumber", "#{ordernumber,jdbcType=VARCHAR}");
         }
         
         if (record.getRoomnumber() != null) {
@@ -44,10 +48,6 @@ public class OrderSqlProvider {
         
         if (record.getStatus() != null) {
             sql.VALUES("status", "#{status,jdbcType=INTEGER}");
-        }
-        
-        if (record.getDays() != null) {
-            sql.VALUES("days", "#{days,jdbcType=INTEGER}");
         }
         
         if (record.getPrice() != null) {
@@ -79,12 +79,12 @@ public class OrderSqlProvider {
         sql.SELECT("userId");
         sql.SELECT("hotelId");
         sql.SELECT("roomId");
+        sql.SELECT("transactionid");
+        sql.SELECT("days");
         sql.SELECT("orderNumber");
-        sql.SELECT("transactionId");
         sql.SELECT("roomNumber");
         sql.SELECT("note");
         sql.SELECT("status");
-        sql.SELECT("days");
         sql.SELECT("price");
         sql.SELECT("startDate");
         sql.SELECT("endDate");
@@ -122,12 +122,16 @@ public class OrderSqlProvider {
             sql.SET("roomId = #{record.roomid,jdbcType=INTEGER}");
         }
         
-        if (record.getOrdernumber() != null) {
-            sql.SET("orderNumber = #{record.ordernumber,jdbcType=VARCHAR}");
+        if (record.getTransactionid() != null) {
+            sql.SET("transactionid = #{record.transactionid,jdbcType=VARCHAR}");
         }
         
-        if (record.getTransactionid() != null) {
-            sql.SET("transactionId = #{record.transactionid,jdbcType=VARCHAR}");
+        if (record.getDays() != null) {
+            sql.SET("days = #{record.days,jdbcType=INTEGER}");
+        }
+        
+        if (record.getOrdernumber() != null) {
+            sql.SET("orderNumber = #{record.ordernumber,jdbcType=VARCHAR}");
         }
         
         if (record.getRoomnumber() != null) {
@@ -140,10 +144,6 @@ public class OrderSqlProvider {
         
         if (record.getStatus() != null) {
             sql.SET("status = #{record.status,jdbcType=INTEGER}");
-        }
-        
-        if (record.getDays() != null) {
-            sql.SET("days = #{record.days,jdbcType=INTEGER}");
         }
         
         if (record.getPrice() != null) {
@@ -174,12 +174,12 @@ public class OrderSqlProvider {
         sql.SET("userId = #{record.userid,jdbcType=INTEGER}");
         sql.SET("hotelId = #{record.hotelid,jdbcType=INTEGER}");
         sql.SET("roomId = #{record.roomid,jdbcType=INTEGER}");
+        sql.SET("transactionid = #{record.transactionid,jdbcType=VARCHAR}");
+        sql.SET("days = #{record.days,jdbcType=INTEGER}");
         sql.SET("orderNumber = #{record.ordernumber,jdbcType=VARCHAR}");
-        sql.SET("transactionId = #{record.transactionid,jdbcType=VARCHAR}");
         sql.SET("roomNumber = #{record.roomnumber,jdbcType=INTEGER}");
         sql.SET("note = #{record.note,jdbcType=VARCHAR}");
         sql.SET("status = #{record.status,jdbcType=INTEGER}");
-        sql.SET("days = #{record.days,jdbcType=INTEGER}");
         sql.SET("price = #{record.price,jdbcType=DOUBLE}");
         sql.SET("startDate = #{record.startdate,jdbcType=VARCHAR}");
         sql.SET("endDate = #{record.enddate,jdbcType=VARCHAR}");
@@ -206,12 +206,16 @@ public class OrderSqlProvider {
             sql.SET("roomId = #{roomid,jdbcType=INTEGER}");
         }
         
-        if (record.getOrdernumber() != null) {
-            sql.SET("orderNumber = #{ordernumber,jdbcType=VARCHAR}");
+        if (record.getTransactionid() != null) {
+            sql.SET("transactionid = #{transactionid,jdbcType=VARCHAR}");
         }
         
-        if (record.getTransactionid() != null) {
-            sql.SET("transactionId = #{transactionid,jdbcType=VARCHAR}");
+        if (record.getDays() != null) {
+            sql.SET("days = #{days,jdbcType=INTEGER}");
+        }
+        
+        if (record.getOrdernumber() != null) {
+            sql.SET("orderNumber = #{ordernumber,jdbcType=VARCHAR}");
         }
         
         if (record.getRoomnumber() != null) {
@@ -224,10 +228,6 @@ public class OrderSqlProvider {
         
         if (record.getStatus() != null) {
             sql.SET("status = #{status,jdbcType=INTEGER}");
-        }
-        
-        if (record.getDays() != null) {
-            sql.SET("days = #{days,jdbcType=INTEGER}");
         }
         
         if (record.getPrice() != null) {

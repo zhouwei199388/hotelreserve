@@ -9,7 +9,7 @@ public class HotelRoom {
 
     private Double price;
 
-    private Integer window;
+    private Integer iswindow;
 
     private String image;
 
@@ -45,12 +45,12 @@ public class HotelRoom {
         this.price = price;
     }
 
-    public Integer getWindow() {
-        return window;
+    public Integer getIswindow() {
+        return iswindow;
     }
 
-    public void setWindow(Integer window) {
-        this.window = window;
+    public void setIswindow(Integer iswindow) {
+        this.iswindow = iswindow;
     }
 
     public String getImage() {

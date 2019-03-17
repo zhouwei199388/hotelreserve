@@ -25,9 +25,11 @@ public interface HotelRoomMapper {
 
     @Insert({
         "insert into hotelroom (hotelId, name, ",
-        "price, window, image)",
+        "price, isWindow, ",
+        "image)",
         "values (#{hotelid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, ",
-        "#{price,jdbcType=DOUBLE}, #{window,jdbcType=INTEGER}, #{image,jdbcType=VARCHAR})"
+        "#{price,jdbcType=DOUBLE}, #{iswindow,jdbcType=INTEGER}, ",
+        "#{image,jdbcType=VARCHAR})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
     int insert(HotelRoom record);
@@ -42,14 +44,14 @@ public interface HotelRoomMapper {
         @Result(column="hotelId", property="hotelid", jdbcType=JdbcType.INTEGER),
         @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
         @Result(column="price", property="price", jdbcType=JdbcType.DOUBLE),
-        @Result(column="window", property="window", jdbcType=JdbcType.INTEGER),
+        @Result(column="isWindow", property="iswindow", jdbcType=JdbcType.INTEGER),
         @Result(column="image", property="image", jdbcType=JdbcType.VARCHAR)
     })
     List<HotelRoom> selectByExample(HotelRoomExample example);
 
     @Select({
         "select",
-        "id, hotelId, name, price, window, image",
+        "id, hotelId, name, price, isWindow, image",
         "from hotelroom",
         "where id = #{id,jdbcType=INTEGER}"
     })
@@ -58,7 +60,7 @@ public interface HotelRoomMapper {
         @Result(column="hotelId", property="hotelid", jdbcType=JdbcType.INTEGER),
         @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
         @Result(column="price", property="price", jdbcType=JdbcType.DOUBLE),
-        @Result(column="window", property="window", jdbcType=JdbcType.INTEGER),
+        @Result(column="isWindow", property="iswindow", jdbcType=JdbcType.INTEGER),
         @Result(column="image", property="image", jdbcType=JdbcType.VARCHAR)
     })
     HotelRoom selectByPrimaryKey(Integer id);
@@ -77,7 +79,7 @@ public interface HotelRoomMapper {
         "set hotelId = #{hotelid,jdbcType=INTEGER},",
           "name = #{name,jdbcType=VARCHAR},",
           "price = #{price,jdbcType=DOUBLE},",
-          "window = #{window,jdbcType=INTEGER},",
+          "isWindow = #{iswindow,jdbcType=INTEGER},",
           "image = #{image,jdbcType=VARCHAR}",
         "where id = #{id,jdbcType=INTEGER}"
     })

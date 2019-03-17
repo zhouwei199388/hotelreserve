@@ -95,8 +95,8 @@ public class OrderControllerTest {
     public void getMyOrder() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/api/order/getMyOrder")
                 .contentType(MediaType.APPLICATION_JSON)
-                .param("userId", "8")
-                .param("status", "0"))
+                .param("userId", "1")
+                .param("status", "1"))
                 .andExpect(MockMvcResultMatchers.status().isOk()) //400错误请求
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();

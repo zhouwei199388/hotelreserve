@@ -28,7 +28,7 @@ public class RoomModel {
      this.hotelid = room.getHotelid();
      this.name = room.getName();
      this.price = room.getPrice();
-     this.window = room.getWindow();
+     this.window = room.getIswindow();
      this.image = room.getImage();
     }
 
@@ -40,7 +40,7 @@ public class RoomModel {
         room.setImage(this.image);
         room.setName(this.name);
         room.setPrice(this.price);
-        room.setWindow(this.window);
+        room.setIswindow(this.window);
         return room;
     }
 

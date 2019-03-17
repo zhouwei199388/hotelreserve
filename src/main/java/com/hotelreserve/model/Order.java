@@ -9,17 +9,17 @@ public class Order {
 
     private Integer roomid;
 
-    private String ordernumber;
-
     private String transactionid;
+
+    private Integer days;
+
+    private String ordernumber;
 
     private Integer roomnumber;
 
     private String note;
 
     private Integer status;
-
-    private Integer days;
 
     private Double price;
 
@@ -61,20 +61,28 @@ public class Order {
         this.roomid = roomid;
     }
 
-    public String getOrdernumber() {
-        return ordernumber;
-    }
-
-    public void setOrdernumber(String ordernumber) {
-        this.ordernumber = ordernumber == null ? null : ordernumber.trim();
-    }
-
     public String getTransactionid() {
         return transactionid;
     }
 
     public void setTransactionid(String transactionid) {
         this.transactionid = transactionid == null ? null : transactionid.trim();
+    }
+
+    public Integer getDays() {
+        return days;
+    }
+
+    public void setDays(Integer days) {
+        this.days = days;
+    }
+
+    public String getOrdernumber() {
+        return ordernumber;
+    }
+
+    public void setOrdernumber(String ordernumber) {
+        this.ordernumber = ordernumber == null ? null : ordernumber.trim();
     }
 
     public Integer getRoomnumber() {
@@ -99,14 +107,6 @@ public class Order {
 
     public void setStatus(Integer status) {
         this.status = status;
-    }
-
-    public Integer getDays() {
-        return days;
-    }
-
-    public void setDays(Integer days) {
-        this.days = days;
     }
 
     public Double getPrice() {

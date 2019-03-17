@@ -344,6 +344,136 @@ public class OrderExample {
             return (Criteria) this;
         }
 
+        public Criteria andTransactionidIsNull() {
+            addCriterion("transactionid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionidIsNotNull() {
+            addCriterion("transactionid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionidEqualTo(String value) {
+            addCriterion("transactionid =", value, "transactionid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionidNotEqualTo(String value) {
+            addCriterion("transactionid <>", value, "transactionid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionidGreaterThan(String value) {
+            addCriterion("transactionid >", value, "transactionid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionidGreaterThanOrEqualTo(String value) {
+            addCriterion("transactionid >=", value, "transactionid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionidLessThan(String value) {
+            addCriterion("transactionid <", value, "transactionid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionidLessThanOrEqualTo(String value) {
+            addCriterion("transactionid <=", value, "transactionid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionidLike(String value) {
+            addCriterion("transactionid like", value, "transactionid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionidNotLike(String value) {
+            addCriterion("transactionid not like", value, "transactionid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionidIn(List<String> values) {
+            addCriterion("transactionid in", values, "transactionid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionidNotIn(List<String> values) {
+            addCriterion("transactionid not in", values, "transactionid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionidBetween(String value1, String value2) {
+            addCriterion("transactionid between", value1, value2, "transactionid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionidNotBetween(String value1, String value2) {
+            addCriterion("transactionid not between", value1, value2, "transactionid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDaysIsNull() {
+            addCriterion("days is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDaysIsNotNull() {
+            addCriterion("days is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDaysEqualTo(Integer value) {
+            addCriterion("days =", value, "days");
+            return (Criteria) this;
+        }
+
+        public Criteria andDaysNotEqualTo(Integer value) {
+            addCriterion("days <>", value, "days");
+            return (Criteria) this;
+        }
+
+        public Criteria andDaysGreaterThan(Integer value) {
+            addCriterion("days >", value, "days");
+            return (Criteria) this;
+        }
+
+        public Criteria andDaysGreaterThanOrEqualTo(Integer value) {
+            addCriterion("days >=", value, "days");
+            return (Criteria) this;
+        }
+
+        public Criteria andDaysLessThan(Integer value) {
+            addCriterion("days <", value, "days");
+            return (Criteria) this;
+        }
+
+        public Criteria andDaysLessThanOrEqualTo(Integer value) {
+            addCriterion("days <=", value, "days");
+            return (Criteria) this;
+        }
+
+        public Criteria andDaysIn(List<Integer> values) {
+            addCriterion("days in", values, "days");
+            return (Criteria) this;
+        }
+
+        public Criteria andDaysNotIn(List<Integer> values) {
+            addCriterion("days not in", values, "days");
+            return (Criteria) this;
+        }
+
+        public Criteria andDaysBetween(Integer value1, Integer value2) {
+            addCriterion("days between", value1, value2, "days");
+            return (Criteria) this;
+        }
+
+        public Criteria andDaysNotBetween(Integer value1, Integer value2) {
+            addCriterion("days not between", value1, value2, "days");
+            return (Criteria) this;
+        }
+
         public Criteria andOrdernumberIsNull() {
             addCriterion("orderNumber is null");
             return (Criteria) this;
@@ -411,76 +541,6 @@ public class OrderExample {
 
         public Criteria andOrdernumberNotBetween(String value1, String value2) {
             addCriterion("orderNumber not between", value1, value2, "ordernumber");
-            return (Criteria) this;
-        }
-
-        public Criteria andTransactionidIsNull() {
-            addCriterion("transactionId is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTransactionidIsNotNull() {
-            addCriterion("transactionId is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTransactionidEqualTo(String value) {
-            addCriterion("transactionId =", value, "transactionid");
-            return (Criteria) this;
-        }
-
-        public Criteria andTransactionidNotEqualTo(String value) {
-            addCriterion("transactionId <>", value, "transactionid");
-            return (Criteria) this;
-        }
-
-        public Criteria andTransactionidGreaterThan(String value) {
-            addCriterion("transactionId >", value, "transactionid");
-            return (Criteria) this;
-        }
-
-        public Criteria andTransactionidGreaterThanOrEqualTo(String value) {
-            addCriterion("transactionId >=", value, "transactionid");
-            return (Criteria) this;
-        }
-
-        public Criteria andTransactionidLessThan(String value) {
-            addCriterion("transactionId <", value, "transactionid");
-            return (Criteria) this;
-        }
-
-        public Criteria andTransactionidLessThanOrEqualTo(String value) {
-            addCriterion("transactionId <=", value, "transactionid");
-            return (Criteria) this;
-        }
-
-        public Criteria andTransactionidLike(String value) {
-            addCriterion("transactionId like", value, "transactionid");
-            return (Criteria) this;
-        }
-
-        public Criteria andTransactionidNotLike(String value) {
-            addCriterion("transactionId not like", value, "transactionid");
-            return (Criteria) this;
-        }
-
-        public Criteria andTransactionidIn(List<String> values) {
-            addCriterion("transactionId in", values, "transactionid");
-            return (Criteria) this;
-        }
-
-        public Criteria andTransactionidNotIn(List<String> values) {
-            addCriterion("transactionId not in", values, "transactionid");
-            return (Criteria) this;
-        }
-
-        public Criteria andTransactionidBetween(String value1, String value2) {
-            addCriterion("transactionId between", value1, value2, "transactionid");
-            return (Criteria) this;
-        }
-
-        public Criteria andTransactionidNotBetween(String value1, String value2) {
-            addCriterion("transactionId not between", value1, value2, "transactionid");
             return (Criteria) this;
         }
 
@@ -671,66 +731,6 @@ public class OrderExample {
 
         public Criteria andStatusNotBetween(Integer value1, Integer value2) {
             addCriterion("status not between", value1, value2, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysIsNull() {
-            addCriterion("days is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysIsNotNull() {
-            addCriterion("days is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysEqualTo(Integer value) {
-            addCriterion("days =", value, "days");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysNotEqualTo(Integer value) {
-            addCriterion("days <>", value, "days");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysGreaterThan(Integer value) {
-            addCriterion("days >", value, "days");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysGreaterThanOrEqualTo(Integer value) {
-            addCriterion("days >=", value, "days");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysLessThan(Integer value) {
-            addCriterion("days <", value, "days");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysLessThanOrEqualTo(Integer value) {
-            addCriterion("days <=", value, "days");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysIn(List<Integer> values) {
-            addCriterion("days in", values, "days");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysNotIn(List<Integer> values) {
-            addCriterion("days not in", values, "days");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysBetween(Integer value1, Integer value2) {
-            addCriterion("days between", value1, value2, "days");
-            return (Criteria) this;
-        }
-
-        public Criteria andDaysNotBetween(Integer value1, Integer value2) {
-            addCriterion("days not between", value1, value2, "days");
             return (Criteria) this;
         }
 

@@ -28,9 +28,9 @@ public interface PreOrderResponseMapper {
     int deleteByPrimaryKey(Integer id);
 
     @Insert({
-        "insert into preorderresponse (orderId, nonceStr, ",
-        "packageStr, timeStamap, ",
-        "paySign, appId)",
+        "insert into preorderresponse (orderId, noncestr, ",
+        "packagestr, timestamap, ",
+        "paysign, appid)",
         "values (#{orderid,jdbcType=INTEGER}, #{noncestr,jdbcType=VARCHAR}, ",
         "#{packagestr,jdbcType=VARCHAR}, #{timestamap,jdbcType=VARCHAR}, ",
         "#{paysign,jdbcType=VARCHAR}, #{appid,jdbcType=VARCHAR})"
@@ -46,28 +46,28 @@ public interface PreOrderResponseMapper {
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="orderId", property="orderid", jdbcType=JdbcType.INTEGER),
-        @Result(column="nonceStr", property="noncestr", jdbcType=JdbcType.VARCHAR),
-        @Result(column="packageStr", property="packagestr", jdbcType=JdbcType.VARCHAR),
-        @Result(column="timeStamap", property="timestamap", jdbcType=JdbcType.VARCHAR),
-        @Result(column="paySign", property="paysign", jdbcType=JdbcType.VARCHAR),
-        @Result(column="appId", property="appid", jdbcType=JdbcType.VARCHAR)
+        @Result(column="noncestr", property="noncestr", jdbcType=JdbcType.VARCHAR),
+        @Result(column="packagestr", property="packagestr", jdbcType=JdbcType.VARCHAR),
+        @Result(column="timestamap", property="timestamap", jdbcType=JdbcType.VARCHAR),
+        @Result(column="paysign", property="paysign", jdbcType=JdbcType.VARCHAR),
+        @Result(column="appid", property="appid", jdbcType=JdbcType.VARCHAR)
     })
     List<PreOrderResponse> selectByExample(PreOrderResponseExample example);
 
     @Select({
         "select",
-        "id, orderId, nonceStr, packageStr, timeStamap, paySign, appId",
+        "id, orderId, noncestr, packagestr, timestamap, paysign, appid",
         "from preorderresponse",
         "where id = #{id,jdbcType=INTEGER}"
     })
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="orderId", property="orderid", jdbcType=JdbcType.INTEGER),
-        @Result(column="nonceStr", property="noncestr", jdbcType=JdbcType.VARCHAR),
-        @Result(column="packageStr", property="packagestr", jdbcType=JdbcType.VARCHAR),
-        @Result(column="timeStamap", property="timestamap", jdbcType=JdbcType.VARCHAR),
-        @Result(column="paySign", property="paysign", jdbcType=JdbcType.VARCHAR),
-        @Result(column="appId", property="appid", jdbcType=JdbcType.VARCHAR)
+        @Result(column="noncestr", property="noncestr", jdbcType=JdbcType.VARCHAR),
+        @Result(column="packagestr", property="packagestr", jdbcType=JdbcType.VARCHAR),
+        @Result(column="timestamap", property="timestamap", jdbcType=JdbcType.VARCHAR),
+        @Result(column="paysign", property="paysign", jdbcType=JdbcType.VARCHAR),
+        @Result(column="appid", property="appid", jdbcType=JdbcType.VARCHAR)
     })
     PreOrderResponse selectByPrimaryKey(Integer id);
 
@@ -83,11 +83,11 @@ public interface PreOrderResponseMapper {
     @Update({
         "update preorderresponse",
         "set orderId = #{orderid,jdbcType=INTEGER},",
-          "nonceStr = #{noncestr,jdbcType=VARCHAR},",
-          "packageStr = #{packagestr,jdbcType=VARCHAR},",
-          "timeStamap = #{timestamap,jdbcType=VARCHAR},",
-          "paySign = #{paysign,jdbcType=VARCHAR},",
-          "appId = #{appid,jdbcType=VARCHAR}",
+          "noncestr = #{noncestr,jdbcType=VARCHAR},",
+          "packagestr = #{packagestr,jdbcType=VARCHAR},",
+          "timestamap = #{timestamap,jdbcType=VARCHAR},",
+          "paysign = #{paysign,jdbcType=VARCHAR},",
+          "appid = #{appid,jdbcType=VARCHAR}",
         "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(PreOrderResponse record);

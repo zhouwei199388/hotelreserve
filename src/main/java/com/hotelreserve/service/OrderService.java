@@ -347,6 +347,7 @@ public class OrderService {
         List<OrderModel> orderModels = new ArrayList<>();
         for (Order order : orders) {
             OrderModel model = new OrderModel();
+            LogUtils.info(new Gson().toJson(model));
             HotelInfo hotelInfo = mHotelInfoMapper.selectByPrimaryKey(order.getHotelid());
             HotelRoom hotelRoom = mHotelRoomMapper.selectByPrimaryKey(order.getRoomid());
             User user = mUserMapper.selectByPrimaryKey(order.getUserid());

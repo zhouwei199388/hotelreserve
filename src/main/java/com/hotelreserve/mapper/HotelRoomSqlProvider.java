@@ -26,8 +26,8 @@ public class HotelRoomSqlProvider {
             sql.VALUES("price", "#{price,jdbcType=DOUBLE}");
         }
         
-        if (record.getWindow() != null) {
-            sql.VALUES("window", "#{window,jdbcType=INTEGER}");
+        if (record.getIswindow() != null) {
+            sql.VALUES("isWindow", "#{iswindow,jdbcType=INTEGER}");
         }
         
         if (record.getImage() != null) {
@@ -47,7 +47,7 @@ public class HotelRoomSqlProvider {
         sql.SELECT("hotelId");
         sql.SELECT("name");
         sql.SELECT("price");
-        sql.SELECT("window");
+        sql.SELECT("isWindow");
         sql.SELECT("image");
         sql.FROM("hotelroom");
         applyWhere(sql, example, false);
@@ -82,8 +82,8 @@ public class HotelRoomSqlProvider {
             sql.SET("price = #{record.price,jdbcType=DOUBLE}");
         }
         
-        if (record.getWindow() != null) {
-            sql.SET("window = #{record.window,jdbcType=INTEGER}");
+        if (record.getIswindow() != null) {
+            sql.SET("isWindow = #{record.iswindow,jdbcType=INTEGER}");
         }
         
         if (record.getImage() != null) {
@@ -102,7 +102,7 @@ public class HotelRoomSqlProvider {
         sql.SET("hotelId = #{record.hotelid,jdbcType=INTEGER}");
         sql.SET("name = #{record.name,jdbcType=VARCHAR}");
         sql.SET("price = #{record.price,jdbcType=DOUBLE}");
-        sql.SET("window = #{record.window,jdbcType=INTEGER}");
+        sql.SET("isWindow = #{record.iswindow,jdbcType=INTEGER}");
         sql.SET("image = #{record.image,jdbcType=VARCHAR}");
         
         HotelRoomExample example = (HotelRoomExample) parameter.get("example");
@@ -126,8 +126,8 @@ public class HotelRoomSqlProvider {
             sql.SET("price = #{price,jdbcType=DOUBLE}");
         }
         
-        if (record.getWindow() != null) {
-            sql.SET("window = #{window,jdbcType=INTEGER}");
+        if (record.getIswindow() != null) {
+            sql.SET("isWindow = #{iswindow,jdbcType=INTEGER}");
         }
         
         if (record.getImage() != null) {

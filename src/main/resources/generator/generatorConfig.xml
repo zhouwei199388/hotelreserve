@@ -90,15 +90,15 @@
         >
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
-        <!--<table tableName="preorderResponse"  domainObjectName="PreOrderResponse"-->
-               <!--enableCountByExample="false"-->
-               <!--enableUpdateByExample="true"-->
-               <!--enableDeleteByExample="true"-->
-               <!--enableSelectByExample="true"-->
-               <!--selectByExampleQueryId="false"-->
-        <!--&gt;-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
+        <table tableName="preorderResponse"  domainObjectName="PreOrderResponse"
+               enableCountByExample="false"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="false"
+        >
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
         <table tableName="admin"  domainObjectName="Admin"
                enableCountByExample="false"
                enableUpdateByExample="true"

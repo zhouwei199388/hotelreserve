@@ -26,23 +26,23 @@ public class PreOrderResponseSqlProvider {
         }
         
         if (record.getNoncestr() != null) {
-            sql.VALUES("nonceStr", "#{noncestr,jdbcType=VARCHAR}");
+            sql.VALUES("noncestr", "#{noncestr,jdbcType=VARCHAR}");
         }
         
         if (record.getPackagestr() != null) {
-            sql.VALUES("packageStr", "#{packagestr,jdbcType=VARCHAR}");
+            sql.VALUES("packagestr", "#{packagestr,jdbcType=VARCHAR}");
         }
         
         if (record.getTimestamap() != null) {
-            sql.VALUES("timeStamap", "#{timestamap,jdbcType=VARCHAR}");
+            sql.VALUES("timestamap", "#{timestamap,jdbcType=VARCHAR}");
         }
         
         if (record.getPaysign() != null) {
-            sql.VALUES("paySign", "#{paysign,jdbcType=VARCHAR}");
+            sql.VALUES("paysign", "#{paysign,jdbcType=VARCHAR}");
         }
         
         if (record.getAppid() != null) {
-            sql.VALUES("appId", "#{appid,jdbcType=VARCHAR}");
+            sql.VALUES("appid", "#{appid,jdbcType=VARCHAR}");
         }
         
         return sql.toString();
@@ -56,11 +56,11 @@ public class PreOrderResponseSqlProvider {
             sql.SELECT("id");
         }
         sql.SELECT("orderId");
-        sql.SELECT("nonceStr");
-        sql.SELECT("packageStr");
-        sql.SELECT("timeStamap");
-        sql.SELECT("paySign");
-        sql.SELECT("appId");
+        sql.SELECT("noncestr");
+        sql.SELECT("packagestr");
+        sql.SELECT("timestamap");
+        sql.SELECT("paysign");
+        sql.SELECT("appid");
         sql.FROM("preorderresponse");
         applyWhere(sql, example, false);
         
@@ -87,23 +87,23 @@ public class PreOrderResponseSqlProvider {
         }
         
         if (record.getNoncestr() != null) {
-            sql.SET("nonceStr = #{record.noncestr,jdbcType=VARCHAR}");
+            sql.SET("noncestr = #{record.noncestr,jdbcType=VARCHAR}");
         }
         
         if (record.getPackagestr() != null) {
-            sql.SET("packageStr = #{record.packagestr,jdbcType=VARCHAR}");
+            sql.SET("packagestr = #{record.packagestr,jdbcType=VARCHAR}");
         }
         
         if (record.getTimestamap() != null) {
-            sql.SET("timeStamap = #{record.timestamap,jdbcType=VARCHAR}");
+            sql.SET("timestamap = #{record.timestamap,jdbcType=VARCHAR}");
         }
         
         if (record.getPaysign() != null) {
-            sql.SET("paySign = #{record.paysign,jdbcType=VARCHAR}");
+            sql.SET("paysign = #{record.paysign,jdbcType=VARCHAR}");
         }
         
         if (record.getAppid() != null) {
-            sql.SET("appId = #{record.appid,jdbcType=VARCHAR}");
+            sql.SET("appid = #{record.appid,jdbcType=VARCHAR}");
         }
         
         applyWhere(sql, example, true);
@@ -116,11 +116,11 @@ public class PreOrderResponseSqlProvider {
         
         sql.SET("id = #{record.id,jdbcType=INTEGER}");
         sql.SET("orderId = #{record.orderid,jdbcType=INTEGER}");
-        sql.SET("nonceStr = #{record.noncestr,jdbcType=VARCHAR}");
-        sql.SET("packageStr = #{record.packagestr,jdbcType=VARCHAR}");
-        sql.SET("timeStamap = #{record.timestamap,jdbcType=VARCHAR}");
-        sql.SET("paySign = #{record.paysign,jdbcType=VARCHAR}");
-        sql.SET("appId = #{record.appid,jdbcType=VARCHAR}");
+        sql.SET("noncestr = #{record.noncestr,jdbcType=VARCHAR}");
+        sql.SET("packagestr = #{record.packagestr,jdbcType=VARCHAR}");
+        sql.SET("timestamap = #{record.timestamap,jdbcType=VARCHAR}");
+        sql.SET("paysign = #{record.paysign,jdbcType=VARCHAR}");
+        sql.SET("appid = #{record.appid,jdbcType=VARCHAR}");
         
         PreOrderResponseExample example = (PreOrderResponseExample) parameter.get("example");
         applyWhere(sql, example, true);
@@ -136,23 +136,23 @@ public class PreOrderResponseSqlProvider {
         }
         
         if (record.getNoncestr() != null) {
-            sql.SET("nonceStr = #{noncestr,jdbcType=VARCHAR}");
+            sql.SET("noncestr = #{noncestr,jdbcType=VARCHAR}");
         }
         
         if (record.getPackagestr() != null) {
-            sql.SET("packageStr = #{packagestr,jdbcType=VARCHAR}");
+            sql.SET("packagestr = #{packagestr,jdbcType=VARCHAR}");
         }
         
         if (record.getTimestamap() != null) {
-            sql.SET("timeStamap = #{timestamap,jdbcType=VARCHAR}");
+            sql.SET("timestamap = #{timestamap,jdbcType=VARCHAR}");
         }
         
         if (record.getPaysign() != null) {
-            sql.SET("paySign = #{paysign,jdbcType=VARCHAR}");
+            sql.SET("paysign = #{paysign,jdbcType=VARCHAR}");
         }
         
         if (record.getAppid() != null) {
-            sql.SET("appId = #{appid,jdbcType=VARCHAR}");
+            sql.SET("appid = #{appid,jdbcType=VARCHAR}");
         }
         
         sql.WHERE("id = #{id,jdbcType=INTEGER}");

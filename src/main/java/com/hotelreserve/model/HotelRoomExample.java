@@ -354,63 +354,63 @@ public class HotelRoomExample {
             return (Criteria) this;
         }
 
-        public Criteria andWindowIsNull() {
-            addCriterion("window is null");
+        public Criteria andIswindowIsNull() {
+            addCriterion("isWindow is null");
             return (Criteria) this;
         }
 
-        public Criteria andWindowIsNotNull() {
-            addCriterion("window is not null");
+        public Criteria andIswindowIsNotNull() {
+            addCriterion("isWindow is not null");
             return (Criteria) this;
         }
 
-        public Criteria andWindowEqualTo(Integer value) {
-            addCriterion("window =", value, "window");
+        public Criteria andIswindowEqualTo(Integer value) {
+            addCriterion("isWindow =", value, "iswindow");
             return (Criteria) this;
         }
 
-        public Criteria andWindowNotEqualTo(Integer value) {
-            addCriterion("window <>", value, "window");
+        public Criteria andIswindowNotEqualTo(Integer value) {
+            addCriterion("isWindow <>", value, "iswindow");
             return (Criteria) this;
         }
 
-        public Criteria andWindowGreaterThan(Integer value) {
-            addCriterion("window >", value, "window");
+        public Criteria andIswindowGreaterThan(Integer value) {
+            addCriterion("isWindow >", value, "iswindow");
             return (Criteria) this;
         }
 
-        public Criteria andWindowGreaterThanOrEqualTo(Integer value) {
-            addCriterion("window >=", value, "window");
+        public Criteria andIswindowGreaterThanOrEqualTo(Integer value) {
+            addCriterion("isWindow >=", value, "iswindow");
             return (Criteria) this;
         }
 
-        public Criteria andWindowLessThan(Integer value) {
-            addCriterion("window <", value, "window");
+        public Criteria andIswindowLessThan(Integer value) {
+            addCriterion("isWindow <", value, "iswindow");
             return (Criteria) this;
         }
 
-        public Criteria andWindowLessThanOrEqualTo(Integer value) {
-            addCriterion("window <=", value, "window");
+        public Criteria andIswindowLessThanOrEqualTo(Integer value) {
+            addCriterion("isWindow <=", value, "iswindow");
             return (Criteria) this;
         }
 
-        public Criteria andWindowIn(List<Integer> values) {
-            addCriterion("window in", values, "window");
+        public Criteria andIswindowIn(List<Integer> values) {
+            addCriterion("isWindow in", values, "iswindow");
             return (Criteria) this;
         }
 
-        public Criteria andWindowNotIn(List<Integer> values) {
-            addCriterion("window not in", values, "window");
+        public Criteria andIswindowNotIn(List<Integer> values) {
+            addCriterion("isWindow not in", values, "iswindow");
             return (Criteria) this;
         }
 
-        public Criteria andWindowBetween(Integer value1, Integer value2) {
-            addCriterion("window between", value1, value2, "window");
+        public Criteria andIswindowBetween(Integer value1, Integer value2) {
+            addCriterion("isWindow between", value1, value2, "iswindow");
             return (Criteria) this;
         }
 
-        public Criteria andWindowNotBetween(Integer value1, Integer value2) {
-            addCriterion("window not between", value1, value2, "window");
+        public Criteria andIswindowNotBetween(Integer value1, Integer value2) {
+            addCriterion("isWindow not between", value1, value2, "iswindow");
             return (Criteria) this;
         }
 
