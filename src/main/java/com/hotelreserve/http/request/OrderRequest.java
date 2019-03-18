@@ -18,7 +18,8 @@ public class OrderRequest {
 
     public String ordernumber;
 
-    public Integer roomnumber;
+    public String roomnumber;
+    public Integer roomCount;
 
     public String note;
 
@@ -37,6 +38,7 @@ public class OrderRequest {
         this.userid = order.getUserid();
         this.ordernumber = order.getOrdernumber();
         this.roomnumber = order.getRoomnumber();
+        this.roomCount = order.getRoomcount();
         this.note = order.getNote();
         this.status = order.getStatus();
         this.price = order.getPrice();
@@ -53,6 +55,7 @@ public class OrderRequest {
         order.setOrdernumber(this.ordernumber);
         order.setTransactionid("");
         order.setRoomnumber(this.roomnumber);
+        order.setRoomcount(this.roomCount);
         order.setPrice(this.price);
         order.setNote(this.note);
         order.setDays(this.days);

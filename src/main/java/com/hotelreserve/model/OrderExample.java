@@ -344,6 +344,76 @@ public class OrderExample {
             return (Criteria) this;
         }
 
+        public Criteria andRoomnumberIsNull() {
+            addCriterion("roomNumber is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoomnumberIsNotNull() {
+            addCriterion("roomNumber is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoomnumberEqualTo(String value) {
+            addCriterion("roomNumber =", value, "roomnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoomnumberNotEqualTo(String value) {
+            addCriterion("roomNumber <>", value, "roomnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoomnumberGreaterThan(String value) {
+            addCriterion("roomNumber >", value, "roomnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoomnumberGreaterThanOrEqualTo(String value) {
+            addCriterion("roomNumber >=", value, "roomnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoomnumberLessThan(String value) {
+            addCriterion("roomNumber <", value, "roomnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoomnumberLessThanOrEqualTo(String value) {
+            addCriterion("roomNumber <=", value, "roomnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoomnumberLike(String value) {
+            addCriterion("roomNumber like", value, "roomnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoomnumberNotLike(String value) {
+            addCriterion("roomNumber not like", value, "roomnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoomnumberIn(List<String> values) {
+            addCriterion("roomNumber in", values, "roomnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoomnumberNotIn(List<String> values) {
+            addCriterion("roomNumber not in", values, "roomnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoomnumberBetween(String value1, String value2) {
+            addCriterion("roomNumber between", value1, value2, "roomnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoomnumberNotBetween(String value1, String value2) {
+            addCriterion("roomNumber not between", value1, value2, "roomnumber");
+            return (Criteria) this;
+        }
+
         public Criteria andTransactionidIsNull() {
             addCriterion("transactionid is null");
             return (Criteria) this;
@@ -544,63 +614,63 @@ public class OrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andRoomnumberIsNull() {
-            addCriterion("roomNumber is null");
+        public Criteria andRoomcountIsNull() {
+            addCriterion("roomCount is null");
             return (Criteria) this;
         }
 
-        public Criteria andRoomnumberIsNotNull() {
-            addCriterion("roomNumber is not null");
+        public Criteria andRoomcountIsNotNull() {
+            addCriterion("roomCount is not null");
             return (Criteria) this;
         }
 
-        public Criteria andRoomnumberEqualTo(Integer value) {
-            addCriterion("roomNumber =", value, "roomnumber");
+        public Criteria andRoomcountEqualTo(Integer value) {
+            addCriterion("roomCount =", value, "roomcount");
             return (Criteria) this;
         }
 
-        public Criteria andRoomnumberNotEqualTo(Integer value) {
-            addCriterion("roomNumber <>", value, "roomnumber");
+        public Criteria andRoomcountNotEqualTo(Integer value) {
+            addCriterion("roomCount <>", value, "roomcount");
             return (Criteria) this;
         }
 
-        public Criteria andRoomnumberGreaterThan(Integer value) {
-            addCriterion("roomNumber >", value, "roomnumber");
+        public Criteria andRoomcountGreaterThan(Integer value) {
+            addCriterion("roomCount >", value, "roomcount");
             return (Criteria) this;
         }
 
-        public Criteria andRoomnumberGreaterThanOrEqualTo(Integer value) {
-            addCriterion("roomNumber >=", value, "roomnumber");
+        public Criteria andRoomcountGreaterThanOrEqualTo(Integer value) {
+            addCriterion("roomCount >=", value, "roomcount");
             return (Criteria) this;
         }
 
-        public Criteria andRoomnumberLessThan(Integer value) {
-            addCriterion("roomNumber <", value, "roomnumber");
+        public Criteria andRoomcountLessThan(Integer value) {
+            addCriterion("roomCount <", value, "roomcount");
             return (Criteria) this;
         }
 
-        public Criteria andRoomnumberLessThanOrEqualTo(Integer value) {
-            addCriterion("roomNumber <=", value, "roomnumber");
+        public Criteria andRoomcountLessThanOrEqualTo(Integer value) {
+            addCriterion("roomCount <=", value, "roomcount");
             return (Criteria) this;
         }
 
-        public Criteria andRoomnumberIn(List<Integer> values) {
-            addCriterion("roomNumber in", values, "roomnumber");
+        public Criteria andRoomcountIn(List<Integer> values) {
+            addCriterion("roomCount in", values, "roomcount");
             return (Criteria) this;
         }
 
-        public Criteria andRoomnumberNotIn(List<Integer> values) {
-            addCriterion("roomNumber not in", values, "roomnumber");
+        public Criteria andRoomcountNotIn(List<Integer> values) {
+            addCriterion("roomCount not in", values, "roomcount");
             return (Criteria) this;
         }
 
-        public Criteria andRoomnumberBetween(Integer value1, Integer value2) {
-            addCriterion("roomNumber between", value1, value2, "roomnumber");
+        public Criteria andRoomcountBetween(Integer value1, Integer value2) {
+            addCriterion("roomCount between", value1, value2, "roomcount");
             return (Criteria) this;
         }
 
-        public Criteria andRoomnumberNotBetween(Integer value1, Integer value2) {
-            addCriterion("roomNumber not between", value1, value2, "roomnumber");
+        public Criteria andRoomcountNotBetween(Integer value1, Integer value2) {
+            addCriterion("roomCount not between", value1, value2, "roomcount");
             return (Criteria) this;
         }
 

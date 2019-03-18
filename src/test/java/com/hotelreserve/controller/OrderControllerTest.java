@@ -47,7 +47,7 @@ public class OrderControllerTest {
         Order order = new Order();
         order.setStartdate("2018-12-29");
         order.setEnddate("2018-12-31");
-        order.setRoomnumber(1);
+        order.setRoomcount(1);
         order.setPrice(580.00);
         order.setStatus(0);
         order.setOrdernumber("1212442132164654");
@@ -68,7 +68,7 @@ public class OrderControllerTest {
         order.roomid = 16;
         order.userid = 8;
         order.ordernumber = String.valueOf(date.getTime());
-        order.roomnumber = 1;
+        order.roomCount = 1;
         order.startdate = "2018-12-29";
         order.enddate = "2018-12-31";
         order.days = 2;

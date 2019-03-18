@@ -12,7 +12,8 @@ public class OrderModel {
 
     public String ordernumber;
 
-    public Integer roomnumber;
+    public String roomnumber;
+    public Integer roomCount;
 
     public String note;
 
@@ -36,6 +37,7 @@ public class OrderModel {
         this.id = order.getId();
         this.ordernumber = order.getOrdernumber();
         this.roomnumber = order.getRoomnumber();
+        this.roomCount = order.getRoomcount();
         this.note = order.getNote();
         this.status = order.getStatus();
         this.days = order.getDays();

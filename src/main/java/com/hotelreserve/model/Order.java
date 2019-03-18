@@ -9,13 +9,15 @@ public class Order {
 
     private Integer roomid;
 
+    private String roomnumber;
+
     private String transactionid;
 
     private Integer days;
 
     private String ordernumber;
 
-    private Integer roomnumber;
+    private Integer roomcount;
 
     private String note;
 
@@ -61,6 +63,14 @@ public class Order {
         this.roomid = roomid;
     }
 
+    public String getRoomnumber() {
+        return roomnumber;
+    }
+
+    public void setRoomnumber(String roomnumber) {
+        this.roomnumber = roomnumber == null ? null : roomnumber.trim();
+    }
+
     public String getTransactionid() {
         return transactionid;
     }
@@ -85,12 +95,12 @@ public class Order {
         this.ordernumber = ordernumber == null ? null : ordernumber.trim();
     }
 
-    public Integer getRoomnumber() {
-        return roomnumber;
+    public Integer getRoomcount() {
+        return roomcount;
     }
 
-    public void setRoomnumber(Integer roomnumber) {
-        this.roomnumber = roomnumber;
+    public void setRoomcount(Integer roomcount) {
+        this.roomcount = roomcount;
     }
 
     public String getNote() {
