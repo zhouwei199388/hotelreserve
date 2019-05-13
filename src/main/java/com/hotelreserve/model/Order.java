@@ -9,6 +9,8 @@ public class Order {
 
     private Integer roomid;
 
+    private Integer adminid;
+
     private String roomnumber;
 
     private String transactionid;
@@ -17,9 +19,9 @@ public class Order {
 
     private String ordernumber;
 
-    private Integer roomcount;
-
     private String note;
+
+    private Integer roomcount;
 
     private Integer status;
 
@@ -63,6 +65,14 @@ public class Order {
         this.roomid = roomid;
     }
 
+    public Integer getAdminid() {
+        return adminid;
+    }
+
+    public void setAdminid(Integer adminid) {
+        this.adminid = adminid;
+    }
+
     public String getRoomnumber() {
         return roomnumber;
     }
@@ -95,20 +105,20 @@ public class Order {
         this.ordernumber = ordernumber == null ? null : ordernumber.trim();
     }
 
-    public Integer getRoomcount() {
-        return roomcount;
-    }
-
-    public void setRoomcount(Integer roomcount) {
-        this.roomcount = roomcount;
-    }
-
     public String getNote() {
         return note;
     }
 
     public void setNote(String note) {
         this.note = note == null ? null : note.trim();
+    }
+
+    public Integer getRoomcount() {
+        return roomcount;
+    }
+
+    public void setRoomcount(Integer roomcount) {
+        this.roomcount = roomcount;
     }
 
     public Integer getStatus() {

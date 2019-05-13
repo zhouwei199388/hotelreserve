@@ -2,11 +2,11 @@ package com.hotelreserve.service;
 
 import com.google.gson.Gson;
 import com.hotelreserve.http.ConnectionMessage;
-import com.hotelreserve.http.WXmessage;
 import com.hotelreserve.http.model.OrderMessage;
 import com.hotelreserve.http.model.OrderModel;
-import com.hotelreserve.http.request.OrderRequest;
 import com.hotelreserve.http.model.ResponseHeader;
+import com.hotelreserve.http.request.OrderRequest;
+import com.hotelreserve.http.request.RoomNumberRequest;
 import com.hotelreserve.http.response.OrderResponse;
 import com.hotelreserve.http.response.PrePayResponse;
 import com.hotelreserve.mapper.*;
@@ -16,15 +16,11 @@ import com.hotelreserve.utils.LogUtils;
 import com.hotelreserve.utils.RequestHandler;
 import com.hotelreserve.wxpay.PayUtils;
 import com.hotelreserve.wxpay.WxPayConfig;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.rmi.runtime.Log;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.Executors;
@@ -45,6 +41,8 @@ public class OrderService {
     private UserMapper mUserMapper;
     @Autowired
     private PreOrderResponseMapper mPreOrderMapper;
+    @Autowired
+    private AdminMapper mAdminMapper;
 
     private static DelayQueue<OrderMessage> delayQueue = new DelayQueue<>();
 
@@ -449,11 +447,33 @@ public class OrderService {
         }
         return header;
     }
-//
-//    public ResponseHeader setRoomNum(){
-//     ResponseHeader header = new ResponseHeader();
-//
-//    }
+
+    /**
+     *
+     *  管理后台入住操作
+     * @param request
+     * @return
+     */
+    public ResponseHeader setRoomNum(RoomNumberRequest request) {
+        ResponseHeader header = new ResponseHeader();
+        Admin admin = mAdminMapper.selectByPrimaryKey(request.adminId);
+        if(admin==null){
+            header.msg="非法用户操作";
+            return header;
+        }
+        Order order = new Order();
+        order.setId(request.orderId);
+        order.setAdminid(request.adminId);
+        order.setRoomnumber(request.roomNumber);
+        order.setStatus(ConnectionMessage.WANCHENG);
+        LogUtils.info(new Gson().toJson(order));
+        int resultType = mOrderMapper.updateByPrimaryKeySelective(order);
+        if (resultType == 1) {
+            header.code = ConnectionMessage.SUCCESS_CODE;
+            header.msg = "入住成功";
+        }
+        return header;
+    }
 
 
 }

@@ -22,6 +22,8 @@ public class ConnectionMessage {
     public static final int  HAVEPAID = 1;//已支付
     public static final int  PAY_TIMEOUT = 2;//支付超时
     public static final int  CANCEL = 3;//已取消
+    public static final int  WANCHENG = 4;//已完成
+    public static final int  RUZHUCHAOSHI = 5;//入住超时
 
 
     public static final String SERVER_ERROR_TEXT = "服务器错误";

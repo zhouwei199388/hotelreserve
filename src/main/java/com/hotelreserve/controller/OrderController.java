@@ -3,6 +3,7 @@ package com.hotelreserve.controller;
 import com.google.gson.Gson;
 import com.hotelreserve.http.model.ResponseHeader;
 import com.hotelreserve.http.request.OrderRequest;
+import com.hotelreserve.http.request.RoomNumberRequest;
 import com.hotelreserve.http.response.OrderResponse;
 import com.hotelreserve.http.response.PrePayResponse;
 import com.hotelreserve.model.Order;
@@ -11,6 +12,7 @@ import com.hotelreserve.utils.LogUtils;
 import com.hotelreserve.utils.ResponseUtils;
 import com.hotelreserve.wxpay.PayUtils;
 import com.hotelreserve.wxpay.WxPayConfig;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import sun.rmi.runtime.Log;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -47,8 +50,17 @@ public class OrderController {
 
     @ResponseBody
     @RequestMapping(value = "/wxRefund", method = RequestMethod.GET)
-    public void wxRefund(HttpServletResponse response,int orderId) {
+    public void wxRefund(HttpServletResponse response, int orderId) {
         ResponseHeader header = mOrderService.wechatRefund(orderId);
+        LogUtils.info(new Gson().toJson(header));
+        ResponseUtils.renderJson(response, new Gson().toJson(header));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/setRoomNum", method = RequestMethod.POST)
+    public void setRoomNum(HttpServletResponse response, @RequestBody RoomNumberRequest request) {
+        LogUtils.info(new Gson().toJson(request));
+        ResponseHeader header = mOrderService.setRoomNum(request);
         LogUtils.info(new Gson().toJson(header));
         ResponseUtils.renderJson(response,new Gson().toJson(header));
     }
@@ -90,7 +102,7 @@ public class OrderController {
                 String transactionId = (String) map.get("transaction_id");
                 LogUtils.info(transactionId);
                 LogUtils.info(map.toString());
-                mOrderService.updateOrderStatus(WxPayConfig.TO_SIGN_IN, orderNumber, price,transactionId);
+                mOrderService.updateOrderStatus(WxPayConfig.TO_SIGN_IN, orderNumber, price, transactionId);
 
                 /**此处添加自己的业务逻辑代码end**/
                 //通知微信服务器已经支付成功

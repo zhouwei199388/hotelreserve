@@ -2,7 +2,9 @@ package com.hotelreserve.controller;
 
 import com.google.gson.Gson;
 import com.hotelreserve.http.request.OrderRequest;
+import com.hotelreserve.http.request.RoomNumberRequest;
 import com.hotelreserve.model.Order;
+import com.hotelreserve.utils.LogUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.client.match.MockRestRequestMatchers;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -83,6 +86,22 @@ public class OrderControllerTest {
     }
 
     @Test
+    public void setRoomNumber() throws Exception {
+        RoomNumberRequest roomNumber = new RoomNumberRequest();
+        roomNumber.orderId = 4;
+        roomNumber.adminId = 4;
+        roomNumber.roomNumber = "504";
+        String request = new Gson().toJson(roomNumber);
+        LogUtils.info(request);
+        mvc.perform(MockMvcRequestBuilders.post("/api/order/setRoomNum")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(request))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+    }
+
+    @Test
     public void getAllOrder() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/api/order/getAllOrder")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -104,7 +123,7 @@ public class OrderControllerTest {
 
 
     @Test
-    public void wxRefund() throws Exception{
+    public void wxRefund() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/api/order/wxRefund")
                 .contentType(MediaType.APPLICATION_JSON)
                 .param("orderId", "11"))

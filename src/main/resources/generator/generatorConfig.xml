@@ -15,7 +15,7 @@
         <!--数据库链接URL，用户名、密码 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://127.0.0.1:3306/hotel?characterEncoding=utf8"
-                        userId="root" password="root">
+                        userId="root" password="199388">
         </jdbcConnection>
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>

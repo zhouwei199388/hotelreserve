@@ -51,6 +51,8 @@ public class OrderRequest {
         Order order = new Order();
         order.setUserid(this.userid);
         order.setHotelid(this.hotelid);
+        order.setAdminid(0);
+        order.setRoomnumber("");
         order.setRoomid(this.roomid);
         order.setOrdernumber(this.ordernumber);
         order.setTransactionid("");
